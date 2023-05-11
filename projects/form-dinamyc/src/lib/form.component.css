@@ -1,0 +1,20 @@
+.page {
+    border-radius: 11px;
+    padding: 38px;
+    margin-bottom: 35px;
+}
+
+.div-title span {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+
+.p-autocomplete,
+.p-inputtext,
+.p-dropdown,
+.p-treeselect,
+.p-calendar {
+    width: 100%;
+}
