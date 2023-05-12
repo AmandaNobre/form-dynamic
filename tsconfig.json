@@ -14,6 +14,9 @@
       ],
       "form": [
         "dist/form"
+      ],
+      "form-dynamic-angular": [
+        "dist/form-dynamic-angular"
       ]
     },
     "noPropertyAccessFromIndexSignature": false,

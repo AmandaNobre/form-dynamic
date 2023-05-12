@@ -8,8 +8,8 @@
         <div *ngFor="let campo of form" class="{{campo.col}} col-sm-12">
             <div class="mb-3">
                 <!-- <label class="form-label" *ngIf="campo.type !== 'checkbox' && campo.type !== 'button'"
-                    translate={{campo.label}}>
-                </label> -->
+                  translate={{campo.label}}>
+              </label> -->
                 <label class="form-label" *ngIf="campo.type !== 'checkbox' && campo.type !== 'button'">{{campo.label}}
                 </label>
 
@@ -20,8 +20,8 @@
 
                 <!-- select -->
                 <p-dropdown styleClass="w-100" (onChange)="onChangevalues()" *ngIf="campo.type === 'select'"
-                    [options]="campo.selectOptions" formControlName={{campo.formControl}} [disabled]="campo.disabled"
-                    optionLabel="Descricao"></p-dropdown>
+                    [options]="campo.list" formControlName={{campo.formControl}} [disabled]="campo.disabled"
+                    optionLabel="name"></p-dropdown>
 
                 <!-- treeSelect -->
                 <p-treeSelect (onNodeSelect)="onChangevalues()" *ngIf="campo.type === 'treeSelect'"
@@ -33,9 +33,9 @@
                 <p-autoComplete styleClass="w-100" inputStyleClass="w-100" (onChange)="onChangevalues()"
                     [disabled]="campo.disabled" *ngIf="campo.type === 'autocomplete'" #autoComplete
                     formControlName={{campo.formControl}} [suggestions]="filteredAutoComplete"
-                    (completeMethod)="filterAutoComplete($event, campo.suggestionsAutoComplete)"
-                    [forceSelection]=campo.forceSelection (onFocus)="!autoComplete.value && autoComplete"
-                    dropdownMode="current" dataKey="Id" field="Descricao" class="formControl"></p-autoComplete>
+                    (completeMethod)="filterAutoComplete($event, campo.list)" [forceSelection]=campo.forceSelection
+                    (onFocus)="!autoComplete.value && autoComplete" dropdownMode="current" dataKey="Id" field="name"
+                    class="formControl"></p-autoComplete>
 
                 <!-- date -->
                 <div class="d-flex-custom" *ngIf="campo.type === 'date' && campo.datePeriodo">
@@ -44,7 +44,7 @@
                     <span class="calendarPeriod">a</span>
                     <p-calendar (onFocus)="onFocusDate(control.value['períodoIni'])" [minDate]="minDate"
                         [maxDate]="maxDate" dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa"
-                        [showIcon]="true" formControlName={{campo.formControlPeriod}}></p-calendar>
+                        [showIcon]="true" formControlName={{campo.formControlSecondary}}></p-calendar>
                 </div>
                 <div *ngIf="campo.type === 'date' && !campo.datePeriodo"
                     class="d-flex justify-content-space-evenly align-items-center">
@@ -72,7 +72,7 @@
                 </div>
 
                 <!-- button -->
-                <div class="mt-4" *ngIf="campo.type == 'button'">
+                <div class="mt-4" *ngIf="campo.type == 'button'" (click)="campo.onCLick()">
                     <!-- <p-button [label]="translate.instant(campo.label)" [disabled]="campo.disabled"></p-button> -->
                     <p-button [disabled]="campo.disabled">{{campo.label}}</p-button>
                 </div>
@@ -97,23 +97,23 @@
 
                 <!-- radioButton -->
                 <div *ngIf="campo.type === 'radioButton'" class="d-flex">
-                    <div *ngFor="let listRadioButton of campo.listRadioButton" class="field-checkbox">
-                        <p-radioButton [value]="listRadioButton.value" formControlName={{campo.formControl}}
+                    <div *ngFor="let listRadioButton of campo.list" class="field-checkbox">
+                        <p-radioButton [value]="listRadioButton.id" formControlName={{campo.formControl}}
                             class="mr-10px"></p-radioButton>
-                        <label class="mr-1" translate={{listRadioButton.text}}></label>
+                        <label class="mr-1">{{listRadioButton.name}}</label>
                     </div>
                 </div>
             </div>
         </div>
 
-        <p-divider *ngIf="viewButtons"></p-divider>
+        <p-divider *ngIf="viewClean || viewFIlter"></p-divider>
 
         <div class="buttons-form">
             <!-- <p-button *ngIf="viewClean" styleClass="p-button-warning"
-                [label]="translate.instant('cardComponent.cleanButton')" (click)="onClickclean()"
-                icon="pi pi-times"></p-button>
-            <p-button *ngIf="viewFIlter" [label]="translate.instant('cardComponent.searchButton')"
-                (click)="onClickFilter()" icon="pi pi-search"></p-button> -->
+              [label]="translate.instant('cardComponent.cleanButton')" (click)="onClickclean()"
+              icon="pi pi-times"></p-button>
+          <p-button *ngIf="viewFIlter" [label]="translate.instant('cardComponent.searchButton')"
+              (click)="onClickFilter()" icon="pi pi-search"></p-button> -->
             <p-button *ngIf="viewClean" styleClass="p-button-warning" [label]="Limpar" (click)="onClickclean()"
                 icon="pi pi-times"></p-button>
             <p-button *ngIf="viewFIlter" [label]="Pesquisar" (click)="onClickFilter()" icon="pi pi-search"></p-button>

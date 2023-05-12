@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { IForm } from 'projects/form-dinamyc/src/public-api';
+import { IForm, IList } from 'projects/form-dynamic-angular/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,9 @@ export class AppComponent implements OnInit {
   controlnoteSAPMaintenanceOrder: UntypedFormGroup;
   controlmitigationBarriers: UntypedFormGroup;
 
+
+  list: IList[] = [{ id: 12, name: "as" }, { id: "1a2", name: "asdas" }]
+
   constructor(
     private fb: UntypedFormBuilder,
   ) {
@@ -39,7 +42,8 @@ export class AppComponent implements OnInit {
       uo: null,
       critical: false,
       installationLocation: '',
-      component: ''
+      component: '',
+      statusPeriodo: ''
     });
 
     this.controlIdentification = this.fb.group({
@@ -79,10 +83,12 @@ export class AppComponent implements OnInit {
     ]
 
     this.formBypass = [
-      { label: 'UO: *', type: 'select', formControl: 'uo', col: 'col-lg-6', disabled: null, selectOptions: [{ Codigo: "12", Descricao: "as" }, { Codigo: "1a2", Descricao: "asdas" }] },
+      { label: 'UO: *', type: 'select', formControl: 'uo', col: 'col-lg-6', disabled: null, list: this.list },
       { label: "pageRequests.installationLocation", col: 'col-lg-6', type: 'treeSelect', formControl: 'installationLocation', disabled: false },
-      { label: 'pageRequests.component', col: 'col-lg-6', type: 'autocomplete', forceSelection: false, formControl: 'component', disabled: false },
+      { label: 'pageRequests.component', col: 'col-lg-6', type: 'autocomplete', list: this.list, forceSelection: false, formControl: 'component', disabled: false },
       { label: 'pageRequests.critical', col: 'col-lg-6', type: 'checkbox', formControl: 'critical', disabled: null },
+      { label: '', col: 'col-lg-12', type: 'radioButton', datePeriodo: true, formControl: 'statusPeriodo', disabled: null, list: this.list },
+
     ]
 
     this.formIdentification = [

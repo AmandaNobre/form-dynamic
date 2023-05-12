@@ -2,15 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-// import { FormModule } from 'projects/form-dinamyc/src/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
-import { FormModule } from 'form-dinamyc/src/lib/form.module'
+// import { FormDynamicAngularModule } from 'projects/form-dynamic-angular/src/public-api';
+import { FormDynamicAngularModule } from 'form-dynamic-angular';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -22,7 +21,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
-    FormModule,
+    FormDynamicAngularModule,
     ReactiveFormsModule,
     TranslateModule.forRoot({
       loader: {

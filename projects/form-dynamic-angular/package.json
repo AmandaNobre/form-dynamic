@@ -1,7 +1,8 @@
 {
-  "name": "form-dinamyc",
-  "version": "0.0.2",
+  "name": "form-dynamic-angular",
+  "version": "1.0.0",
   "peerDependencies": {
+    "@angular/common": "^15.2.0",
     "@angular/core": "^15.2.0"
   },
   "dependencies": {

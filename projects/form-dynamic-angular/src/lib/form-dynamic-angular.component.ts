@@ -1,11 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 
-interface IList {
-  name: string,
-  code: number
+
+export interface IList {
+  id: number | string,
+  name: string
 }
 
 
@@ -15,27 +14,25 @@ export interface IForm {
   type: string,
   disabled: boolean | null,
   col: string,
-  selectOptions?: any
-  suggestionsAutoComplete?: any
   datePeriodo?: boolean
   formControl?: string,
-  list?: IList[],
   clean?: Function;
-  formControlPeriod?: string,
-  listRadioButton?: any[],
   treeSelect?: any,
   onChange?: Function;
   forceSelection?: boolean
+  formControlSecondary?: string,
+  onCLick?: Function,
+  list?: IList[]
 }
 
 
 @Component({
-  selector: 'lib-form',
-  templateUrl: 'form.component.html',
-  styleUrls: ['form.component.css']
+  selector: 'form-dynamic-angular',
+  templateUrl: 'form-dynamic-angular.component.html',
+  styleUrls: ['form-dynamic-angular.component.css']
 })
 
-export class FormComponent implements OnInit {
+export class FormDynamicAngularComponent {
   @Input() title!: string;
 
   @Output() filter = new EventEmitter<any>();
@@ -43,13 +40,10 @@ export class FormComponent implements OnInit {
   @Output() onChange = new EventEmitter<any>();
 
   @Input() form: IForm[] = []
-
   @Input() control: UntypedFormGroup;
 
-  @Input() viewButtons: boolean = true;
   @Input() viewFIlter: boolean = false;
   @Input() viewClean: boolean = false;
-  @Input() treeSelect: any;
   @Input() files: File[] = [];
 
   filteredAutoComplete: any[] = [];
@@ -84,7 +78,7 @@ export class FormComponent implements OnInit {
     if (suggestionsAutoComplete) {
       for (let i = 0; i < suggestionsAutoComplete.length; i++) {
         let dados = suggestionsAutoComplete[i];
-        if (dados.Descricao.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        if (dados.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
           filtered.push(dados);
         }
       }
