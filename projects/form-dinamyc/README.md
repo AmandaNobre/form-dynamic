@@ -1,24 +1,29 @@
-# Form
+# FORM DINAMYC ANGULAR
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
+![Version](https://img.shields.io/npm/v/form-dinamyc.svg ) 
 
-## Code scaffolding
+## Description
+The form-dinamic is a solution whith objectve is minimize the coding in forms, so one json you can have mutch components in forms in primeng as: input (text and number),  select, treeSelect, autocomplete, date, dateTime, textarea, checkbox, button, upload files, list e radioButton
 
-Run `ng generate component component-name --project form` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project form`.
-> Note: Don't forget to add `--project form` or else it will be added to the default project in your `angular.json` file. 
 
-## Build
+## 3. Basic Usage 📑
+```js
 
-Run `ng build form` to build the project. The build artifacts will be stored in the `dist/` directory.
+import { FormModule } from 'form-dinamyc/src/lib/form.module'
 
-## Publishing
+<lib-form title="Exemple" [form]=formmExemple [control]=controlExemple></lib-form>
 
-After building your library with `ng build form`, go to the dist folder `cd dist/form` and run `npm publish`.
+formmExemple: IForm[] =  = [
+      { label: 'Requester', col: 'col-lg-6', type: 'text', formControl: 'requester'},
+      { label: 'Manager', col: 'col-lg-6', type: 'text', formControl: 'manager' }
+    ]
 
-## Running unit tests
+controlExemple: UntypedFormGroup = this.fb.group({
+      requester: '',
+      manager: ''
+    });
 
-Run `ng test form` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Further help
+## 4. Props 💬
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+| Prop  | Type  | Default | Description |

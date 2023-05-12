@@ -19,22 +19,20 @@
                     [attr.disabled]="campo.disabled">
 
                 <!-- select -->
-                <p-dropdown (onChange)="onChangevalues()" 
-                    *ngIf="campo.type === 'select'" [options]="campo.selectOptions"
-                    formControlName={{campo.formControl}} [disabled]="campo.disabled"
+                <p-dropdown styleClass="w-100" (onChange)="onChangevalues()" *ngIf="campo.type === 'select'"
+                    [options]="campo.selectOptions" formControlName={{campo.formControl}} [disabled]="campo.disabled"
                     optionLabel="Descricao"></p-dropdown>
 
                 <!-- treeSelect -->
                 <p-treeSelect (onNodeSelect)="onChangevalues()" *ngIf="campo.type === 'treeSelect'"
-                    class="md:w-20rem w-full" containerStyleClass="w-full" formControlName={{campo.formControl}}
-                    [options]="campo.treeSelect" [filter]="true" [filterInputAutoFocus]="true"
-                    [disabled]="campo.disabled" emptyMessage="Nenhum dado encontrado" [showClear]="true"
-                    (onClear)="campo.clean()"></p-treeSelect>
+                    formControlName={{campo.formControl}} [options]="campo.treeSelect" [filter]="true"
+                    [filterInputAutoFocus]="true" [disabled]="campo.disabled" emptyMessage="Nenhum dado encontrado"
+                    [showClear]="true" (onClear)="campo.clean()"></p-treeSelect>
 
                 <!-- autoComplete -->
-                <p-autoComplete (onChange)="onChangevalues()" [disabled]="campo.disabled"
-                    *ngIf="campo.type === 'autocomplete'" #autoComplete formControlName={{campo.formControl}}
-                    [suggestions]="filteredAutoComplete"
+                <p-autoComplete styleClass="w-100" inputStyleClass="w-100" (onChange)="onChangevalues()"
+                    [disabled]="campo.disabled" *ngIf="campo.type === 'autocomplete'" #autoComplete
+                    formControlName={{campo.formControl}} [suggestions]="filteredAutoComplete"
                     (completeMethod)="filterAutoComplete($event, campo.suggestionsAutoComplete)"
                     [forceSelection]=campo.forceSelection (onFocus)="!autoComplete.value && autoComplete"
                     dropdownMode="current" dataKey="Id" field="Descricao" class="formControl"></p-autoComplete>

@@ -11,10 +11,6 @@
 }
 
 
-.p-autocomplete,
-.p-inputtext,
-.p-dropdown,
-.p-treeselect,
-.p-calendar {
+.p-treeselect {
     width: 100%;
 }
