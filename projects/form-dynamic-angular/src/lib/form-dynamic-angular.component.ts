@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 
 export interface IList {
@@ -51,7 +52,7 @@ export class FormDynamicAngularComponent {
   minDate: Date
 
   constructor(
-    // public translate: TranslateService,
+    public translate: TranslateService,
   ) {
   }
 
