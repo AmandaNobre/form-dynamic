@@ -56,8 +56,6 @@ export class FormDynamicAngularComponent {
   ) {
   }
 
-  ngOnInit(): void { }
-
 
   onFocusDate(date: Date) {
     // this.minDate = moment(date).toDate()

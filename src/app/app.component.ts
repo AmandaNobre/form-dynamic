@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { IForm, IList } from 'projects/form-dynamic-angular/src/public-api';
 
 @Component({
@@ -29,10 +30,14 @@ export class AppComponent implements OnInit {
 
   constructor(
     private fb: UntypedFormBuilder,
+    private translate: TranslateService,
   ) {
   }
 
   ngOnInit() {
+
+    this.translate.use("pt")
+
     this.controlResponsible = this.fb.group({
       requester: '',
       manager: ''
@@ -121,6 +126,11 @@ export class AppComponent implements OnInit {
       { label: 'pageRequests.shutdownShutdownincaseoflimitactuation', col: 'col-lg-6', type: 'text', formControl: 'shutdownShutdownincaseoflimitactuation', disabled: null },
       { label: 'pageRequests.responsibility', col: 'col-lg-6', type: 'text', formControl: 'responsibility2', disabled: null },
     ]
+  }
+
+
+  uselanguage(language: string) {
+    this.translate.use(language);
   }
 
 }

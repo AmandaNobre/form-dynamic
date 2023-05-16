@@ -1,14 +1,19 @@
-<form-dynamic-angular title="pageRequests.responsible" [form]=formResponsible [control]=controlResponsible
-></form-dynamic-angular>
+<select (change)="uselanguage($event.target.value)">
+    <option value='pt'>pt</option>
+    <option value='en'>en</option>
+</select>
 
-<form-dynamic-angular title="pageRequests.bypass" [form]=formBypass [control]=controlBypass 
-></form-dynamic-angular>
 
-<form-dynamic-angular title="pageRequests.identification"  [form]=formIdentification
-[control]=controlIdentification ></form-dynamic-angular>
+<form-dynamic-angular title="pageRequests.responsible" [form]=formResponsible
+    [control]=controlResponsible></form-dynamic-angular>
+
+ <form-dynamic-angular title="pageRequests.bypass" [form]=formBypass [control]=controlBypass></form-dynamic-angular> 
+
+<form-dynamic-angular title="pageRequests.identification" [form]=formIdentification
+    [control]=controlIdentification></form-dynamic-angular>
 
 <form-dynamic-angular title="pageRequests.noteSAPMaintenanceOrder" [form]=formnoteSAPMaintenanceOrder
-[control]=controlnoteSAPMaintenanceOrder ></form-dynamic-angular>
+    [control]=controlnoteSAPMaintenanceOrder></form-dynamic-angular>
 
 <form-dynamic-angular title="pageRequests.mitigationBarriers" [form]=formmitigationBarriers
     [control]=controlmitigationBarriers></form-dynamic-angular>

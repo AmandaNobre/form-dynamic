@@ -1,16 +1,13 @@
 <div class="white-bg page">
     <div class="div-title">
-        <!-- <span translate={{title}}></span> -->
-        <span>{{title}}</span>
+        <span translate={{title}}></span>
         <p-divider></p-divider>
     </div>
     <form [formGroup]="control" (submit)="onClickFilter()" class="row">
         <div *ngFor="let campo of form" class="{{campo.col}} col-sm-12">
             <div class="mb-3">
-                <!-- <label class="form-label" *ngIf="campo.type !== 'checkbox' && campo.type !== 'button'"
-                  translate={{campo.label}}>
-              </label> -->
-                <label class="form-label" *ngIf="campo.type !== 'checkbox' && campo.type !== 'button'">{{campo.label}}
+                <label class="form-label" *ngIf="campo.type !== 'checkbox' && campo.type !== 'button'"
+                    translate={{campo.label}}>
                 </label>
 
                 <!-- text -->
@@ -67,14 +64,12 @@
                 <div class="mt-5" *ngIf="campo.type == 'checkbox'">
                     <input [attr.disabled]="campo.disabled" id="checkbox" type='checkbox'
                         formControlName={{campo.formControl}}>
-                    <!-- <label class="form-label" translate={{campo.label}}></label> -->
-                    <label class="form-label">{{campo.label}}</label>
+                    <label class="form-label" translate={{campo.label}}></label>
                 </div>
 
                 <!-- button -->
                 <div class="mt-4" *ngIf="campo.type == 'button'" (click)="campo.onCLick()">
-                    <!-- <p-button [label]="translate.instant(campo.label)" [disabled]="campo.disabled"></p-button> -->
-                    <p-button [disabled]="campo.disabled">{{campo.label}}</p-button>
+                    <p-button [label]="translate.instant(campo.label)" [disabled]="campo.disabled"></p-button>
                 </div>
 
                 <!-- upload image -->
@@ -109,14 +104,11 @@
         <p-divider *ngIf="viewClean || viewFIlter"></p-divider>
 
         <div class="buttons-form">
-            <!-- <p-button *ngIf="viewClean" styleClass="p-button-warning"
-              [label]="translate.instant('cardComponent.cleanButton')" (click)="onClickclean()"
-              icon="pi pi-times"></p-button>
-          <p-button *ngIf="viewFIlter" [label]="translate.instant('cardComponent.searchButton')"
-              (click)="onClickFilter()" icon="pi pi-search"></p-button> -->
-            <p-button *ngIf="viewClean" styleClass="p-button-warning" [label]="Limpar" (click)="onClickclean()"
+            <p-button *ngIf="viewClean" styleClass="p-button-warning"
+                [label]="translate.instant('cardComponent.cleanButton')" (click)="onClickclean()"
                 icon="pi pi-times"></p-button>
-            <p-button *ngIf="viewFIlter" [label]="Pesquisar" (click)="onClickFilter()" icon="pi pi-search"></p-button>
+            <p-button *ngIf="viewFIlter" [label]="translate.instant('cardComponent.searchButton')"
+                (click)="onClickFilter()" icon="pi pi-search"></p-button>
         </div>
     </form>
 </div>
