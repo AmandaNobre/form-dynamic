@@ -7,22 +7,40 @@ The form-dynamic is a solution whith objectve is minimize the coding in forms, s
 
 
 ## Basic Usage 📑
-```js
-
-import { FormDynamicAngularModule } from 'form-dynamic-angular';
+```html
 
 <form-dynamic-angular title="Exemple" [form]=formmExemple [control]=controlExemple></form-dynamic-angular>
 
-formmExemple: IForm[] = [
-      { label: 'Requester', col: 'col-lg-6', type: 'text', formControl: 'requester'},
-      { label: 'Manager', col: 'col-lg-6', type: 'text', formControl: 'manager' }
-]
+```
 
-controlExemple: UntypedFormGroup = this.fb.group({
+```js
+
+import { TranslateService } from '@ngx-translate/core';
+import { UntypedFormBuilder } from '@angular/forms';
+import { IForm } from 'form-dynamic-angular';
+
+export class AppComponent implements OnInit {
+
+  controlExemple: UntypedFormGroup 
+  formmExemple: IForm[] = []
+
+  constructor(
+    private translate: TranslateService,
+    private fb: UntypedFormBuilder,
+  ) {}
+
+  ngOnInit() {
+    this.controlExemple  = this.fb.group({
       requester: '',
       manager: ''
-});
+    });
 
+    this.formmExemple =  [
+        { label: 'Requester', col: 'col-lg-6', type: 'text', formControl: 'requester'},
+        { label: 'Manager', col: 'col-lg-6', type: 'text', formControl: 'manager' }
+    ]
+  }
+}
 
 ```
 
@@ -65,7 +83,7 @@ Created files
 
 ```
 
-Created input
+Created input and form
 
 ```html
 <!--app.component.html-->
@@ -75,6 +93,8 @@ Created input
     <option value='en'>en</option>
 </select>
 
+<form-dynamic-angular title="Login" [form]=formmLogin [control]=controlLogin></form-dynamic-angular>
+
 ```
 
 Created function
@@ -83,13 +103,35 @@ Created function
 //app.component.ts
 
 import { TranslateService } from '@ngx-translate/core';
+import { UntypedFormBuilder } from '@angular/forms';
+import { IForm } from 'form-dynamic-angular';
 
-constructor(
-  private translate: TranslateService
-) {}
 
-uselanguage(language: string) {
-  this.translate.use(language);
+export class AppComponent implements OnInit {
+
+  controlmitigationBarriers: UntypedFormGroup 
+  formmLogin: IForm[] = []
+
+  constructor(
+    private translate: TranslateService,
+    private fb: UntypedFormBuilder,
+  ) {}
+
+  ngOnInit() {
+    this.controlmitigationBarriers  = this.fb.group({
+      username: '',
+      password: ''
+    });
+
+    this.formmLogin = [
+      { label: 'pageLogin.userName', col: 'col-lg-6', type: 'text', formControl: 'username' },
+      { label: 'pageLogin.password', col: 'col-lg-6', type: 'text', formControl: 'password' }
+    ]
+  }
+
+  uselanguage(language: string) {
+    this.translate.use(language);
+  }
 }
 
 ```
