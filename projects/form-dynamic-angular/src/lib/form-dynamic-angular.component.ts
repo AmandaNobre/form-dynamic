@@ -1,15 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
 import { TranslateService } from '@ngx-translate/core';
-
-
 export interface IList {
   id: number | string,
   name: string
 }
-
-
-
 export interface IForm {
   label: string,
   type: string,
@@ -25,8 +21,6 @@ export interface IForm {
   onCLick?: Function,
   list?: IList[]
 }
-
-
 @Component({
   selector: 'form-dynamic-angular',
   templateUrl: 'form-dynamic-angular.component.html',
@@ -55,7 +49,6 @@ export class FormDynamicAngularComponent {
     public translate: TranslateService,
   ) {
   }
-
 
   onFocusDate(date: Date) {
     // this.minDate = moment(date).toDate()

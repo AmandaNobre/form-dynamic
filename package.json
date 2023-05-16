@@ -22,7 +22,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "bootstrap": "^5.2.3",
     "form-dinamyc": "^0.0.4",
-    "form-dynamic-angular": "^1.0.0",
+    "form-dynamic-angular": "^2.0.1",
     "primeng": "^15.4.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

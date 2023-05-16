@@ -7,9 +7,7 @@
 .div-title span {
     font-size: 20px;
     font-weight: 500;
-    color: var(--text-color);
 }
-
 
 .p-treeselect {
     width: 100%;

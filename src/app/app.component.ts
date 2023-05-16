@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { IForm } from 'form-dynamic-angular';
-import { IList } from 'projects/form-dynamic-angular/src/public-api';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+
+import { IForm, IList } from 'form-dynamic-angular';
 
 @Component({
   selector: 'app-root',

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
-import { FormDynamicAngularComponent } from './form-dynamic-angular.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
@@ -9,14 +11,12 @@ import { CalendarModule } from 'primeng/calendar';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { FormDynamicAngularComponent } from './form-dynamic-angular.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
-
 @NgModule({
   declarations: [
     FormDynamicAngularComponent
@@ -41,9 +41,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   ],
   exports: [
     FormDynamicAngularComponent
-  ],
-  // providers: [
-  //   TranslateService
-  // ]
+  ]
 })
+
 export class FormDynamicAngularModule { }
