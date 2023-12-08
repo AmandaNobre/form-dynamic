@@ -8,6 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "paths": {
       "@angular/*": [
         "./node_modules/@angular/*"

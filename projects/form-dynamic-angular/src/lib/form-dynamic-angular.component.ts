@@ -1,31 +1,51 @@
 import { UntypedFormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { TranslateService } from '@ngx-translate/core';
+import * as moment from 'moment';
+import { MessageService } from 'primeng/api';
 export interface IList {
-  id: number | string,
-  name: string
+  descricao: string,
+  id: number | string
 }
+
+export interface ISelect {
+  descricao: string,
+  id: number | string
+}
+
+
 export interface IForm {
-  label: string,
-  type: string,
-  disabled: boolean | null,
-  col: string,
+  label?: string,
+  secondLabel?: string,
+  type?: string,
+  disabled?: boolean | null,
+  col?: string,
+  selectOptions?: ISelect[]
+  suggestionsAutoComplete?: any
   datePeriodo?: boolean
   formControl?: string,
-  clean?: Function;
-  treeSelect?: any,
-  onChange?: Function;
-  forceSelection?: boolean
+  list?: IList[],
+  clean?: Function,
   formControlSecondary?: string,
+  listRadioButton?: any[],
+  treeSelect?: any,
+  forceSelection?: boolean,
+  statesOption?: any,
   onCLick?: Function,
-  list?: IList[]
+  class?: string,
+  rows?: string,
+  minDate?: Date,
+  maxDate?: Date
+  
 }
+
 @Component({
   selector: 'form-dynamic-angular',
   templateUrl: 'form-dynamic-angular.component.html',
   styleUrls: ['form-dynamic-angular.component.css']
 })
+
 
 export class FormDynamicAngularComponent {
   @Input() title!: string;
@@ -40,27 +60,54 @@ export class FormDynamicAngularComponent {
   @Input() viewFIlter: boolean = false;
   @Input() viewClean: boolean = false;
   @Input() files: File[] = [];
+  filesDonwload: File[] = [];
 
   filteredAutoComplete: any[] = [];
   maxDate: Date
   minDate: Date
+  minDateAll: Date;
 
   constructor(
     public translate: TranslateService,
+    private messageService: MessageService
   ) {
   }
 
-  onFocusDate(date: Date) {
-    // this.minDate = moment(date).toDate()
-    // this.maxDate = moment(date).add(6, 'month').toDate();
+  dowloadFIle(event: any, file: any) {
+    event.stopPropagation()
+
+    // this.attachmentsService.download(file.id).subscribe(data => {
+    //   const blob = window.URL.createObjectURL(new Blob([data]));
+    //   const anchorEl = document.createElement("a");
+    //   anchorEl.href = blob;
+    //   anchorEl.setAttribute("download", file.name);
+    //   anchorEl.click();
+    // })
   }
 
-  onSelect(event: { addedFiles: any; }) {
-    this.files.push(...event.addedFiles);
+  onFocusDate(date: Date) {
+    this.minDate = moment(date).toDate()
+    this.maxDate = moment(date).add(6, 'month').toDate();
+  }
+
+  async onSelect(fileName: string, event: { addedFiles: any; }) {
+    this.filesDonwload.push(...event.addedFiles);
+    const newFIles = event.addedFiles
+    let arr = [];
+    for (const item of newFIles) {
+      let aux = {
+        name: item.name,
+        contentType: item?.type,
+        content: await this.toBase64(item)
+      };
+      arr.push(aux);
+    }
+
+    this.control.get(fileName)?.setValue(arr);
   }
 
   onRemove(event: File) {
-    this.files.splice(this.files.indexOf(event), 1);
+    this.filesDonwload.splice(this.filesDonwload.indexOf(event), 1);
   }
 
   filterAutoComplete(event: { query: any; }, suggestionsAutoComplete: any) {
@@ -70,7 +117,7 @@ export class FormDynamicAngularComponent {
     if (suggestionsAutoComplete) {
       for (let i = 0; i < suggestionsAutoComplete.length; i++) {
         let dados = suggestionsAutoComplete[i];
-        if (dados.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        if (dados.descricao.toLowerCase().indexOf(query.toLowerCase()) == 0) {
           filtered.push(dados);
         }
       }
@@ -89,5 +136,21 @@ export class FormDynamicAngularComponent {
 
   onClickclean() {
     this.clean.emit(null);
+  }
+
+  toBase64 = async (file: File) => {
+    return new Promise((resolve, _) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  onBlurDate(event: any) {
+    if (event.target.value) {
+      if (!moment(event.target.value, "DD/MM/yyyy HH:mm", true).isValid() && !moment(event.target.value, "DD/MM/yyyy", true).isValid()) {
+        this.messageService.add({ severity: 'error', summary: this.translate.instant('globals.invalidDate'), detail: this.translate.instant('globals.invalidDateMessage') })
+      }
+    }
   }
 }

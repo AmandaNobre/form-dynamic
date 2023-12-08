@@ -1,102 +1,209 @@
 <div class="white-bg page">
-    <div class="div-title">
+    <div *ngIf="title" class="div-title">
         <span translate={{title}}></span>
         <p-divider></p-divider>
     </div>
-    <form [formGroup]="control" (submit)="onClickFilter()" class="row">
+    <form *ngIf="control" [formGroup]="control" (submit)="onClickFilter()" class="row">
         <div *ngFor="let campo of form" class="{{campo.col}} col-sm-12">
+            <label class="form-label"
+                *ngIf="campo.type !== 'checkbox' && campo.type !== 'button' && campo.type !== 'inputSwitch' && campo.type !== 'upload-files'"
+                translate={{campo.label}}>
+            </label>
+            <label class="form-label ml-2"
+                *ngIf="campo.type !== 'checkbox' && campo.type !== 'button'  && campo.type !== 'upload-files'"
+                translate={{campo.secondLabel}}>
+            </label>
             <div class="mb-3">
-                <label class="form-label" *ngIf="campo.type !== 'checkbox' && campo.type !== 'button'"
-                    translate={{campo.label}}>
-                </label>
-
                 <!-- text -->
-                <input *ngIf="campo.type == 'number' || campo.type == 'text'" (onChange)="onChangevalues()"
-                    type={{campo.type}} formControlName={{campo.formControl}} class="form-control"
-                    [attr.disabled]="campo.disabled">
+                <input *ngIf="campo.type == 'text'" (attr.change)="onChangevalues()" type={{campo.type}}
+                    formControlName={{campo.formControl}} class="form-control" [attr.disabled]="campo.disabled">
+
+                <!-- number -->
+                <p-inputNumber *ngIf="campo.type == 'number'" (onChange)="onChangevalues()" type={{campo.type}}
+                    formControlName={{campo.formControl}} class="form-control" [attr.disabled]="campo.disabled"
+                    [useGrouping]="false"></p-inputNumber>
 
                 <!-- select -->
-                <p-dropdown styleClass="w-100" (onChange)="onChangevalues()" *ngIf="campo.type === 'select'"
-                    [options]="campo.list" formControlName={{campo.formControl}} [disabled]="campo.disabled"
-                    optionLabel="name"></p-dropdown>
+                <p-dropdown styleClass="w-100" (onChange)="onChangevalues()"
+                    [placeholder]="translate.instant('cardComponent.select')" *ngIf="campo.type === 'select'"
+                    [options]="campo.selectOptions" formControlName={{campo.formControl}} [disabled]="campo.disabled"
+                    optionLabel="descricao"></p-dropdown>
 
                 <!-- treeSelect -->
                 <p-treeSelect (onNodeSelect)="onChangevalues()" *ngIf="campo.type === 'treeSelect'"
-                    formControlName={{campo.formControl}} [options]="campo.treeSelect" [filter]="true"
-                    [filterInputAutoFocus]="true" [disabled]="campo.disabled" emptyMessage="Nenhum dado encontrado"
-                    [showClear]="true" (onClear)="campo.clean()"></p-treeSelect>
+                    class="md:w-20rem w-full" containerStyleClass="w-full" formControlName={{campo.formControl}}
+                    [options]="campo.treeSelect" [filter]="true" [filterInputAutoFocus]="true"
+                    [disabled]="campo.disabled" emptyMessage="Nenhum dado encontrado" [showClear]="true"
+                    (onClear)="campo.clean()"></p-treeSelect>
 
                 <!-- autoComplete -->
-                <p-autoComplete styleClass="w-100" inputStyleClass="w-100" (onChange)="onChangevalues()"
-                    [disabled]="campo.disabled" *ngIf="campo.type === 'autocomplete'" #autoComplete
-                    formControlName={{campo.formControl}} [suggestions]="filteredAutoComplete"
-                    (completeMethod)="filterAutoComplete($event, campo.list)" [forceSelection]=campo.forceSelection
-                    (onFocus)="!autoComplete.value && autoComplete" dropdownMode="current" dataKey="Id" field="name"
-                    class="formControl"></p-autoComplete>
+                <p-autoComplete styleClass="w-100" (onSelect)="onChangevalues()" [disabled]="campo.disabled"
+                    *ngIf="campo.type === 'autocomplete'" #autoComplete formControlName={{campo.formControl}}
+                    [suggestions]="filteredAutoComplete"
+                    (completeMethod)="filterAutoComplete($event, campo.suggestionsAutoComplete)"
+                    [forceSelection]="false" (onFocus)="!autoComplete.value && autoComplete" dropdownMode="current"
+                    dataKey="Id" field="descricao" class="formControl"></p-autoComplete>
 
                 <!-- date -->
                 <div class="d-flex-custom" *ngIf="campo.type === 'date' && campo.datePeriodo">
-                    <p-calendar dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa"
-                        [showIcon]="true" formControlName={{campo.formControl}}></p-calendar>
-                    <span class="calendarPeriod">a</span>
-                    <p-calendar (onFocus)="onFocusDate(control.value['períodoIni'])" [minDate]="minDate"
-                        [maxDate]="maxDate" dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa"
-                        [showIcon]="true" formControlName={{campo.formControlSecondary}}></p-calendar>
+                    <p-calendar [selectOtherMonths]="true" [minDate]="minDateAll" styleClass="w-100"
+                        (onSelect)="onChangevalues()" dateFormat="dd/mm/yy" [disabled]="campo.disabled"
+                        placeholder="dd/mm/aaaa" [showIcon]="true" formControlName={{campo.formControl}}
+                        (onBlur)="onBlurDate($event)"></p-calendar>
+                    <span class="calendarPeriod">{{translate.instant('globals.between_dates')}}</span>
+                    <p-calendar [selectOtherMonths]="true" styleClass="w-100"
+                        (onFocus)="onFocusDate(control.value['períodoIni'])" (onSelect)="onChangevalues()"
+                        [minDate]="minDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [disabled]="campo.disabled"
+                        placeholder="dd/mm/aaaa" [showIcon]="true" formControlName={{campo.formControlSecondary}}
+                        (onBlur)="onBlurDate($event)"></p-calendar>
                 </div>
                 <div *ngIf="campo.type === 'date' && !campo.datePeriodo"
                     class="d-flex justify-content-space-evenly align-items-center">
-                    <p-calendar dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa"
-                        formControlName={{campo.formControl}} [showIcon]="true"></p-calendar>
+                    <p-calendar (onSelect)="onChangevalues()" [selectOtherMonths]="true" [minDate]="minDateAll"
+                        styleClass="w-100" dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa"
+                        formControlName={{campo.formControl}} [showIcon]="true"
+                        (onBlur)="onBlurDate($event)"></p-calendar>
                 </div>
 
                 <!-- dateTime -->
                 <div *ngIf="campo.type === 'dateTime'">
-                    <p-calendar dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa hh:mm"
-                        formControlName={{campo.formControl}} [showIcon]="true" [showTime]="true"></p-calendar>
+                    <p-calendar (onSelect)="onChangevalues()" [selectOtherMonths]="true"
+                        [(minDate)]="campo.minDate ?? minDateAll" [(maxDate)]="campo.maxDate" styleClass="w-100"
+                        dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa hh:mm"
+                        formControlName={{campo.formControl}} [showIcon]="true" [showTime]="true"
+                        (onBlur)="onBlurDate($event)"></p-calendar>
                 </div>
 
                 <!-- textarea -->
-                <textarea (onChange)="onChangevalues()" [attr.disabled]="campo.disabled"
+                <!-- <p-editor *ngIf="campo.type === 'textarea' " [(ngModel)]="text"
+                    [style]="{ height: '320px' }"></p-editor> -->
+                <textarea (attr.change)="onChangevalues()" [attr.disabled]="campo.disabled"
                     *ngIf="campo.type === 'textarea' " pInputTextarea formControlName={{campo.formControl}}
-                    class="form-control"></textarea>
+                    class="form-control" rows={{campo.rows}}></textarea>
 
                 <!-- checkbox -->
-                <div class="mt-5" *ngIf="campo.type == 'checkbox'">
-                    <input [attr.disabled]="campo.disabled" id="checkbox" type='checkbox'
+                <div *ngIf="campo.type == 'checkbox'">
+                    <input (change)="onChangevalues()" [attr.disabled]="campo.disabled" id="checkbox" type='checkbox'
                         formControlName={{campo.formControl}}>
                     <label class="form-label" translate={{campo.label}}></label>
                 </div>
 
                 <!-- button -->
-                <div class="mt-4" *ngIf="campo.type == 'button'" (click)="campo.onCLick()">
-                    <p-button [label]="translate.instant(campo.label)" [disabled]="campo.disabled"></p-button>
-                </div>
+                <button pButton *ngIf="campo.type == 'button'" class='{{campo.class}} w-100 mt-3'
+                    (click)="campo.onCLick()" [label]="translate.instant(campo.label)"
+                    [disabled]="campo.disabled"></button>
 
                 <!-- upload image -->
                 <div [disabled]="campo.disabled" *ngIf="campo.type === 'upload-image' " ngx-dropzone class="drag-image"
-                    [accept]="'image/*'" (change)="onSelect($event)">
+                    [accept]="'image/*'" (change)="onSelect(campo.formControl, $event)">
                     <ngx-dropzone-label>
                         <div><i class="pi pi-cloud-upload"></i></div>
                         <h6 [translate]="'cardComponent.titleAttachments'"></h6>
                         <span [translate]="'cardComponent.subTitleAttachments'"></span>
                     </ngx-dropzone-label>
-                    <ngx-dropzone-image-preview *ngFor="let f of files" [file]="f" [removable]="true"
+                    <ngx-dropzone-image-preview *ngFor="let f of filesDonwload" [file]="f" [removable]="true"
                         (removed)="onRemove(f)">
                         <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                     </ngx-dropzone-image-preview>
                 </div>
 
+                <!-- upload files -->
+                <div *ngIf="campo.type === 'upload-files' && !campo.disabled " ngx-dropzone class="drag-image"
+                    [accept]="'image/*, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf, application/msword'"
+                    (change)="onSelect(campo.formControl, $event)">
+                    <ngx-dropzone-label>
+                        <div><i class="pi pi-cloud-upload"></i></div>
+                        <h6 [translate]="'cardComponent.titleAttachments'"></h6>
+                        <span [translate]="'cardComponent.subTitleAttachmentsAllFIles'"></span>
+                    </ngx-dropzone-label>
+                    <div *ngFor="let f of filesDonwload">
+                        <ngx-dropzone-image-preview *ngIf="f.type && f.type.includes('image')" [file]="f"
+                            [removable]="true" (removed)="onRemove(f)">
+                            <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                        </ngx-dropzone-image-preview>
+                        <ngx-dropzone-preview *ngIf="f.type && !f.type.includes('image')" [file]="f" [removable]="true"
+                            (removed)="onRemove(f)">
+                            <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                        <ngx-dropzone-preview *ngIf=" f.id" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                            <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                    </div>
+                </div>
+
+                <!-- upload files disabled -->
+                <div *ngIf="campo.type === 'upload-files' && campo.disabled ">
+                    <p-button (click)="op.toggle($event)" icon="pi pi-paperclip"
+                        [label]="translate.instant('globals.files')"></p-button>
+
+                    <p-overlayPanel #op [style]="{'width': '450px'}" [showCloseIcon]="true">
+                        <ng-template pTemplate="content">
+                            <p-table *ngIf="files.length > 0" [value]="files" selectionMode="single"
+                                [(selection)]="selectedProduct" (onRowSelect)="onRowSelect($event, op)"
+                                responsiveLayout="scroll">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="name">{{translate.instant('globals.name')}}<p-sortIcon
+                                                field="name"></p-sortIcon></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-file>
+                                    <tr [pSelectableRow]="rowData">
+                                        <td>{{file.name}}</td>
+                                        <td> <p-button icon="pi pi-download"
+                                                (click)='dowloadFIle($event,file)'></p-button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div *ngIf="files.length === 0" class="p-10">
+                                <label>{{translate.instant('globals.notFiles')}}</label>
+                            </div>
+                        </ng-template>
+                    </p-overlayPanel>
+                </div>
+
                 <!-- list -->
-                <p-listbox [disabled]="campo.disabled" formControlName={{campo.formControl}}
-                    *ngIf="campo.type === 'list' && campo.list" [options]=campo.list optionLabel="name"></p-listbox>
+                <!-- <p-listbox [disabled]="campo.disabled" formControlName={{campo.formControl}}
+                    *ngIf="campo.type === 'list' && campo.list" [options]=campo.list optionLabel="name"></p-listbox> -->
+                <ul *ngIf="campo.type === 'list' && campo.list">
+                    <li *ngFor="let list of campo.list" translate={{list}} class="cardList"></li>
+                </ul>
 
                 <!-- radioButton -->
                 <div *ngIf="campo.type === 'radioButton'" class="d-flex">
-                    <div *ngFor="let listRadioButton of campo.list" class="field-checkbox">
-                        <p-radioButton [value]="listRadioButton.id" formControlName={{campo.formControl}}
-                            class="mr-10px"></p-radioButton>
-                        <label class="mr-1">{{listRadioButton.name}}</label>
+                    <div *ngFor="let listRadioButton of campo.listRadioButton" class="field-checkbox">
+                        <p-radioButton [disabled]="campo.disabled" [value]="listRadioButton.value"
+                            formControlName={{campo.formControl}} class="mr-10"></p-radioButton>
+                        <label class="mr-1" translate={{listRadioButton.text}}></label>
                     </div>
+                </div>
+
+                <!-- selectButton -->
+                <div class="d-flex" *ngIf="campo.type === 'selectButton'">
+                    <p-selectButton (onChange)="onChangevalues()" [disabled]="campo.disabled" id="selectButton"
+                        [options]="campo.statesOption" formControlName={{campo.formControl}} optionValue="value">
+                        <ng-template let-item>
+                            <span translate={{item.label}}></span>
+                        </ng-template>
+                    </p-selectButton>
+                    <input type="text" pInputText class="form-control" [attr.disabled]="campo.disabled"
+                        formControlName={{campo.formControlSecondary}}>
+                </div>
+
+                <!-- table -->
+                <table *ngIf="campo.type === 'table'">
+                    <tr *ngFor="let list of campo.list" class="cardList">
+                        <td translate={{list.name}}></td>
+                        <td>{{list.code}}</td>
+                    </tr>
+                </table>
+
+                <!-- inputSwitch -->
+                <div class="d-flex" *ngIf="campo.type === 'inputSwitch'">
+                    <p-inputSwitch [disabled]="campo.disabled" formControlName={{campo.formControl}} class="mr-10"
+                        (onChange)="onChangevalues()"></p-inputSwitch>
+                    <p translate={{campo.label}}></p>
                 </div>
             </div>
         </div>
@@ -104,7 +211,7 @@
         <p-divider *ngIf="viewClean || viewFIlter"></p-divider>
 
         <div class="buttons-form">
-            <p-button *ngIf="viewClean" styleClass="p-button-warning"
+            <p-button *ngIf="viewClean" styleClass="p-button-warning mr-10"
                 [label]="translate.instant('cardComponent.cleanButton')" (click)="onClickclean()"
                 icon="pi pi-times"></p-button>
             <p-button *ngIf="viewFIlter" [label]="translate.instant('cardComponent.searchButton')"

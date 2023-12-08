@@ -21,10 +21,11 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "bootstrap": "^5.2.3",
-    "form-dinamyc": "^0.0.4",
-    "form-dynamic-angular": "^2.0.1",
+    "form-dynamic-angular": "^2.0.55",
+    "moment": "^2.29.4",
     "primeng": "^15.4.1",
     "rxjs": "~7.8.0",
+    "ts-node": "^10.9.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },

@@ -13,6 +13,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { FormDynamicAngularComponent } from './form-dynamic-angular.component';
+import { MessageService } from 'primeng/api';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -38,6 +39,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       },
     })
+  ],
+  providers:[
+    MessageService
   ],
   exports: [
     FormDynamicAngularComponent

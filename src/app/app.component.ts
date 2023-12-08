@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
-import { IForm, IList } from 'form-dynamic-angular';
+// import { IForm, IList } from 'form-dynamic-angular';
+import { IForm, IList, ISelect } from 'projects/form-dynamic-angular/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -26,8 +27,10 @@ export class AppComponent implements OnInit {
   controlnoteSAPMaintenanceOrder: UntypedFormGroup;
   controlmitigationBarriers: UntypedFormGroup;
 
+  id: number
 
-  list: IList[] = [{ id: 12, name: "as" }, { id: "1a2", name: "asdas" }]
+  list: IList[] = [{ id: 12, descricao: "as" }, { id: "1a2", descricao: "asdas" }]
+  select: ISelect[] = [{ id: 12, descricao: "as" }, { id: "1a2", descricao: "asdas" }]
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -41,7 +44,8 @@ export class AppComponent implements OnInit {
 
     this.controlResponsible = this.fb.group({
       requester: '',
-      manager: ''
+      manager: '',
+      responsable: ''
     });
 
     this.controlBypass = this.fb.group({
@@ -49,7 +53,8 @@ export class AppComponent implements OnInit {
       critical: false,
       installationLocation: '',
       component: '',
-      statusPeriodo: ''
+      statusPeriodo: '',
+      criticality: ''
     });
 
     this.controlIdentification = this.fb.group({
@@ -68,7 +73,7 @@ export class AppComponent implements OnInit {
 
     this.controlnoteSAPMaintenanceOrder = this.fb.group({
       type: '',
-      number: '',
+      number: 0,
       plant: '',
       description: '',
       originSystem: '',
@@ -84,17 +89,17 @@ export class AppComponent implements OnInit {
     });
 
     this.formResponsible = [
-      { label: 'pageRequests.requester', col: 'col-lg-6', type: 'text', formControl: 'requester', disabled: true },
-      { label: 'pageRequests.manager', col: 'col-lg-6', type: 'text', formControl: 'manager', disabled: true }
+      { label: 'pageRequests.requester', col: 'col-lg-4', type: 'text', formControl: 'requester', disabled: true },
+      { label: 'pageRequests.manager', col: 'col-lg-4', type: 'text', formControl: 'manager', disabled: true },
+      { label: 'pageRequests.responsable', col: 'col-lg-4', type: 'text', formControl: 'responsable', disabled: true }
     ]
 
     this.formBypass = [
-      { label: 'UO: *', type: 'select', formControl: 'uo', col: 'col-lg-6', disabled: null, list: this.list },
-      { label: "pageRequests.installationLocation", col: 'col-lg-6', type: 'treeSelect', formControl: 'installationLocation', disabled: false },
-      { label: 'pageRequests.component', col: 'col-lg-6', type: 'autocomplete', list: this.list, forceSelection: false, formControl: 'component', disabled: false },
-      { label: 'pageRequests.critical', col: 'col-lg-6', type: 'checkbox', formControl: 'critical', disabled: null },
-      { label: '', col: 'col-lg-12', type: 'radioButton', datePeriodo: true, formControl: 'statusPeriodo', disabled: null, list: this.list },
-
+      { label: 'UO: *', type: 'select', formControl: 'uo', col: 'col-lg-6', disabled: this.id ? true : false, selectOptions: this.select },
+      { label: "pageRequests.installationLocation", col: 'col-lg-6', type: 'treeSelect', formControl: 'installationLocation', disabled: this.id ? true : false },
+      { label: 'pageRequests.component', col: 'col-lg-6', type: 'autocomplete', forceSelection: false, formControl: 'component', disabled: this.id ? true : false, suggestionsAutoComplete: [] },
+      { label: 'pageRequests.critical', col: 'col-lg-6 mt-4', type: 'checkbox', formControl: 'critical', disabled: true },
+      { label: 'pageRequests.criticality', col: 'col-lg-6', type: 'select', formControl: 'criticality', disabled: this.id ? true : false },
     ]
 
     this.formIdentification = [
@@ -111,7 +116,7 @@ export class AppComponent implements OnInit {
     ]
 
     this.formnoteSAPMaintenanceOrder = [
-      { label: 'pageRequests.number', col: 'col-lg-4', type: 'number', formControl: 'number', disabled: null },
+      // { label: 'pageRequests.number', col: 'col-lg-4', type: 'number', formControl: 'number', disabled: null },
       { label: 'pageRequests.type', col: 'col-lg-4', type: 'text', formControl: 'type', disabled: null },
       { label: 'pageRequests.registerInSap', col: 'col-lg-4', type: 'button', formControl: 'type', disabled: null },
       { label: 'pageRequests.plant', col: 'col-lg-4', type: 'text', formControl: 'plant', disabled: null },
