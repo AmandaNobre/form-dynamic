@@ -148,13 +148,10 @@ export class AppComponent implements OnInit {
 
   saveTeste() {
     this.validateForm = true
-    console.log('this.formResponsible', this.controlResponsible.controls)
   }
 
   filterTeste() {
     this.formResponsible
-    console.log(this.controlResponsible.value)
-    console.log("this.controlResponsible")
   }
 
   uselanguage(language: string) {
