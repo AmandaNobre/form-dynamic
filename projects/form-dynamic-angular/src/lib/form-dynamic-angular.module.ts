@@ -11,7 +11,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-
+import { InputTextModule } from 'primeng/inputtext';
 import { FormDynamicAngularComponent } from './form-dynamic-angular.component';
 import { MessageService } from 'primeng/api';
 
@@ -23,6 +23,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     FormDynamicAngularComponent
   ],
   imports: [
+    InputTextModule,
     DividerModule,
     BrowserModule,
     CalendarModule,
@@ -40,7 +41,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       },
     })
   ],
-  providers:[
+  providers: [
     MessageService
   ],
   exports: [

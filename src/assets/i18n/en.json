@@ -10,6 +10,8 @@
     "cardComponent": {
         "searchButton": "Filter",
         "cleanButton": "Clean",
+        "saveButton": "Save",
+        "cancelButton": "Cancel",
         "select": "Select",
         "titleAttachments": "Click or drag and drop a file to attach",
         "subTitleAttachments": "Supported files: PNG, TIF and JPG"

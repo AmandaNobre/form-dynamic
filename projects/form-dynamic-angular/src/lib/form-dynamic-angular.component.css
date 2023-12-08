@@ -12,3 +12,9 @@
 .p-treeselect {
     width: 100%;
 }
+
+.buttons-form {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}

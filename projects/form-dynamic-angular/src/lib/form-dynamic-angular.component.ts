@@ -14,7 +14,6 @@ export interface ISelect {
   id: number | string
 }
 
-
 export interface IForm {
   label?: string,
   secondLabel?: string,
@@ -37,7 +36,12 @@ export interface IForm {
   rows?: string,
   minDate?: Date,
   maxDate?: Date
-  
+}
+
+
+export interface IButtonsStandard {
+  type: 'clean' | 'filter' | 'save' | 'cancel',
+  onCLick: Function
 }
 
 @Component({
@@ -49,17 +53,16 @@ export interface IForm {
 
 export class FormDynamicAngularComponent {
   @Input() title!: string;
-
-  @Output() filter = new EventEmitter<any>();
-  @Output() clean = new EventEmitter<any>();
+  @Input() validateForm: boolean = false;
   @Output() onChange = new EventEmitter<any>();
 
   @Input() form: IForm[] = []
   @Input() control: UntypedFormGroup;
 
-  @Input() viewFIlter: boolean = false;
-  @Input() viewClean: boolean = false;
+  @Input() buttonsStandard: IButtonsStandard
+
   @Input() files: File[] = [];
+
   filesDonwload: File[] = [];
 
   filteredAutoComplete: any[] = [];
@@ -71,6 +74,7 @@ export class FormDynamicAngularComponent {
     public translate: TranslateService,
     private messageService: MessageService
   ) {
+
   }
 
   dowloadFIle(event: any, file: any) {
@@ -128,14 +132,6 @@ export class FormDynamicAngularComponent {
 
   onChangevalues() {
     this.onChange.emit();
-  }
-
-  onClickFilter() {
-    this.filter.emit(null);
-  }
-
-  onClickclean() {
-    this.clean.emit(null);
   }
 
   toBase64 = async (file: File) => {

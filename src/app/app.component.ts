@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormBuilder, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 // import { IForm, IList } from 'form-dynamic-angular';
-import { IForm, IList, ISelect } from 'projects/form-dynamic-angular/src/public-api';
+import { IButtonsStandard, IForm, IList, ISelect } from 'projects/form-dynamic-angular/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -28,24 +28,27 @@ export class AppComponent implements OnInit {
   controlmitigationBarriers: UntypedFormGroup;
 
   id: number
-
+  validateForm: boolean = false
   list: IList[] = [{ id: 12, descricao: "as" }, { id: "1a2", descricao: "asdas" }]
   select: ISelect[] = [{ id: 12, descricao: "as" }, { id: "1a2", descricao: "asdas" }]
 
+  buttonsStandard: IButtonsStandard[] = []
+
   constructor(
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private translate: TranslateService,
   ) {
   }
+
 
   ngOnInit() {
 
     this.translate.use("pt")
 
     this.controlResponsible = this.fb.group({
-      requester: '',
-      manager: '',
-      responsable: ''
+      requester: ['', Validators.required],
+      manager: ['', Validators.required],
+      responsable: ['', Validators.required]
     });
 
     this.controlBypass = this.fb.group({
@@ -132,8 +135,27 @@ export class AppComponent implements OnInit {
       { label: 'pageRequests.shutdownShutdownincaseoflimitactuation', col: 'col-lg-6', type: 'text', formControl: 'shutdownShutdownincaseoflimitactuation', disabled: null },
       { label: 'pageRequests.responsibility', col: 'col-lg-6', type: 'text', formControl: 'responsibility2', disabled: null },
     ]
+
+    this.buttonsStandard = [
+      { type: 'save', onCLick: () => this.saveTeste() },
+      { type: 'filter', onCLick: () => this.filterTeste() },
+      { type: 'clean', onCLick: () => this.filterTeste() },
+      { type: 'cancel', onCLick: () => this.filterTeste() }
+    ]
   }
 
+
+
+  saveTeste() {
+    this.validateForm = true
+    console.log('this.formResponsible', this.controlResponsible.controls)
+  }
+
+  filterTeste() {
+    this.formResponsible
+    console.log(this.controlResponsible.value)
+    console.log("this.controlResponsible")
+  }
 
   uselanguage(language: string) {
     this.translate.use(language);

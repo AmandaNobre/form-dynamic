@@ -15,7 +15,10 @@
             </label>
             <div class="mb-3">
                 <!-- text -->
-                <input *ngIf="campo.type == 'text'" (attr.change)="onChangevalues()" type={{campo.type}}
+                <input [ngClass]="{
+                    'is-invalid':
+                    validateForm && control.controls[campo.formControl].errors
+                  }" *ngIf="campo.type == 'text'" (attr.change)="onChangevalues()" type={{campo.type}}
                     formControlName={{campo.formControl}} class="form-control" [attr.disabled]="campo.disabled">
 
                 <!-- number -->
@@ -205,17 +208,30 @@
                         (onChange)="onChangevalues()"></p-inputSwitch>
                     <p translate={{campo.label}}></p>
                 </div>
+
+                <!-- validação de campo obrigatório -->
+                <small class="invalid-feedback" *ngIf="validateForm && control.controls[campo.formControl].errors">
+                    Campo obrigatório
+                </small>
             </div>
         </div>
 
-        <p-divider *ngIf="viewClean || viewFIlter"></p-divider>
+        <p-divider *ngIf="buttonsStandard.length > 0"></p-divider>
 
         <div class="buttons-form">
-            <p-button *ngIf="viewClean" styleClass="p-button-warning mr-10"
-                [label]="translate.instant('cardComponent.cleanButton')" (click)="onClickclean()"
-                icon="pi pi-times"></p-button>
-            <p-button *ngIf="viewFIlter" [label]="translate.instant('cardComponent.searchButton')"
-                (click)="onClickFilter()" icon="pi pi-search"></p-button>
+            <div *ngFor="let button of buttonsStandard">
+                <p-button *ngIf="button.type === 'clean'" styleClass="p-button-warning"
+                    [label]="translate.instant('cardComponent.cleanButton')" (click)="button.onCLick()"
+                    icon="pi pi-times"></p-button>
+                <p-button *ngIf="button.type === 'filter'" [label]="translate.instant('cardComponent.searchButton')"
+                    (click)="button.onCLick()" icon="pi pi-search"></p-button>
+                <p-button *ngIf="button.type === 'save'" styleClass="p-button-success"
+                    [label]="translate.instant('cardComponent.saveButton')" (click)="button.onCLick()"
+                    icon="pi pi-search"></p-button>
+                <p-button *ngIf="button.type === 'cancel'" styleClass="p-button-danger"
+                    [label]="translate.instant('cardComponent.cancelButton')" (click)="button.onCLick()"
+                    icon="pi pi-search"></p-button>
+            </div>
         </div>
     </form>
 </div>
