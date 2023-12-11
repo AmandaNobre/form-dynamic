@@ -14,6 +14,10 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormDynamicAngularComponent } from './form-dynamic-angular.component';
 import { MessageService } from 'primeng/api';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -23,6 +27,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     FormDynamicAngularComponent
   ],
   imports: [
+    SelectButtonModule,
+    InputSwitchModule,
+    CheckboxModule,
+    InputTextareaModule,
     InputTextModule,
     DividerModule,
     BrowserModule,

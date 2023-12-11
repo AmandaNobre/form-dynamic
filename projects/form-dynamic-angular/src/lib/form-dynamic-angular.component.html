@@ -3,52 +3,56 @@
         <span translate={{title}}></span>
         <p-divider></p-divider>
     </div>
-    <form *ngIf="control" [formGroup]="control" (submit)="onClickFilter()" class="row">
+    <form *ngIf="control" [formGroup]="control" class="row">
         <div *ngFor="let campo of form" class="{{campo.col}} col-sm-12">
             <label class="form-label"
-                *ngIf="campo.type !== 'checkbox' && campo.type !== 'button' && campo.type !== 'inputSwitch' && campo.type !== 'upload-files'"
+                *ngIf="campo.type !== 'check-box' && campo.type !== 'button' && campo.type !== 'switch' && campo.type !== 'upload-files'"
                 translate={{campo.label}}>
             </label>
             <label class="form-label ml-2"
-                *ngIf="campo.type !== 'checkbox' && campo.type !== 'button'  && campo.type !== 'upload-files'"
+                *ngIf="campo.type !== 'check-box' && campo.type !== 'button'  && campo.type !== 'upload-files'"
                 translate={{campo.secondLabel}}>
             </label>
-            <div class="mb-3">
+            <div class="mb-3 ">
+
                 <!-- text -->
                 <input [ngClass]="{
-                    'is-invalid':
+                    'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" *ngIf="campo.type == 'text'" (attr.change)="onChangevalues()" type={{campo.type}}
-                    formControlName={{campo.formControl}} class="form-control" [attr.disabled]="campo.disabled">
-
-                <!-- number -->
-                <p-inputNumber *ngIf="campo.type == 'number'" (onChange)="onChangevalues()" type={{campo.type}}
-                    formControlName={{campo.formControl}} class="form-control" [attr.disabled]="campo.disabled"
-                    [useGrouping]="false"></p-inputNumber>
+                  }" pInputText *ngIf="campo.type == 'text' || campo.type == 'number' "
+                    (attr.change)="onChangevalues()" type={{campo.type}} formControlName={{campo.formControl}}
+                    class="form-control" [attr.disabled]="campo.disabled">
 
                 <!-- select -->
-                <p-dropdown styleClass="w-100" (onChange)="onChangevalues()"
+                <p-dropdown [ngClass]="{
+                    'ng-invalid ng-dirty':
+                    validateForm && control.controls[campo.formControl].errors
+                  }" styleClass="w-100" (onChange)="onChangevalues()"
                     [placeholder]="translate.instant('cardComponent.select')" *ngIf="campo.type === 'select'"
-                    [options]="campo.selectOptions" formControlName={{campo.formControl}} [disabled]="campo.disabled"
+                    [options]="campo.options" formControlName={{campo.formControl}} [disabled]="campo.disabled"
                     optionLabel="descricao"></p-dropdown>
 
                 <!-- treeSelect -->
-                <p-treeSelect (onNodeSelect)="onChangevalues()" *ngIf="campo.type === 'treeSelect'"
-                    class="md:w-20rem w-full" containerStyleClass="w-full" formControlName={{campo.formControl}}
-                    [options]="campo.treeSelect" [filter]="true" [filterInputAutoFocus]="true"
-                    [disabled]="campo.disabled" emptyMessage="Nenhum dado encontrado" [showClear]="true"
-                    (onClear)="campo.clean()"></p-treeSelect>
+                <p-treeSelect [ngClass]="{
+                    'ng-invalid ng-dirty':
+                    validateForm && control.controls[campo.formControl].errors
+                  }" (onNodeSelect)="onChangevalues()" *ngIf="campo.type === 'tree-select'" containerStyleClass="w-100"
+                    formControlName={{campo.formControl}} [options]="campo.treeSelectOptions" [filter]="true"
+                    [filterInputAutoFocus]="true" [disabled]="campo.disabled" emptyMessage="Nenhum dado encontrado"
+                    [showClear]="true" (onClear)="campo.clean()"></p-treeSelect>
 
                 <!-- autoComplete -->
-                <p-autoComplete styleClass="w-100" (onSelect)="onChangevalues()" [disabled]="campo.disabled"
-                    *ngIf="campo.type === 'autocomplete'" #autoComplete formControlName={{campo.formControl}}
-                    [suggestions]="filteredAutoComplete"
-                    (completeMethod)="filterAutoComplete($event, campo.suggestionsAutoComplete)"
-                    [forceSelection]="false" (onFocus)="!autoComplete.value && autoComplete" dropdownMode="current"
-                    dataKey="Id" field="descricao" class="formControl"></p-autoComplete>
+                <p-autoComplete [ngClass]="{
+                    'ng-invalid ng-dirty':
+                    validateForm && control.controls[campo.formControl].errors
+                  }" styleClass="w-100" [inputStyle]="{'width':'100%'}" (onSelect)=" onChangevalues()"
+                    [disabled]="campo.disabled" *ngIf="campo.type === 'autocomplete'"
+                    formControlName={{campo.formControl}} [suggestions]="filteredAutoComplete"
+                    (completeMethod)="filterAutoComplete($event, campo.options)" [forceSelection]="false"
+                    dropdownMode="current" dataKey="id" field="descricao"></p-autoComplete>
 
                 <!-- date -->
-                <div class="d-flex-custom" *ngIf="campo.type === 'date' && campo.datePeriodo">
+                <div class="d-flex-custom" *ngIf="campo.type === 'date' && campo.datePeriod">
                     <p-calendar [selectOtherMonths]="true" [minDate]="minDateAll" styleClass="w-100"
                         (onSelect)="onChangevalues()" dateFormat="dd/mm/yy" [disabled]="campo.disabled"
                         placeholder="dd/mm/aaaa" [showIcon]="true" formControlName={{campo.formControl}}
@@ -60,7 +64,7 @@
                         placeholder="dd/mm/aaaa" [showIcon]="true" formControlName={{campo.formControlSecondary}}
                         (onBlur)="onBlurDate($event)"></p-calendar>
                 </div>
-                <div *ngIf="campo.type === 'date' && !campo.datePeriodo"
+                <div *ngIf="campo.type === 'date' && !campo.datePeriod"
                     class="d-flex justify-content-space-evenly align-items-center">
                     <p-calendar (onSelect)="onChangevalues()" [selectOtherMonths]="true" [minDate]="minDateAll"
                         styleClass="w-100" dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa"
@@ -68,9 +72,12 @@
                         (onBlur)="onBlurDate($event)"></p-calendar>
                 </div>
 
-                <!-- dateTime -->
-                <div *ngIf="campo.type === 'dateTime'">
-                    <p-calendar (onSelect)="onChangevalues()" [selectOtherMonths]="true"
+                <!-- date-time -->
+                <div *ngIf="campo.type === 'date-time'">
+                    <p-calendar [ngClass]="{
+                        'ng-invalid ng-dirty':
+                        validateForm && control.controls[campo.formControl].errors
+                      }" (onSelect)="onChangevalues()" [selectOtherMonths]="true"
                         [(minDate)]="campo.minDate ?? minDateAll" [(maxDate)]="campo.maxDate" styleClass="w-100"
                         dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa hh:mm"
                         formControlName={{campo.formControl}} [showIcon]="true" [showTime]="true"
@@ -78,16 +85,17 @@
                 </div>
 
                 <!-- textarea -->
-                <!-- <p-editor *ngIf="campo.type === 'textarea' " [(ngModel)]="text"
-                    [style]="{ height: '320px' }"></p-editor> -->
-                <textarea (attr.change)="onChangevalues()" [attr.disabled]="campo.disabled"
-                    *ngIf="campo.type === 'textarea' " pInputTextarea formControlName={{campo.formControl}}
+                <textarea [ngClass]="{
+                    'ng-invalid ng-dirty':
+                    validateForm && control.controls[campo.formControl].errors
+                  }" pInputTextarea (attr.change)="onChangevalues()" [attr.disabled]="campo.disabled"
+                    *ngIf="campo.type === 'text-area' " pInputTextarea formControlName={{campo.formControl}}
                     class="form-control" rows={{campo.rows}}></textarea>
 
                 <!-- checkbox -->
-                <div *ngIf="campo.type == 'checkbox'">
+                <div *ngIf="campo.type == 'check-box'">
                     <input (change)="onChangevalues()" [attr.disabled]="campo.disabled" id="checkbox" type='checkbox'
-                        formControlName={{campo.formControl}}>
+                        formControlName={{campo.formControl}} class="mr-10">
                     <label class="form-label" translate={{campo.label}}></label>
                 </div>
 
@@ -167,56 +175,54 @@
                 </div>
 
                 <!-- list -->
-                <!-- <p-listbox [disabled]="campo.disabled" formControlName={{campo.formControl}}
-                    *ngIf="campo.type === 'list' && campo.list" [options]=campo.list optionLabel="name"></p-listbox> -->
-                <ul *ngIf="campo.type === 'list' && campo.list">
-                    <li *ngFor="let list of campo.list" translate={{list}} class="cardList"></li>
+                <ul *ngIf="campo.type === 'list' && campo.options">
+                    <li *ngFor="let list of campo.options">{{list.descricao}}</li>
                 </ul>
 
                 <!-- radioButton -->
-                <div *ngIf="campo.type === 'radioButton'" class="d-flex">
-                    <div *ngFor="let listRadioButton of campo.listRadioButton" class="field-checkbox">
-                        <p-radioButton [disabled]="campo.disabled" [value]="listRadioButton.value"
+                <div *ngIf="campo.type === 'radio-button'" class="d-flex">
+                    <div *ngFor="let listRadioButton of campo.options" class="field-checkbox">
+                        <p-radioButton [disabled]="campo.disabled" [value]="listRadioButton.id"
                             formControlName={{campo.formControl}} class="mr-10"></p-radioButton>
-                        <label class="mr-1" translate={{listRadioButton.text}}></label>
+                        <label class="mr-1">{{listRadioButton.descricao}}</label>
                     </div>
                 </div>
 
                 <!-- selectButton -->
-                <div class="d-flex" *ngIf="campo.type === 'selectButton'">
-                    <p-selectButton (onChange)="onChangevalues()" [disabled]="campo.disabled" id="selectButton"
-                        [options]="campo.statesOption" formControlName={{campo.formControl}} optionValue="value">
+                <div class="d-flex" *ngIf="campo.type === 'select-button'">
+                    <p-selectButton (onChange)="onChangevalues()" [disabled]="campo.disabled" [options]="campo.options"
+                        formControlName={{campo.formControl}} optionValue="id">
                         <ng-template let-item>
-                            <span translate={{item.label}}></span>
+                            <span>{{item.descricao}}</span>
                         </ng-template>
                     </p-selectButton>
-                    <input type="text" pInputText class="form-control" [attr.disabled]="campo.disabled"
-                        formControlName={{campo.formControlSecondary}}>
+                    <!-- <input type="text" pInputText class="form-control" [attr.disabled]="campo.disabled"
+                        formControlName={{campo.formControlSecondary}}> -->
                 </div>
 
                 <!-- table -->
                 <table *ngIf="campo.type === 'table'">
-                    <tr *ngFor="let list of campo.list" class="cardList">
-                        <td translate={{list.name}}></td>
-                        <td>{{list.code}}</td>
+                    <tr *ngFor="let list of campo.options" class="cardList">
+                        <td>{{list.descricao}}</td>
+                        <td>{{list.id}}</td>
                     </tr>
                 </table>
 
                 <!-- inputSwitch -->
-                <div class="d-flex" *ngIf="campo.type === 'inputSwitch'">
+                <div class="d-flex" *ngIf="campo.type === 'switch'">
                     <p-inputSwitch [disabled]="campo.disabled" formControlName={{campo.formControl}} class="mr-10"
                         (onChange)="onChangevalues()"></p-inputSwitch>
                     <p translate={{campo.label}}></p>
                 </div>
 
                 <!-- validação de campo obrigatório -->
-                <small class="invalid-feedback" *ngIf="validateForm && control.controls[campo.formControl].errors">
+                <small *ngIf="validateForm && control.controls[campo.formControl].errors">
                     Campo obrigatório
                 </small>
             </div>
         </div>
 
-        <p-divider *ngIf="buttonsStandard.length > 0"></p-divider>
+        <p-divider *ngIf="buttonsStandard && buttonsStandard.length > 0"></p-divider>
 
         <div class="buttons-form">
             <div *ngFor="let button of buttonsStandard">

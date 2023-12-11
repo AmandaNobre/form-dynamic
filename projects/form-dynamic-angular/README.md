@@ -29,15 +29,15 @@ export class AppComponent implements OnInit {
     private fb: UntypedFormBuilder,
   ) {}
 
-  ngOnInit() {
-    this.controlExemple  = this.fb.group({
-      requester: '',
-      manager: ''
+   ngOnInit() {
+    this.controlExemple = this.fb.group({
+      user: '',
+      password: ''
     });
 
-    this.formmExemple =  [
-        { label: 'Requester', col: 'col-lg-6', type: 'text', formControl: 'requester'},
-        { label: 'Manager', col: 'col-lg-6', type: 'text', formControl: 'manager' }
+    this.formmExemple = [
+      { label: 'User', col: 'col-lg-6', type: 'text', formControl: 'user' },
+      { label: 'Password', col: 'col-lg-6', type: 'text', formControl: 'password' }
     ]
   }
 }
@@ -49,14 +49,165 @@ export class AppComponent implements OnInit {
 | Prop  | Type  | Default | Description |
 |:--------- | :---- | :----   |:----  | 
 | `title` | `string` | `''` | Title page
-| `filter` | `function` | `func` | Callback function actived when click button filter
-| `clean` | `function` | `func` | Callback function actived when click button clean
-| `onChange` | `function` | `func` | Callback function actived when change input
-| `viewFIlter` | `boolean` | `false` | If the button filter is wiew
-| `viewClean` | `boolean` | `false` | If the button clean is wiew
-| `files` | `File[]` | `[]` | Upload files
 | `control` | `UntypedFormGroup` | `undefined` | Controls the form
 | `form` | `IForm[]` | `[]` | Input list
+| `files` | `File[]` | `[]` | Upload files
+| `onChange` | `Function` | `` | Change inputs
+| `validateForm` | `boolean` | `false` | if inputs have validation
+| `buttonsStandard` | `IButtonsStandard[]` | `[]` | Inputs standard (clean, filter, save, cancel)
+
+## Usage Inputs
+
+1- Autocomplete | List | Radio-button | Select | Select-button
+
+```js
+
+import {IOptions } from 'form-dynamic-angular';
+
+controlAutocomplete: UntypedFormGroup
+formmAutocomplete: IForm[] = []
+
+options: IOptions[] = [
+    { id: 1, descricao: "Fortaleza" },
+    { id: 2, descricao: "Maracanaú" }
+  ]
+
+
+this.controlAutocomplete = this.fb.group({
+  cities: '',
+});
+
+this.formmAutocomplete = [
+  { label: 'Cities', col: 'col-lg-6', type: 'autocomplete', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'col-lg-6', type: 'list', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'col-lg-6', type: 'radio-button', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'col-lg-6', type: 'select', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'col-lg-6', type: 'select-button', formControl: 'cities', options: this.options },
+]
+
+```
+
+2- Button
+
+```js
+
+controlAutocomplete: UntypedFormGroup
+formmAutocomplete: IForm[] = []
+
+this.controlAutocomplete = this.fb.group({});
+
+this.formmAutocomplete = [
+ { label: 'Ver cidade', col: 'col-lg-4', type: 'button',  onCLick: this.click },
+]
+
+click() {
+  console.log("click button")
+}
+
+```
+
+2- Check-box
+
+```js
+
+controlAutocomplete: UntypedFormGroup
+formmAutocomplete: IForm[] = []
+
+this.controlAutocomplete = this.fb.group({});
+
+this.formmAutocomplete = [
+  { label: 'Ckeck', col: 'col-lg-6', type: 'check-box', formControl: 'ckech' },
+]
+
+```
+
+3- Date | Date period | Date Time
+
+```js
+
+controlAutocomplete: UntypedFormGroup
+formmAutocomplete: IForm[] = []
+
+this.controlAutocomplete = this.fb.group({
+  date: '',
+  startDate: '',
+  endDate: '',
+  dateTime: ''
+});
+
+this.formmAutocomplete = [
+  { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date' },
+  { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'startDate', datePeriod: true, formControlSecondary: "endDate" },
+  { label: 'Date', col: 'col-lg-6', type: 'date-time', formControl: 'dateTime' }
+    
+]
+
+```
+
+4- Switch |  Text | Text-area
+
+```js
+
+controlAutocomplete: UntypedFormGroup
+formmAutocomplete: IForm[] = []
+
+this.controlAutocomplete = this.fb.group({
+  switch: false,
+  text: '',
+  number: 0,
+  TextArea: ''
+});
+
+this.formmAutocomplete = [
+  { label: 'Switch', col: 'col-lg-6', type: 'switch', formControl: 'switch' },
+  { label: 'Text', col: 'col-lg-6', type: 'text', formControl: 'text' },
+  { label: 'Number', col: 'col-lg-6', type: 'number', formControl: 'number' },
+  { label: 'TextArea', col: 'col-lg-6', type: 'text-area', formControl: 'TextArea' },
+
+]
+
+```
+
+5- Tree-select
+
+```js
+
+import { ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
+
+treeSelect: ITreeSelectOptions[] = [{
+    key: '0',
+    label: 'Documents',
+    icon: 'pi pi-fw pi-inbox',
+    children: [
+      {
+        key: '0-0',
+        label: 'Work',
+        icon: 'pi pi-fw pi-cog',
+        children: [
+          { key: '0-0-0', label: 'Expenses.doc', icon: 'pi pi-fw pi-file' },
+          { key: '0-0-1', label: 'Resume.doc', icon: 'pi pi-fw pi-file', }
+        ]
+      },
+      {
+        key: '0-1',
+        label: 'Home',
+        icon: 'pi pi-fw pi-home'
+      }
+    ]
+  }]
+
+control: UntypedFormGroup
+form: IForm[] = []
+
+this.control = this.fb.group({
+  treeSelect: ""
+});
+
+this.form = [
+  { label: "Tree-select", col: 'col-lg-6', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
+]
+
+```
 
 ## Translate
 
@@ -93,7 +244,7 @@ Created input and form
     <option value='en'>en</option>
 </select>
 
-<form-dynamic-angular title="Login" [form]=formmLogin [control]=controlLogin></form-dynamic-angular>
+<form-dynamic-angular title="Login" [form]=formLogin [control]=controlLogin></form-dynamic-angular>
 
 ```
 
@@ -110,7 +261,7 @@ import { IForm } from 'form-dynamic-angular';
 export class AppComponent implements OnInit {
 
   controlmitigationBarriers: UntypedFormGroup 
-  formmLogin: IForm[] = []
+  formLogin: IForm[] = []
 
   constructor(
     private translate: TranslateService,
@@ -123,7 +274,7 @@ export class AppComponent implements OnInit {
       password: ''
     });
 
-    this.formmLogin = [
+    this.formLogin = [
       { label: 'pageLogin.userName', col: 'col-lg-6', type: 'text', formControl: 'username' },
       { label: 'pageLogin.password', col: 'col-lg-6', type: 'text', formControl: 'password' }
     ]

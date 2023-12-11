@@ -4,12 +4,20 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import * as moment from 'moment';
 import { MessageService } from 'primeng/api';
+
+export interface ITreeSelectOptions {
+  key: string,
+  label: string,
+  icon: string,
+  children?: ITreeSelectOptions[]
+}
+
 export interface IList {
   descricao: string,
   id: number | string
 }
 
-export interface ISelect {
+export interface IOptions {
   descricao: string,
   id: number | string
 }
@@ -17,20 +25,16 @@ export interface ISelect {
 export interface IForm {
   label?: string,
   secondLabel?: string,
-  type?: string,
+  type?: "autocomplete" | "button" | "check-box" | "date" | "date-time" | "switch" | "list" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select",
   disabled?: boolean | null,
   col?: string,
-  selectOptions?: ISelect[]
-  suggestionsAutoComplete?: any
-  datePeriodo?: boolean
+  options?: IOptions[]
+  datePeriod?: boolean
   formControl?: string,
-  list?: IList[],
   clean?: Function,
   formControlSecondary?: string,
-  listRadioButton?: any[],
-  treeSelect?: any,
+  treeSelectOptions?: ITreeSelectOptions[],
   forceSelection?: boolean,
-  statesOption?: any,
   onCLick?: Function,
   class?: string,
   rows?: string,
