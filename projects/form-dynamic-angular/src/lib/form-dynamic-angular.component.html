@@ -20,15 +20,15 @@
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
                   }" pInputText *ngIf="campo.type == 'text' || campo.type == 'number' "
-                    (attr.change)="onChangevalues()" type={{campo.type}} formControlName={{campo.formControl}}
-                    class="form-control" [attr.disabled]="campo.disabled">
+                    (attr.change)="onChangevalues()" type={{campo.type}} class="form-control"
+                    formControlName={{campo.formControl}} />
 
                 <!-- select -->
                 <p-dropdown [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
                   }" styleClass="w-100" (onChange)="onChangevalues()"
-                    [placeholder]="translate.instant('cardComponent.select')" *ngIf="campo.type === 'select'"
+                    placeholder="Selecione" *ngIf="campo.type === 'select'"
                     [options]="campo.options" formControlName={{campo.formControl}} [disabled]="campo.disabled"
                     optionLabel="descricao"></p-dropdown>
 

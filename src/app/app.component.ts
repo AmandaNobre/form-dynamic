@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 // import { IForm, IList } from 'form-dynamic-angular';
 import { IButtonsStandard, IForm, IList, IOptions, ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
@@ -51,14 +51,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.controlExemple = this.fb.group({
-      user: '',
+      user: new FormControl({ value: '', disabled: true }),
       password: ''
     });
 
     this.formmExemple = [
-      { label: 'User', col: 'col-lg-6', type: 'text', formControl: 'user' },
-      { label: 'Password', col: 'col-lg-6', type: 'text', formControl: 'password' }
+      { label: 'User', col: 'col-lg-6', type: 'text', formControl: 'user', disabled: true },
+      { label: 'Password', col: 'col-lg-6', type: 'text', formControl: 'password', disabled: false }
     ]
+
 
     this.controlAutocomplete = this.fb.group({
       cities: '',
