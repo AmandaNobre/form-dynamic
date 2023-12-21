@@ -1,9 +1,9 @@
-<div class="white-bg page">
+<div>
     <div *ngIf="title" class="div-title">
         <span translate={{title}}></span>
         <p-divider></p-divider>
     </div>
-    <form *ngIf="control" [formGroup]="control" class="row">
+    <form *ngIf="control" [formGroup]="control" class="row row-custom">
         <div *ngFor="let campo of form" class="{{campo.col}} col-sm-12">
             <label class="form-label"
                 *ngIf="campo.type !== 'check-box' && campo.type !== 'button' && campo.type !== 'switch' && campo.type !== 'upload-files'"
@@ -27,10 +27,9 @@
                 <p-dropdown [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" styleClass="w-100" (onChange)="onChangevalues()"
-                    placeholder="Selecione" *ngIf="campo.type === 'select'"
-                    [options]="campo.options" formControlName={{campo.formControl}} [disabled]="campo.disabled"
-                    optionLabel="descricao"></p-dropdown>
+                  }" styleClass="w-100" (onChange)="onChangevalues()" placeholder="Selecione"
+                    *ngIf="campo.type === 'select'" [options]="campo.options" formControlName={{campo.formControl}}
+                    [disabled]="campo.disabled" optionLabel="descricao"></p-dropdown>
 
                 <!-- treeSelect -->
                 <p-treeSelect [ngClass]="{
@@ -124,8 +123,8 @@
                     (change)="onSelect(campo.formControl, $event)">
                     <ngx-dropzone-label>
                         <div><i class="pi pi-cloud-upload"></i></div>
-                        <h6 [translate]="'cardComponent.titleAttachments'"></h6>
-                        <span [translate]="'cardComponent.subTitleAttachmentsAllFIles'"></span>
+                        <h6>Clique ou arraste e solte um arquivo para anexar</h6>
+                        <span>Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL</span>
                     </ngx-dropzone-label>
                     <div *ngFor="let f of filesDonwload">
                         <ngx-dropzone-image-preview *ngIf="f.type && f.type.includes('image')" [file]="f"
@@ -179,6 +178,11 @@
                     <li *ngFor="let list of campo.options">{{list.descricao}}</li>
                 </ul>
 
+
+                <p-multiSelect *ngIf="campo.type === 'multi'" [options]="campo.options"
+                    formControlName={{campo.formControl}} styleClass="form-control"
+                    optionLabel="descricao"></p-multiSelect>
+
                 <!-- radioButton -->
                 <div *ngIf="campo.type === 'radio-button'" class="d-flex">
                     <div *ngFor="let listRadioButton of campo.options" class="field-checkbox">
@@ -201,12 +205,40 @@
                 </div>
 
                 <!-- table -->
-                <table *ngIf="campo.type === 'table'">
-                    <tr *ngFor="let list of campo.options" class="cardList">
-                        <td>{{list.descricao}}</td>
-                        <td>{{list.id}}</td>
+                <p-table *ngIf="campo.type === 'table'" [columns]=campo.colsTable styleClass=p-datatable-striped
+                    [value]=campo.rowsTable>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns">
+                                {{ col.header }}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns">
+                                <div *ngIf="col.field !== 'button'">
+                                    {{ rowData[col.field] }}
+                                </div>
+                                <div *ngIf="col.field == 'button'">
+                                    <p-button styleClass={{rowData[col.field].styleClass}}
+                                        label={{rowData[col.field].label}}
+                                        (click)="rowData[col.field].onCLick(rowData)" icon={{rowData[col.field].icon}}></p-button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <!-- <table *ngIf="campo.type === 'table'">
+                    <tr *ngFor="let list of campo.tableOptions" class="cardList">
+                        <td>{{list.c1}}</td>
+                        <td>{{list.c2}}</td>
+                        <td>
+                            <p-button styleClass={{list.button.styleClass}} label={{list.button.label}}
+                                (click)="list.button.onCLick(list.id)" icon={{list.button.icon}}></p-button>
+                        </td>
                     </tr>
-                </table>
+                </table> -->
 
                 <!-- inputSwitch -->
                 <div class="d-flex" *ngIf="campo.type === 'switch'">
@@ -222,21 +254,23 @@
             </div>
         </div>
 
-        <p-divider *ngIf="buttonsStandard && buttonsStandard.length > 0"></p-divider>
+        <p-divider
+            *ngIf="(buttonsStandard && buttonsStandard.length > 0) || (buttonsOptions && buttonsOptions.length > 0)"></p-divider>
 
         <div class="buttons-form">
             <div *ngFor="let button of buttonsStandard">
-                <p-button *ngIf="button.type === 'clean'" styleClass="p-button-warning"
-                    [label]="translate.instant('cardComponent.cleanButton')" (click)="button.onCLick()"
-                    icon="pi pi-times"></p-button>
-                <p-button *ngIf="button.type === 'filter'" [label]="translate.instant('cardComponent.searchButton')"
-                    (click)="button.onCLick()" icon="pi pi-search"></p-button>
-                <p-button *ngIf="button.type === 'save'" styleClass="p-button-success"
-                    [label]="translate.instant('cardComponent.saveButton')" (click)="button.onCLick()"
+                <p-button *ngIf="button.type === 'clean'" styleClass="p-button-warning" label="Limpar"
+                    (click)="button.onCLick()" icon="pi pi-times"></p-button>
+                <p-button *ngIf="button.type === 'filter'" label="Filtrar" (click)="button.onCLick()"
                     icon="pi pi-search"></p-button>
-                <p-button *ngIf="button.type === 'cancel'" styleClass="p-button-danger"
-                    [label]="translate.instant('cardComponent.cancelButton')" (click)="button.onCLick()"
-                    icon="pi pi-search"></p-button>
+                <p-button *ngIf="button.type === 'save'" styleClass="p-button-success" label="Salvar"
+                    (click)="button.onCLick()" icon="pi pi-save"></p-button>
+                <p-button *ngIf="button.type === 'cancel'" styleClass="p-button-danger" label="Cancelar"
+                    (click)="button.onCLick()" icon="pi pi-times"></p-button>
+            </div>
+            <div *ngFor="let button of buttonsOptions">
+                <p-button styleClass={{button.styleClass}} label={{button.label}} (click)=" button.onCLick()"
+                    icon={{button.icon}}></p-button>
             </div>
         </div>
     </form>

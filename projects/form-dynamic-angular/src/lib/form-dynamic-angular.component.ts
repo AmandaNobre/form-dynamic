@@ -22,12 +22,24 @@ export interface IOptions {
   id: number | string
 }
 
+export interface ITable {
+  id: number,
+  c1: string,
+  c2: string,
+  button: IButtonsOptions
+}
+
+export interface ICols {
+  field: string,
+  header: string
+}
+
 export interface IForm {
   label?: string,
   secondLabel?: string,
-  type?: "autocomplete" | "button" | "check-box" | "date" | "date-time" | "switch" | "list" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select",
+  type?: "autocomplete" | "button" | "check-box" | "date" | "date-time" | "switch" | "list" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files",
   disabled?: boolean | null,
-  col?: string,
+  colsTable?: ICols[],
   options?: IOptions[]
   datePeriod?: boolean
   formControl?: string,
@@ -37,15 +49,24 @@ export interface IForm {
   forceSelection?: boolean,
   onCLick?: Function,
   class?: string,
-  rows?: string,
+  rowsTable?: any[],
   minDate?: Date,
-  maxDate?: Date
+  maxDate?: Date,
+  tableOptions?: ITable[],
+  col?: string
 }
 
 
 export interface IButtonsStandard {
   type: 'clean' | 'filter' | 'save' | 'cancel',
   onCLick: Function
+}
+
+export interface IButtonsOptions {
+  label: string,
+  onCLick: Function,
+  icon: string,
+  styleClass: string
 }
 
 @Component({
@@ -63,7 +84,8 @@ export class FormDynamicAngularComponent {
   @Input() form: IForm[] = []
   @Input() control: UntypedFormGroup;
 
-  @Input() buttonsStandard: IButtonsStandard
+  @Input() buttonsStandard: IButtonsStandard[]
+  @Input() buttonsOptions: IButtonsOptions[]
 
   @Input() files: File[] = [];
 

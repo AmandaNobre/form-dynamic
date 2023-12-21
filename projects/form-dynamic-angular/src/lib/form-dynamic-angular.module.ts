@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-
+import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
@@ -18,7 +18,11 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SelectButtonModule } from 'primeng/selectbutton';
-
+import { CommonModule } from '@angular/common';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { FileUploadModule } from 'primeng/fileupload';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { TableModule } from 'primeng/table';
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
@@ -27,13 +31,18 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     FormDynamicAngularComponent
   ],
   imports: [
+    ButtonModule,
+    TableModule,
+    FileUploadModule,
+    NgxDropzoneModule,
+    MultiSelectModule,
+    CommonModule,
     SelectButtonModule,
     InputSwitchModule,
     CheckboxModule,
     InputTextareaModule,
     InputTextModule,
     DividerModule,
-    BrowserModule,
     CalendarModule,
     DropdownModule,
     TreeSelectModule,

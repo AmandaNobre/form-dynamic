@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 // import { IForm, IList } from 'form-dynamic-angular';
-import { IButtonsStandard, IForm, IList, IOptions, ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
+import { IButtonsOptions, IButtonsStandard, ICols, IForm, IList, IOptions, ITable, ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +11,37 @@ import { IButtonsStandard, IForm, IList, IOptions, ITreeSelectOptions } from 'pr
   styleUrls: ['./app.component.css']
 })
 
+
+
+
 export class AppComponent implements OnInit {
   controlExemple: UntypedFormGroup
   formmExemple: IForm[] = []
+
+  table: any = [{
+    id: 1,
+    c1: "teste c1",
+    c2: "teste c2",
+    button: { label: "as", icon: "a", onCLick: (id: number) => this.click(id), styleClass: "asd" }
+  },
+  {
+    id: 2,
+    c1: "asas",
+    c2: "ad",
+    button: { label: "ab", icon: "a", onCLick: (id: number) => this.click(id), styleClass: "asd" }
+  }]
+
+  cols: ICols[] = [
+    { field: 'c1', header: 'C1' },
+    { field: 'c2', header: 'C2' },
+    { field: 'button', header: 'Ação' },
+    
+
+  ]
+
+  buttonsOptions: IButtonsOptions[] = [
+    // { label: "Aceitar", icon: "pi pi-times", onCLick: () => this.click(), styleClass: "p-button-danger" }
+  ]
 
   controlAutocomplete: UntypedFormGroup
   formmAutocomplete: IForm[] = []
@@ -56,12 +84,13 @@ export class AppComponent implements OnInit {
     });
 
     this.formmExemple = [
-      { label: 'User', col: 'col-lg-6', type: 'text', formControl: 'user', disabled: true },
-      { label: 'Password', col: 'col-lg-6', type: 'text', formControl: 'password', disabled: false }
+      // { label: 'User', col: 'col-lg-6', type: 'upload-files', formControl: 'user' },
+      // { label: 'Password', col: 'col-lg-6', type: 'list', formControl: 'password', disabled: false }
     ]
 
 
     this.controlAutocomplete = this.fb.group({
+      a: new FormControl<IOptions[] | null>([]),
       cities: '',
       button: '',
       ckech: false,
@@ -75,27 +104,28 @@ export class AppComponent implements OnInit {
     });
 
     this.formmAutocomplete = [
-      { label: 'Cities', col: 'col-lg-6', type: 'autocomplete', formControl: 'cities', options: this.options },
-      { label: 'Cities', col: 'col-lg-6', type: 'list', formControl: 'cities', options: this.options },
-      { label: 'Cities', col: 'col-lg-6', type: 'radio-button', formControl: 'cities', options: this.options },
-      { label: 'Cities', col: 'col-lg-6', type: 'select', formControl: 'cities', options: this.options },
-      { label: 'Cities', col: 'col-lg-6', type: 'select-button', formControl: 'selectButton', options: this.options },
-      { label: 'Cities', col: 'col-lg-6', type: 'table', formControl: 'selectButton', options: this.options },
-      { label: 'Ver cidade', col: 'col-lg-4', type: 'button', onCLick: this.click },
-      { label: 'Ckeck', col: 'col-lg-6', type: 'check-box', formControl: 'ckech' },
-      { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date' },
-      { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date1', datePeriod: true, formControlSecondary: "date2" },
-      { label: 'Date', col: 'col-lg-6', type: 'date-time', formControl: 'date1' },
-      { label: 'Switch', col: 'col-lg-6', type: 'switch', formControl: 'switch' },
-      { label: 'text', col: 'col-lg-6', type: 'text', formControl: 'date2' },
-      { label: 'Number', col: 'col-lg-6', type: 'number', formControl: 'number' },
-      { label: 'TextArea', col: 'col-lg-6', type: 'text-area', formControl: 'number' },
-      { label: "pageRequests.installationLocation", col: 'col-lg-6', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
+      // { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
+      { label: 'Cities', col: 'col-md-4', type: 'radio-button', formControl: 'cities', options: this.options },
+      // { label: 'Cities', col: 'col-md-4', type: 'text', formControl: 'cities', options: this.options },
+      // { label: 'Cities', col: 'col-lg-6', type: 'select', formControl: 'cities', options: this.options },
+      // { label: 'Cities', col: 'col-lg-6', type: 'select-button', formControl: 'selectButton', options: this.options },
+      // { label: 'Cities', col: 'col-lg-6', type: 'table', formControl: 'selectButton', options: this.options },
+      // { label: 'Ver cidade', col: 'col-lg-4', type: 'button', onCLick: this.click },
+      // { label: 'Ckeck', col: 'col-lg-6', type: 'check-box', formControl: 'ckech' },
+      // { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date' },
+      // { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date1', datePeriod: true, formControlSecondary: "date2" },
+      // { label: 'Date', col: 'col-lg-6', type: 'date-time', formControl: 'date1' },
+      // { label: 'Switch', col: 'col-lg-6', type: 'switch', formControl: 'switch' },
+      // { label: 'text', col: 'col-lg-6', type: 'text', formControl: 'date2' },
+      // { label: 'Number', col: 'col-lg-6', type: 'number', formControl: 'number' },
+      // { label: 'TextArea', col: 'col-lg-6', type: 'text-area', formControl: 'number' },
+      // { label: "pageRequests.installationLocation", col: 'col-lg-6', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
 
     ]
   }
 
-  click() {
+  click(id: number) {
+    console.log('id', id)
     console.log("click button")
   }
 }

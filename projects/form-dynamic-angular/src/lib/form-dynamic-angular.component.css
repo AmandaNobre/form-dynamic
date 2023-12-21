@@ -4,6 +4,10 @@
     margin-bottom: 35px;
 }
 
+.row-custom {
+    align-items: end
+}
+
 .div-title span {
     font-size: 20px;
     font-weight: 500;
@@ -13,4 +17,40 @@
     display: flex;
     gap: 10px;
     justify-content: flex-end;
+}
+
+
+
+
+.drag-image {
+    border: 1px dashed var(--green-text);
+    height: auto;
+    width: 100%;
+    border-radius: 10px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 20px;
+    top: 20px;
+    max-height: 250px;
+    color: var(--green-text);
+    padding: 20px;
+    background-color: var(--bkg-color);
+}
+
+.drag-image h6 {
+    font-size: 20px;
+}
+
+.drag-image span {
+    font-size: 14px;
+}
+
+.drag-image i {
+    font-size: 3rem;
+}
+
+.cardList td {
+    padding-right: 20px;
 }
