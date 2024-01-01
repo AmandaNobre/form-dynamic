@@ -103,28 +103,14 @@
                     (click)="campo.onCLick()" [label]="translate.instant(campo.label)"
                     [disabled]="campo.disabled"></button>
 
-                <!-- upload image -->
-                <div [disabled]="campo.disabled" *ngIf="campo.type === 'upload-image' " ngx-dropzone class="drag-image"
-                    [accept]="'image/*'" (change)="onSelect(campo.formControl, $event)">
-                    <ngx-dropzone-label>
-                        <div><i class="pi pi-cloud-upload"></i></div>
-                        <h6 [translate]="'cardComponent.titleAttachments'"></h6>
-                        <span [translate]="'cardComponent.subTitleAttachments'"></span>
-                    </ngx-dropzone-label>
-                    <ngx-dropzone-image-preview *ngFor="let f of filesDonwload" [file]="f" [removable]="true"
-                        (removed)="onRemove(f)">
-                        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                    </ngx-dropzone-image-preview>
-                </div>
-
                 <!-- upload files -->
                 <div *ngIf="campo.type === 'upload-files' && !campo.disabled " ngx-dropzone class="drag-image"
-                    [accept]="'image/*, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf, application/msword'"
+                    [accept]="campo.acceptFiles"
                     (change)="onSelect(campo.formControl, $event)">
                     <ngx-dropzone-label>
                         <div><i class="pi pi-cloud-upload"></i></div>
                         <h6>Clique ou arraste e solte um arquivo para anexar</h6>
-                        <span>Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL</span>
+                        <span>{{campo.msgAcceptFiles}}</span>
                     </ngx-dropzone-label>
                     <div *ngFor="let f of filesDonwload">
                         <ngx-dropzone-image-preview *ngIf="f.type && f.type.includes('image')" [file]="f"
@@ -229,16 +215,6 @@
                         </tr>
                     </ng-template>
                 </p-table>
-                <!-- <table *ngIf="campo.type === 'table'">
-                    <tr *ngFor="let list of campo.tableOptions" class="cardList">
-                        <td>{{list.c1}}</td>
-                        <td>{{list.c2}}</td>
-                        <td>
-                            <p-button styleClass={{list.button.styleClass}} label={{list.button.label}}
-                                (click)="list.button.onCLick(list.id)" icon={{list.button.icon}}></p-button>
-                        </td>
-                    </tr>
-                </table> -->
 
                 <!-- inputSwitch -->
                 <div class="d-flex" *ngIf="campo.type === 'switch'">
@@ -255,7 +231,7 @@
         </div>
 
         <p-divider
-            *ngIf="(buttonsStandard && buttonsStandard.length > 0) || (buttonsOptions && buttonsOptions.length > 0)"></p-divider>
+            *ngIf="(buttonsStandard && buttonsStandard.length > 0) || (buttonsOptional && buttonsOptional.length > 0)"></p-divider>
 
         <div class="buttons-form">
             <div *ngFor="let button of buttonsStandard">
@@ -268,7 +244,7 @@
                 <p-button *ngIf="button.type === 'cancel'" styleClass="p-button-danger" label="Cancelar"
                     (click)="button.onCLick()" icon="pi pi-times"></p-button>
             </div>
-            <div *ngFor="let button of buttonsOptions">
+            <div *ngFor="let button of buttonsOptional">
                 <p-button styleClass={{button.styleClass}} label={{button.label}} (click)=" button.onCLick()"
                     icon={{button.icon}}></p-button>
             </div>

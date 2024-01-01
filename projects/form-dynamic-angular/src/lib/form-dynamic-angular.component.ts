@@ -26,7 +26,7 @@ export interface ITable {
   id: number,
   c1: string,
   c2: string,
-  button: IButtonsOptions
+  button: IButtonsOptional
 }
 
 export interface ICols {
@@ -53,7 +53,9 @@ export interface IForm {
   minDate?: Date,
   maxDate?: Date,
   tableOptions?: ITable[],
-  col?: string
+  col?: string,
+  acceptFiles?: string,
+  msgAcceptFiles?:string
 }
 
 
@@ -62,7 +64,7 @@ export interface IButtonsStandard {
   onCLick: Function
 }
 
-export interface IButtonsOptions {
+export interface IButtonsOptional {
   label: string,
   onCLick: Function,
   icon: string,
@@ -85,7 +87,7 @@ export class FormDynamicAngularComponent {
   @Input() control: UntypedFormGroup;
 
   @Input() buttonsStandard: IButtonsStandard[]
-  @Input() buttonsOptions: IButtonsOptions[]
+  @Input() buttonsOptional: IButtonsOptional[]
 
   @Input() files: File[] = [];
 

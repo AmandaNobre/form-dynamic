@@ -55,6 +55,7 @@ export class AppComponent implements OnInit {
 | `onChange` | `Function` | `` | Change inputs
 | `validateForm` | `boolean` | `false` | if inputs have validation
 | `buttonsStandard` | `IButtonsStandard[]` | `[]` | Inputs standard (clean, filter, save, cancel)
+| `buttonsOptional` | `IButtonsOptional[]` | `[]` | Inputs optional
 
 ## Usage Inputs
 
@@ -205,6 +206,62 @@ this.control = this.fb.group({
 
 this.form = [
   { label: "Tree-select", col: 'col-lg-6', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
+]
+
+```
+
+6- Table
+
+```js
+
+import { ICols } from 'projects/form-dynamic-angular/src/public-api';
+
+rowsTable: any = [{
+    id: 1,
+    c1: "teste c1",
+    c2: "teste c2",
+    button: { label: "as", icon: "a", onCLick: (id: number) => this.click(id), styleClass: "asd" }
+  },
+  {
+    id: 2,
+    c1: "asas",
+    c2: "ad",
+    button: { label: "ab", icon: "a", onCLick: (id: number) => this.click(id), styleClass: "asd" }
+  }]
+
+  cols: ICols[] = [
+    { field: 'c1', header: 'C1' },
+    { field: 'c2', header: 'C2' },
+    { field: 'button', header: 'Ação' },
+  ]
+
+control: UntypedFormGroup
+form: IForm[] = []
+
+this.control = this.fb.group({
+  table: ""
+});
+
+this.form = [
+  { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'table', rowsTable: this.rowsTable, colsTable: this.cols, class: 'p-datatable-gridlines' }
+]
+
+```
+
+7- Upload-files
+
+```js
+
+control: UntypedFormGroup
+form: IForm[] = []
+
+this.control = this.fb.group({
+  table: ""
+});
+
+this.form = [
+  { type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf, application/msword', msgAcceptFiles:"Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" }
+
 ]
 
 ```
