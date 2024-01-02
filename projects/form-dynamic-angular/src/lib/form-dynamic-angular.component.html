@@ -6,22 +6,20 @@
     <form *ngIf="control" [formGroup]="control" class="row row-custom">
         <div *ngFor="let campo of form" class="{{campo.col}} col-sm-12">
             <label class="form-label"
-                *ngIf="campo.type !== 'check-box' && campo.type !== 'button' && campo.type !== 'switch' && campo.type !== 'upload-files'"
-                translate={{campo.label}}>
+                *ngIf="campo.type !== 'check-box' && campo.type !== 'button' && campo.type !== 'switch' && campo.type !== 'upload-files'">{{campo.label}}
             </label>
             <label class="form-label ml-2"
-                *ngIf="campo.type !== 'check-box' && campo.type !== 'button'  && campo.type !== 'upload-files'"
-                translate={{campo.secondLabel}}>
+                *ngIf="campo.type !== 'check-box' && campo.type !== 'button'  && campo.type !== 'upload-files'">{{campo.secondLabel}}
             </label>
+            <label *ngIf="campo.required" class="danger-text ml-2">*</label>
             <div class="mb-3 ">
 
                 <!-- text -->
                 <input [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" pInputText *ngIf="campo.type == 'text' || campo.type == 'number' "
-                    (attr.change)="onChangevalues()" type={{campo.type}} class="form-control"
-                    formControlName={{campo.formControl}} />
+                  }" pInputText *ngIf="campo.type == 'text' || campo.type == 'number' " (change)="onChangevalues()"
+                    type={{campo.type}} class="form-control" formControlName={{campo.formControl}} />
 
                 <!-- select -->
                 <p-dropdown [ngClass]="{
@@ -105,8 +103,7 @@
 
                 <!-- upload files -->
                 <div *ngIf="campo.type === 'upload-files' && !campo.disabled " ngx-dropzone class="drag-image"
-                    [accept]="campo.acceptFiles"
-                    (change)="onSelect(campo.formControl, $event)">
+                    [accept]="campo.acceptFiles" (change)="onSelect(campo.formControl, $event)">
                     <ngx-dropzone-label>
                         <div><i class="pi pi-cloud-upload"></i></div>
                         <h6>Clique ou arraste e solte um arquivo para anexar</h6>
@@ -208,8 +205,8 @@
                                 </div>
                                 <div *ngIf="col.field == 'button'">
                                     <p-button styleClass={{rowData[col.field].styleClass}}
-                                        label={{rowData[col.field].label}}
-                                        (click)="rowData[col.field].onCLick(rowData)" icon={{rowData[col.field].icon}}></p-button>
+                                        label={{rowData[col.field].label}} (click)="rowData[col.field].onCLick(rowData)"
+                                        icon={{rowData[col.field].icon}}></p-button>
                                 </div>
                             </td>
                         </tr>
@@ -224,9 +221,11 @@
                 </div>
 
                 <!-- validação de campo obrigatório -->
-                <small *ngIf="validateForm && control.controls[campo.formControl].errors">
-                    Campo obrigatório
-                </small>
+                <div class="h-10">
+                    <small class="danger-text" *ngIf="validateForm && control.controls[campo.formControl].errors">
+                        Campo obrigatório
+                    </small>
+                </div>
             </div>
         </div>
 

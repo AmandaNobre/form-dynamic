@@ -55,7 +55,8 @@ export interface IForm {
   tableOptions?: ITable[],
   col?: string,
   acceptFiles?: string,
-  msgAcceptFiles?:string
+  msgAcceptFiles?:string,
+  required?: boolean 
 }
 
 

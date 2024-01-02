@@ -91,7 +91,7 @@ export class AppComponent implements OnInit {
 
     this.controlAutocomplete = this.fb.group({
       a: new FormControl<IOptions[] | null>([]),
-      cities: '',
+      cities: new FormControl('', Validators.required),
       button: '',
       ckech: false,
       date: '',
@@ -104,9 +104,10 @@ export class AppComponent implements OnInit {
     });
 
     this.formmAutocomplete = [
-      { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
-      { label: 'Cities', col: 'col-md-4', type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*', msgAcceptFiles:"Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" },
-      // { label: 'Cities', col: 'col-md-4', type: 'text', formControl: 'cities', options: this.options },
+      // { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
+      // { label: 'Cities', col: 'col-md-4', type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*', msgAcceptFiles:"Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" },
+      { label: 'Cities', col: 'col-md-4', type: 'text', formControl: 'a', options: this.options, required: true },
+      { label: 'Cities', col: 'col-md-4', type: 'text', formControl: 'cities', options: this.options, required: true },
       // { label: 'Cities', col: 'col-lg-6', type: 'select', formControl: 'cities', options: this.options },
       // { label: 'Cities', col: 'col-lg-6', type: 'select-button', formControl: 'selectButton', options: this.options },
       // { label: 'Cities', col: 'col-lg-6', type: 'table', formControl: 'selectButton', options: this.options },
@@ -115,7 +116,7 @@ export class AppComponent implements OnInit {
       // { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date' },
       // { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date1', datePeriod: true, formControlSecondary: "date2" },
       // { label: 'Date', col: 'col-lg-6', type: 'date-time', formControl: 'date1' },
-      // { label: 'Switch', col: 'col-lg-6', type: 'switch', formControl: 'switch' },
+      { label: 'Switch', col: 'col-lg-6', type: 'switch', formControl: 'switch' },
       // { label: 'text', col: 'col-lg-6', type: 'text', formControl: 'date2' },
       // { label: 'Number', col: 'col-lg-6', type: 'number', formControl: 'number' },
       // { label: 'TextArea', col: 'col-lg-6', type: 'text-area', formControl: 'number' },
@@ -124,8 +125,11 @@ export class AppComponent implements OnInit {
     ]
   }
 
+  chageValues(){
+    console.log("s")
+  }
+
   click(id: number) {
-    console.log('id', id)
-    console.log("click button")
+    console.log(this.controlAutocomplete)
   }
 }
