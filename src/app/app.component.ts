@@ -106,7 +106,7 @@ export class AppComponent implements OnInit {
     this.formmAutocomplete = [
       // { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
       // { label: 'Cities', col: 'col-md-4', type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*', msgAcceptFiles:"Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" },
-      { label: 'Cities', col: 'col-md-4', type: 'text', formControl: 'a', options: this.options, required: true },
+      { label: 'Cities', col: 'col-md-4', type: 'multi', formControl: 'a', options: this.options, required: true },
       { label: 'Cities', col: 'col-md-4', type: 'text', formControl: 'cities', options: this.options, required: true },
       // { label: 'Cities', col: 'col-lg-6', type: 'select', formControl: 'cities', options: this.options },
       // { label: 'Cities', col: 'col-lg-6', type: 'select-button', formControl: 'selectButton', options: this.options },
