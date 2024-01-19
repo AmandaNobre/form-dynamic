@@ -39,6 +39,11 @@ export class AppComponent implements OnInit {
 
   ]
 
+  buttonsStandard: IButtonsStandard[] = [
+    { type: 'cancel', onCLick: (id: number) => this.click(id), styleClass: "p-button-outlined" },
+    { type: 'save', onCLick: (id: number) => this.click(id), styleClass: 'p-button-outlined' }
+  ]
+
   buttonsOptional: IButtonsOptional[] = [
     { label: "Aceitar", icon: "pi pi-times", onCLick: (id: number) => this.click(id), styleClass: "p-button-danger" }
   ]
@@ -106,8 +111,11 @@ export class AppComponent implements OnInit {
     this.formmAutocomplete = [
       // { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
       // { label: 'Cities', col: 'col-md-4', type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*', msgAcceptFiles:"Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" },
-      { label: 'Cities', col: 'col-md-4', type: 'multi', formControl: 'a', options: this.options, required: true },
-      { label: 'Cities', col: 'col-md-4', type: 'text', formControl: 'cities', options: this.options, required: true },
+      // { label: 'Cities', col: 'col-md-4', type: 'multi', formControl: 'a', options: this.options, required: true },
+      { label: 'Cities', col: 'col-md-6', type: 'password', formControl: 'cities', options: this.options, required: true },
+      { label: 'Cities', col: 'col-md-6', type: 'text', formControl: 'cities', options: this.options, required: true },
+      // { label: 'Adicionar', col: 'col-md-2', type: 'button', icon: 'pi pi-plus', class: "mt-3 p-button-outlined" },
+
       // { label: 'Cities', col: 'col-lg-6', type: 'select', formControl: 'cities', options: this.options },
       // { label: 'Cities', col: 'col-lg-6', type: 'select-button', formControl: 'selectButton', options: this.options },
       // { label: 'Cities', col: 'col-lg-6', type: 'table', formControl: 'selectButton', options: this.options },
@@ -116,7 +124,7 @@ export class AppComponent implements OnInit {
       // { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date' },
       // { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date1', datePeriod: true, formControlSecondary: "date2" },
       // { label: 'Date', col: 'col-lg-6', type: 'date-time', formControl: 'date1' },
-      { label: 'Switch', col: 'col-lg-6', type: 'switch', formControl: 'switch' },
+      // { label: 'Switch', col: 'col-lg-6', type: 'switch', formControl: 'switch' },
       // { label: 'text', col: 'col-lg-6', type: 'text', formControl: 'date2' },
       // { label: 'Number', col: 'col-lg-6', type: 'number', formControl: 'number' },
       // { label: 'TextArea', col: 'col-lg-6', type: 'text-area', formControl: 'number' },
@@ -125,7 +133,7 @@ export class AppComponent implements OnInit {
     ]
   }
 
-  chageValues(){
+  chageValues() {
     console.log("s")
   }
 

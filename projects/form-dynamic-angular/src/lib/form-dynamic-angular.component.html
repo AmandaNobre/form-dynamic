@@ -1,6 +1,9 @@
 <div>
     <div *ngIf="title" class="div-title">
         <span translate={{title}}></span>
+        <div *ngIf="sigle && description" class="d-flex subtitle">
+            <span translate={{sigle}}></span> <span>-</span><span translate={{description}}></span>
+        </div>
         <p-divider></p-divider>
     </div>
     <form *ngIf="control" [formGroup]="control" class="row row-custom">
@@ -97,9 +100,13 @@
                 </div>
 
                 <!-- button -->
-                <button pButton *ngIf="campo.type == 'button'" class='{{campo.class}} w-100 mt-3'
-                    (click)="campo.onCLick()" [label]="translate.instant(campo.label)"
-                    [disabled]="campo.disabled"></button>
+
+                <p-button *ngIf="campo.type === 'button'" styleClass="{{campo.class}} w-100 mt-3" [label]="campo.label"
+                    [disabled]="campo.disabled" (click)="campo.onCLick()" icon="pi pi-times"></p-button>
+
+                <!-- <button pButton *ngIf="campo.type == 'button'" class='{{campo.class}} w-100 mt-3'
+                    (click)="campo.onCLick()" icon={{button.icon}} [label]="translate.instant(campo.label)"
+                    [disabled]="campo.disabled"></button> -->
 
                 <!-- upload files -->
                 <div *ngIf="campo.type === 'upload-files' && !campo.disabled " ngx-dropzone class="drag-image"
@@ -220,6 +227,14 @@
                     <p translate={{campo.label}}></p>
                 </div>
 
+                <!-- password -->
+                <p-password [ngClass]="{
+                    'ng-invalid ng-dirty':
+                    validateForm && control.controls[campo.formControl].errors
+                  }" *ngIf="campo.type === 'password'" [feedback]="false" formControlName={{campo.formControl}}
+                    (onChange)="onChangevalues()" styleClass="w-100" inputStyleClass="form-control"
+                    [toggleMask]="true"></p-password>
+
                 <!-- validação de campo obrigatório -->
                 <div class="h-10">
                     <small class="danger-text" *ngIf="validateForm && control.controls[campo.formControl].errors">
@@ -234,14 +249,14 @@
 
         <div class="buttons-form">
             <div *ngFor="let button of buttonsStandard">
-                <p-button *ngIf="button.type === 'clean'" styleClass="p-button-warning" label="Limpar"
-                    (click)="button.onCLick()" icon="pi pi-times"></p-button>
-                <p-button *ngIf="button.type === 'filter'" label="Filtrar" (click)="button.onCLick()"
-                    icon="pi pi-search"></p-button>
-                <p-button *ngIf="button.type === 'save'" styleClass="p-button-success" label="Salvar"
-                    (click)="button.onCLick()" icon="pi pi-save"></p-button>
-                <p-button *ngIf="button.type === 'cancel'" styleClass="p-button-danger" label="Cancelar"
-                    (click)="button.onCLick()" icon="pi pi-times"></p-button>
+                <p-button *ngIf="button.type === 'clean'" styleClass="p-button-warning {{button.styleClass}}"
+                    label="Limpar" (click)="button.onCLick()" icon="pi pi-times"></p-button>
+                <p-button *ngIf="button.type === 'filter'" styleClass="{{button.styleClass}}" label="Filtrar"
+                    (click)="button.onCLick()" icon="pi pi-search"></p-button>
+                <p-button *ngIf="button.type === 'save'" styleClass="p-button-success {{button.styleClass}}"
+                    label="Salvar" (click)="button.onCLick()" icon="pi pi-save"></p-button>
+                <p-button *ngIf="button.type === 'cancel'" styleClass="p-button-danger {{button.styleClass}}"
+                    label="Cancelar" (click)="button.onCLick()" icon="pi pi-times"></p-button>
             </div>
             <div *ngFor="let button of buttonsOptional">
                 <p-button styleClass={{button.styleClass}} label={{button.label}} (click)=" button.onCLick()"

@@ -23,6 +23,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { FileUploadModule } from 'primeng/fileupload';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { TableModule } from 'primeng/table';
+import { PasswordModule } from 'primeng/password';
+
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
@@ -31,6 +33,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     FormDynamicAngularComponent
   ],
   imports: [
+    PasswordModule,
     ButtonModule,
     TableModule,
     FileUploadModule,

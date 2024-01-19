@@ -37,7 +37,7 @@ export interface ICols {
 export interface IForm {
   label?: string,
   secondLabel?: string,
-  type?: "autocomplete" | "button" | "check-box" | "date" | "date-time" | "switch" | "list" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files",
+  type?: "autocomplete" | "button" | "check-box" | "date" | "date-time" | "switch" | "list" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password",
   disabled?: boolean | null,
   colsTable?: ICols[],
   options?: IOptions[]
@@ -55,14 +55,16 @@ export interface IForm {
   tableOptions?: ITable[],
   col?: string,
   acceptFiles?: string,
-  msgAcceptFiles?:string,
-  required?: boolean 
+  msgAcceptFiles?: string,
+  required?: boolean,
+  icon?: string
 }
 
 
 export interface IButtonsStandard {
   type: 'clean' | 'filter' | 'save' | 'cancel',
-  onCLick: Function
+  onCLick: Function,
+  styleClass?: string
 }
 
 export interface IButtonsOptional {
@@ -81,6 +83,8 @@ export interface IButtonsOptional {
 
 export class FormDynamicAngularComponent {
   @Input() title!: string;
+  @Input() sigle!: string;
+  @Input() description!: string;
   @Input() validateForm: boolean = false;
   @Output() onChange = new EventEmitter<any>();
 

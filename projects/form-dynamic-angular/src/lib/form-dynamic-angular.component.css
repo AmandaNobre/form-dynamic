@@ -4,9 +4,10 @@
     margin-bottom: 35px;
 }
 
-.h-10{
+.h-10 {
     height: 10px;
 }
+
 .row-custom {
     align-items: end
 }
@@ -22,7 +23,7 @@
     justify-content: flex-end;
 }
 
-.danger-text{
+.danger-text {
     color: #f18282;
 }
 
@@ -56,4 +57,13 @@
 
 .cardList td {
     padding-right: 20px;
+}
+
+.subtitle span {
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.subtitle {
+    align-items: baseline;
 }
