@@ -28,7 +28,7 @@
                 <p-dropdown [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" styleClass="w-100" (onChange)="onChangevalues()" placeholder="Selecione"
+                  }" styleClass="w-100 form-control p-0" (onChange)="onChangevalues()" placeholder="Selecione"
                     *ngIf="campo.type === 'select'" [options]="campo.options" formControlName={{campo.formControl}}
                     [disabled]="campo.disabled" optionLabel="descricao"></p-dropdown>
 
@@ -36,16 +36,17 @@
                 <p-treeSelect [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" (onNodeSelect)="onChangevalues()" *ngIf="campo.type === 'tree-select'" containerStyleClass="w-100"
-                    formControlName={{campo.formControl}} [options]="campo.treeSelectOptions" [filter]="true"
-                    [filterInputAutoFocus]="true" [disabled]="campo.disabled" emptyMessage="Nenhum dado encontrado"
-                    [showClear]="true" (onClear)="campo.clean()"></p-treeSelect>
+                  }" (onNodeSelect)="onChangevalues()" *ngIf="campo.type === 'tree-select'"
+                    containerStyleClass="w-100 form-control p-0" formControlName={{campo.formControl}}
+                    [options]="campo.treeSelectOptions" [filter]="true" [filterInputAutoFocus]="true"
+                    [disabled]="campo.disabled" emptyMessage="Nenhum dado encontrado" [showClear]="true"
+                    (onClear)="campo.clean()"></p-treeSelect>
 
                 <!-- autoComplete -->
                 <p-autoComplete [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" styleClass="w-100" [inputStyle]="{'width':'100%'}" (onSelect)=" onChangevalues()"
+                  }" styleClass="w-100 form-control p-0" [inputStyle]="{'width':'100%'}" (onSelect)=" onChangevalues()"
                     [disabled]="campo.disabled" *ngIf="campo.type === 'autocomplete'"
                     formControlName={{campo.formControl}} [suggestions]="filteredAutoComplete"
                     (completeMethod)="filterAutoComplete($event, campo.options)" [forceSelection]="false"
@@ -53,12 +54,12 @@
 
                 <!-- date -->
                 <div class="d-flex-custom" *ngIf="campo.type === 'date' && campo.datePeriod">
-                    <p-calendar [selectOtherMonths]="true" [minDate]="minDateAll" styleClass="w-100"
+                    <p-calendar [selectOtherMonths]="true" [minDate]="minDateAll" styleClass="w-100 form-control p-0"
                         (onSelect)="onChangevalues()" dateFormat="dd/mm/yy" [disabled]="campo.disabled"
                         placeholder="dd/mm/aaaa" [showIcon]="true" formControlName={{campo.formControl}}
                         (onBlur)="onBlurDate($event)"></p-calendar>
                     <span class="calendarPeriod">{{translate.instant('globals.between_dates')}}</span>
-                    <p-calendar [selectOtherMonths]="true" styleClass="w-100"
+                    <p-calendar [selectOtherMonths]="true" styleClass="w-100 form-control p-0"
                         (onFocus)="onFocusDate(control.value['períodoIni'])" (onSelect)="onChangevalues()"
                         [minDate]="minDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [disabled]="campo.disabled"
                         placeholder="dd/mm/aaaa" [showIcon]="true" formControlName={{campo.formControlSecondary}}
@@ -67,8 +68,8 @@
                 <div *ngIf="campo.type === 'date' && !campo.datePeriod"
                     class="d-flex justify-content-space-evenly align-items-center">
                     <p-calendar (onSelect)="onChangevalues()" [selectOtherMonths]="true" [minDate]="minDateAll"
-                        styleClass="w-100" dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa"
-                        formControlName={{campo.formControl}} [showIcon]="true"
+                        styleClass="w-100 form-control p-0" dateFormat="dd/mm/yy" [disabled]="campo.disabled"
+                        placeholder="dd/mm/aaaa" formControlName={{campo.formControl}} [showIcon]="true"
                         (onBlur)="onBlurDate($event)"></p-calendar>
                 </div>
 
@@ -78,10 +79,10 @@
                         'ng-invalid ng-dirty':
                         validateForm && control.controls[campo.formControl].errors
                       }" (onSelect)="onChangevalues()" [selectOtherMonths]="true"
-                        [(minDate)]="campo.minDate ?? minDateAll" [(maxDate)]="campo.maxDate" styleClass="w-100"
-                        dateFormat="dd/mm/yy" [disabled]="campo.disabled" placeholder="dd/mm/aaaa hh:mm"
-                        formControlName={{campo.formControl}} [showIcon]="true" [showTime]="true"
-                        (onBlur)="onBlurDate($event)"></p-calendar>
+                        [(minDate)]="campo.minDate ?? minDateAll" [(maxDate)]="campo.maxDate"
+                        styleClass="w-100 form-control p-0" dateFormat="dd/mm/yy" [disabled]="campo.disabled"
+                        placeholder="dd/mm/aaaa hh:mm" formControlName={{campo.formControl}} [showIcon]="true"
+                        [showTime]="true" (onBlur)="onBlurDate($event)"></p-calendar>
                 </div>
 
                 <!-- textarea -->
@@ -100,13 +101,9 @@
                 </div>
 
                 <!-- button -->
-
-                <p-button *ngIf="campo.type === 'button'" styleClass="{{campo.class}} w-100 mt-3" [label]="campo.label"
-                    [disabled]="campo.disabled" (click)="campo.onCLick()" icon="pi pi-times"></p-button>
-
-                <!-- <button pButton *ngIf="campo.type == 'button'" class='{{campo.class}} w-100 mt-3'
-                    (click)="campo.onCLick()" icon={{button.icon}} [label]="translate.instant(campo.label)"
-                    [disabled]="campo.disabled"></button> -->
+                <button pButton *ngIf="campo.type == 'button'" class='{{campo.class}} w-100 mt-3'
+                    (click)="campo.onCLick()" icon={{campo.icon}} [label]="translate.instant(campo.label)"
+                    [disabled]="campo.disabled"></button>
 
                 <!-- upload files -->
                 <div *ngIf="campo.type === 'upload-files' && !campo.disabled " ngx-dropzone class="drag-image"
@@ -168,9 +165,9 @@
                     <li *ngFor="let list of campo.options">{{list.descricao}}</li>
                 </ul>
 
-
+                <!-- multi -->
                 <p-multiSelect *ngIf="campo.type === 'multi'" [options]="campo.options"
-                    formControlName={{campo.formControl}} styleClass="form-control"
+                    formControlName={{campo.formControl}} styleClass="form-control p-0"
                     optionLabel="descricao"></p-multiSelect>
 
                 <!-- radioButton -->
@@ -237,7 +234,8 @@
 
                 <!-- validação de campo obrigatório -->
                 <div class="h-10">
-                    <small class="danger-text" *ngIf="validateForm && control.controls[campo.formControl].errors">
+                    <small class="danger-text"
+                        *ngIf="validateForm && control.controls[campo.formControl] && control.controls[campo.formControl].errors">
                         Campo obrigatório
                     </small>
                 </div>

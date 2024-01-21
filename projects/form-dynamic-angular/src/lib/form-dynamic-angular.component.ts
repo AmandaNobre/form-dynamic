@@ -22,13 +22,6 @@ export interface IOptions {
   id: number | string
 }
 
-export interface ITable {
-  id: number,
-  c1: string,
-  c2: string,
-  button: IButtonsOptional
-}
-
 export interface ICols {
   field: string,
   header: string
@@ -52,7 +45,6 @@ export interface IForm {
   rowsTable?: any[],
   minDate?: Date,
   maxDate?: Date,
-  tableOptions?: ITable[],
   col?: string,
   acceptFiles?: string,
   msgAcceptFiles?: string,

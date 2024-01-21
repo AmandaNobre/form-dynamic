@@ -49,6 +49,8 @@ export class AppComponent implements OnInit {
 | Prop  | Type  | Default | Description |
 |:--------- | :---- | :----   |:----  | 
 | `title` | `string` | `''` | Title page
+| `sigle` | `string` | `''` | Sigle page
+| `description` | `string` | `''` | Description page
 | `control` | `UntypedFormGroup` | `undefined` | Controls the form
 | `form` | `IForm[]` | `[]` | Input list
 | `files` | `File[]` | `[]` | Upload files
@@ -59,7 +61,7 @@ export class AppComponent implements OnInit {
 
 ## Usage Inputs
 
-1- Autocomplete | List | Radio-button | Select | Select-button
+1- Autocomplete | List | Radio-button | Select | Select-button | Multi
 
 ```js
 
@@ -73,7 +75,6 @@ options: IOptions[] = [
     { id: 2, descricao: "Maracanaú" }
   ]
 
-
 this.controlAutocomplete = this.fb.group({
   cities: '',
 });
@@ -84,6 +85,7 @@ this.formmAutocomplete = [
   { label: 'Cities', col: 'col-lg-6', type: 'radio-button', formControl: 'cities', options: this.options },
   { label: 'Cities', col: 'col-lg-6', type: 'select', formControl: 'cities', options: this.options },
   { label: 'Cities', col: 'col-lg-6', type: 'select-button', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'col-lg-6', type: 'multi', formControl: 'cities', options: this.options },
 ]
 
 ```
@@ -98,7 +100,7 @@ formmAutocomplete: IForm[] = []
 this.controlAutocomplete = this.fb.group({});
 
 this.formmAutocomplete = [
- { label: 'Ver cidade', col: 'col-lg-4', type: 'button',  onCLick: this.click },
+ { label: 'Ver cidade', col: 'col-lg-4', type: 'button',  onCLick: this.click(), icon: 'pi pi-plus', class: 'p-button-outlined' }
 ]
 
 click() {
@@ -145,7 +147,7 @@ this.formmAutocomplete = [
 
 ```
 
-4- Switch |  Text | Text-area
+4- Switch |  Text | Text-area | Number | Password
 
 ```js
 
@@ -156,15 +158,16 @@ this.controlAutocomplete = this.fb.group({
   switch: false,
   text: '',
   number: 0,
-  TextArea: ''
+  textArea: '',
+  password: ''
 });
 
 this.formmAutocomplete = [
   { label: 'Switch', col: 'col-lg-6', type: 'switch', formControl: 'switch' },
   { label: 'Text', col: 'col-lg-6', type: 'text', formControl: 'text' },
   { label: 'Number', col: 'col-lg-6', type: 'number', formControl: 'number' },
-  { label: 'TextArea', col: 'col-lg-6', type: 'text-area', formControl: 'TextArea' },
-
+  { label: 'TextArea', col: 'col-lg-6', type: 'text-area', formControl: 'textArea' },
+  { label: 'Password', col: 'col-lg-6', type: 'password', formControl: 'password' }
 ]
 
 ```

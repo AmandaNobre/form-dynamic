@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 // import { IForm, IList } from 'form-dynamic-angular';
-import { IButtonsOptional, IButtonsStandard, ICols, IForm, IList, IOptions, ITable, ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
+import { IButtonsOptional, IButtonsStandard, ICols, IForm, IList, IOptions, ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -110,26 +110,23 @@ export class AppComponent implements OnInit {
 
     this.formmAutocomplete = [
       // { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
-      // { label: 'Cities', col: 'col-md-4', type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*', msgAcceptFiles:"Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" },
-      // { label: 'Cities', col: 'col-md-4', type: 'multi', formControl: 'a', options: this.options, required: true },
-      { label: 'Cities', col: 'col-md-6', type: 'password', formControl: 'cities', options: this.options, required: true },
-      { label: 'Cities', col: 'col-md-6', type: 'text', formControl: 'cities', options: this.options, required: true },
-      // { label: 'Adicionar', col: 'col-md-2', type: 'button', icon: 'pi pi-plus', class: "mt-3 p-button-outlined" },
-
-      // { label: 'Cities', col: 'col-lg-6', type: 'select', formControl: 'cities', options: this.options },
-      // { label: 'Cities', col: 'col-lg-6', type: 'select-button', formControl: 'selectButton', options: this.options },
-      // { label: 'Cities', col: 'col-lg-6', type: 'table', formControl: 'selectButton', options: this.options },
+      // { label: 'Cities', col: 'col-md-4', type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*', msgAcceptFiles: "Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" },
+      { label: 'Cities', col: 'col-md-2', type: 'multi', formControl: 'a', options: this.options, required: true },
+      { label: 'Cities', col: 'col-md-2', type: 'password', formControl: 'cities', options: this.options, required: true },
+      { label: 'Cities', col: 'col-md-2', type: 'text', formControl: 'cities', options: this.options, required: true },
+      { label: 'Adicionar', col: 'col-md-2', type: 'button',  class: "mt-3 p-button-outlined" },
+      { label: 'Cities', col: 'col-md-2', type: 'select', formControl: 'cities', options: this.options },
+      { label: 'Cities', col: 'col-md-2', type: 'select-button', formControl: 'selectButton', options: this.options },
       // { label: 'Ver cidade', col: 'col-lg-4', type: 'button', onCLick: this.click },
-      // { label: 'Ckeck', col: 'col-lg-6', type: 'check-box', formControl: 'ckech' },
-      // { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date' },
-      // { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date1', datePeriod: true, formControlSecondary: "date2" },
-      // { label: 'Date', col: 'col-lg-6', type: 'date-time', formControl: 'date1' },
-      // { label: 'Switch', col: 'col-lg-6', type: 'switch', formControl: 'switch' },
-      // { label: 'text', col: 'col-lg-6', type: 'text', formControl: 'date2' },
-      // { label: 'Number', col: 'col-lg-6', type: 'number', formControl: 'number' },
-      // { label: 'TextArea', col: 'col-lg-6', type: 'text-area', formControl: 'number' },
-      // { label: "pageRequests.installationLocation", col: 'col-lg-6', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
-
+      { label: 'Ckeck', col: 'col-md-2', type: 'check-box', formControl: 'ckech' },
+      { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date' },
+      { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date1', datePeriod: true, formControlSecondary: "date2" },
+      { label: 'Date', col: 'col-md-2', type: 'date-time', formControl: 'date1' },
+      // { label: 'Switch', col: 'col-md-2', type: 'switch', formControl: 'switch' },
+      { label: 'text', col: 'col-md-2', type: 'autocomplete', formControl: 'date2' },
+      { label: "pageRequests.installationLocation", col: 'col-md-2', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
+      { label: 'Number', col: 'col-md-2', type: 'number', formControl: 'number' },
+      { label: 'TextArea', col: 'col-md-2', type: 'text-area', formControl: 'number' },
     ]
   }
 
