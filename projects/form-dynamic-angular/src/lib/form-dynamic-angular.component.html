@@ -8,11 +8,9 @@
     </div>
     <form *ngIf="control" [formGroup]="control" class="row row-custom">
         <div *ngFor="let campo of form" class="{{campo.col}} col-sm-12">
-            <label class="form-label"
-                *ngIf="campo.type !== 'check-box' && campo.type !== 'button' && campo.type !== 'switch' && campo.type !== 'upload-files'">{{campo.label}}
+            <label class="form-label" *ngIf="campo.label">{{campo.label}}
             </label>
-            <label class="form-label ml-2"
-                *ngIf="campo.type !== 'check-box' && campo.type !== 'button'  && campo.type !== 'upload-files'">{{campo.secondLabel}}
+            <label class="form-label ml-2" *ngIf="campo.secondLabel">{{campo.secondLabel}}
             </label>
             <label *ngIf="campo.required" class="danger-text ml-2">*</label>
             <div class="mb-3 ">
@@ -65,8 +63,7 @@
                         placeholder="dd/mm/aaaa" [showIcon]="true" formControlName={{campo.formControlSecondary}}
                         (onBlur)="onBlurDate($event)"></p-calendar>
                 </div>
-                <div *ngIf="campo.type === 'date' && !campo.datePeriod"
-                    class="d-flex justify-content-space-evenly align-items-center">
+                <div *ngIf="campo.type === 'date' && !campo.datePeriod">
                     <p-calendar (onSelect)="onChangevalues()" [selectOtherMonths]="true" [minDate]="minDateAll"
                         styleClass="w-100 form-control p-0" dateFormat="dd/mm/yy" [disabled]="campo.disabled"
                         placeholder="dd/mm/aaaa" formControlName={{campo.formControl}} [showIcon]="true"

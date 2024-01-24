@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 // import { IForm, IList } from 'form-dynamic-angular';
 import { IButtonsOptional, IButtonsStandard, ICols, IForm, IList, IOptions, ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
@@ -10,9 +9,6 @@ import { IButtonsOptional, IButtonsStandard, ICols, IForm, IList, IOptions, ITre
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
-
-
 
 export class AppComponent implements OnInit {
   controlExemple: UntypedFormGroup
@@ -32,11 +28,10 @@ export class AppComponent implements OnInit {
   }]
 
   cols: ICols[] = [
-    { field: 'c1', header: 'C1' },
-    { field: 'c2', header: 'C2' },
-    { field: 'button', header: 'Ação' },
-
-
+    { field: 'itemName', header: 'Item' },
+    { field: 'valueUnit', header: 'Valor Unitário' },
+    { field: 'qtd', header: 'Quantidade' },
+    { field: 'value', header: 'Valor Total' }
   ]
 
   buttonsStandard: IButtonsStandard[] = [
@@ -111,22 +106,37 @@ export class AppComponent implements OnInit {
     this.formmAutocomplete = [
       // { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
       // { label: 'Cities', col: 'col-md-4', type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*', msgAcceptFiles: "Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" },
-      { label: 'Cities', col: 'col-md-2', type: 'multi', formControl: 'a', options: this.options, required: true },
-      { label: 'Cities', col: 'col-md-2', type: 'password', formControl: 'cities', options: this.options, required: true },
-      { label: 'Cities', col: 'col-md-2', type: 'text', formControl: 'cities', options: this.options, required: true },
-      { label: 'Adicionar', col: 'col-md-2', type: 'button',  class: "mt-3 p-button-outlined" },
-      { label: 'Cities', col: 'col-md-2', type: 'select', formControl: 'cities', options: this.options },
-      { label: 'Cities', col: 'col-md-2', type: 'select-button', formControl: 'selectButton', options: this.options },
+      // { label: 'Cities', col: 'col-md-2', type: 'multi', formControl: 'a', options: this.options, required: true },
+      // { label: 'Cities', col: 'col-md-2', type: 'password', formControl: 'cities', options: this.options, required: true },
+      // { label: 'Cities', col: 'col-md-2', type: 'text', formControl: 'cities', options: this.options, required: true },
+      // { label: 'Adicionar', col: 'col-md-2', type: 'button', class: "mt-3 p-button-outlined" },
+      // { label: 'Cities', col: 'col-md-2', type: 'select', formControl: 'cities', options: this.options },
+      // { label: 'Cities', col: 'col-md-2', type: 'select-button', formControl: 'selectButton', options: this.options },
       // { label: 'Ver cidade', col: 'col-lg-4', type: 'button', onCLick: this.click },
-      { label: 'Ckeck', col: 'col-md-2', type: 'check-box', formControl: 'ckech' },
-      { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date' },
-      { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date1', datePeriod: true, formControlSecondary: "date2" },
-      { label: 'Date', col: 'col-md-2', type: 'date-time', formControl: 'date1' },
+      // { label: 'Ckeck', col: 'col-md-2', type: 'check-box', formControl: 'ckech' },
+      // { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date' },
+      // { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date1', datePeriod: true, formControlSecondary: "date2" },
+      // { label: 'Date', col: 'col-md-2', type: 'date-time', formControl: 'date1' },
       // { label: 'Switch', col: 'col-md-2', type: 'switch', formControl: 'switch' },
-      { label: 'text', col: 'col-md-2', type: 'autocomplete', formControl: 'date2' },
-      { label: "pageRequests.installationLocation", col: 'col-md-2', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
-      { label: 'Number', col: 'col-md-2', type: 'number', formControl: 'number' },
-      { label: 'TextArea', col: 'col-md-2', type: 'text-area', formControl: 'number' },
+      // { label: 'text', col: 'col-md-2', type: 'autocomplete', formControl: 'date2' },
+      // { label: "pageRequests.installationLocation", col: 'col-md-2', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
+      // { label: 'Number', col: 'col-md-2', type: 'number', formControl: 'number' },
+      // { label: 'TextArea', col: 'col-md-2', type: 'text-area', formControl: 'number' },
+
+      { label: 'Requisição', col: 'col-md-6', type: 'text', formControl: 'a', required: true },
+      { label: 'Estabelecimento', col: 'col-md-6', type: 'multi', formControl: 'a', options: this.options, required: true },
+      { label: 'Requisitante', col: 'col-md-4', type: 'select', formControl: 'a', options: this.options, required: true },
+      { label: 'Lotação', col: 'col-md-4', type: 'select', formControl: 'a', options: this.options, required: true },
+      { label: 'Data da Requisição', col: 'col-md-4', type: 'date', formControl: 'a', options: this.options, required: true },
+      { label: 'Data da Requisição', col: 'col-md-12', type: 'date-time', formControl: 'a', options: this.options, required: true },
+      { label: 'Local de Entrega', col: 'col-md-12', type: 'text', formControl: 'a', options: this.options, required: true },
+      { label: 'Tipo da Requisição', col: 'col-md-12', type: 'select', formControl: 'a', options: this.options, required: true },
+      { label: 'Narrativa', col: 'col-md-12', type: 'text', formControl: 'a', required: true },
+      { label: 'Item', col: 'col-md-4', type: 'text', formControl: 'a', required: true },
+      { label: 'Quantidade', col: 'col-md-4', type: 'text', formControl: 'a', required: true },
+      { label: 'Adicionar', col: 'col-md-4', type: 'button', class: "mt-3 p-button-outlined" },
+      { label: '', col: 'col-lg-12', type: 'upload-files',acceptFiles:"image/*, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf, application/msword" ,formControl: 'a', colsTable: this.cols, class: 'p-datatable-gridlines' },
+
     ]
   }
 
