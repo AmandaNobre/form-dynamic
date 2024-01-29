@@ -49,7 +49,8 @@ export interface IForm {
   acceptFiles?: string,
   msgAcceptFiles?: string,
   required?: boolean,
-  icon?: string
+  icon?: string,
+  placeholder?: string
 }
 
 

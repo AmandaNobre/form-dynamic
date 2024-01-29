@@ -12,43 +12,45 @@
             </label>
             <label class="form-label ml-2" *ngIf="campo.secondLabel">{{campo.secondLabel}}
             </label>
-            <label *ngIf="campo.required" class="danger-text ml-2">*</label>
+            <label *ngIf="campo.required && campo.label" class="danger-text ml-2">*</label>
             <div class="mb-3 ">
 
                 <!-- text -->
                 <input [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" pInputText *ngIf="campo.type == 'text' || campo.type == 'number' " (change)="onChangevalues()"
-                    type={{campo.type}} class="form-control" formControlName={{campo.formControl}} />
+                  }" pInputText placeholder={{campo.placeholder}} *ngIf="campo.type == 'text' || campo.type == 'number' "
+                    (change)="onChangevalues()" type={{campo.type}} class="form-control"
+                    formControlName={{campo.formControl}} />
 
                 <!-- select -->
                 <p-dropdown [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" styleClass="w-100 form-control p-0" (onChange)="onChangevalues()" placeholder="Selecione"
-                    *ngIf="campo.type === 'select'" [options]="campo.options" formControlName={{campo.formControl}}
-                    [disabled]="campo.disabled" optionLabel="descricao"></p-dropdown>
+                  }"  placeholder={{campo.placeholder}} styleClass="w-100 form-control p-0" (onChange)="onChangevalues()"
+                    placeholder="Selecione" *ngIf="campo.type === 'select'" [options]="campo.options"
+                    formControlName={{campo.formControl}} [disabled]="campo.disabled"
+                    optionLabel="descricao"></p-dropdown>
 
                 <!-- treeSelect -->
                 <p-treeSelect [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" (onNodeSelect)="onChangevalues()" *ngIf="campo.type === 'tree-select'"
-                    containerStyleClass="w-100 form-control p-0" formControlName={{campo.formControl}}
-                    [options]="campo.treeSelectOptions" [filter]="true" [filterInputAutoFocus]="true"
-                    [disabled]="campo.disabled" emptyMessage="Nenhum dado encontrado" [showClear]="true"
-                    (onClear)="campo.clean()"></p-treeSelect>
+                  }"  placeholder={{campo.placeholder}} (onNodeSelect)="onChangevalues()"
+                    *ngIf="campo.type === 'tree-select'" containerStyleClass="w-100 form-control p-0"
+                    formControlName={{campo.formControl}} [options]="campo.treeSelectOptions" [filter]="true"
+                    [filterInputAutoFocus]="true" [disabled]="campo.disabled" emptyMessage="Nenhum dado encontrado"
+                    [showClear]="true" (onClear)="campo.clean()"></p-treeSelect>
 
                 <!-- autoComplete -->
                 <p-autoComplete [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" styleClass="w-100 form-control p-0" [inputStyle]="{'width':'100%'}" (onSelect)=" onChangevalues()"
-                    [disabled]="campo.disabled" *ngIf="campo.type === 'autocomplete'"
-                    formControlName={{campo.formControl}} [suggestions]="filteredAutoComplete"
-                    (completeMethod)="filterAutoComplete($event, campo.options)" [forceSelection]="false"
-                    dropdownMode="current" dataKey="id" field="descricao"></p-autoComplete>
+                  }"  placeholder={{campo.placeholder}} styleClass="w-100 form-control p-0"
+                    [inputStyle]="{'width':'100%'}" (onSelect)=" onChangevalues()" [disabled]="campo.disabled"
+                    *ngIf="campo.type === 'autocomplete'" formControlName={{campo.formControl}}
+                    [suggestions]="filteredAutoComplete" (completeMethod)="filterAutoComplete($event, campo.options)"
+                    [forceSelection]="false" dropdownMode="current" dataKey="id" field="descricao"></p-autoComplete>
 
                 <!-- date -->
                 <div class="d-flex-custom" *ngIf="campo.type === 'date' && campo.datePeriod">
@@ -86,7 +88,7 @@
                 <textarea [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" pInputTextarea (attr.change)="onChangevalues()" [attr.disabled]="campo.disabled"
+                  }"   placeholder={{campo.placeholder}} pInputTextarea (attr.change)="onChangevalues()" [attr.disabled]="campo.disabled"
                     *ngIf="campo.type === 'text-area' " pInputTextarea formControlName={{campo.formControl}}
                     class="form-control" rows={{campo.rows}}></textarea>
 
@@ -163,7 +165,7 @@
                 </ul>
 
                 <!-- multi -->
-                <p-multiSelect *ngIf="campo.type === 'multi'" [options]="campo.options"
+                <p-multiSelect   placeholder={{campo.placeholder}} *ngIf="campo.type === 'multi'" [options]="campo.options"
                     formControlName={{campo.formControl}} styleClass="form-control p-0"
                     optionLabel="descricao"></p-multiSelect>
 
@@ -225,7 +227,7 @@
                 <p-password [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" *ngIf="campo.type === 'password'" [feedback]="false" formControlName={{campo.formControl}}
+                  }"   placeholder={{campo.placeholder}} *ngIf="campo.type === 'password'" [feedback]="false" formControlName={{campo.formControl}}
                     (onChange)="onChangevalues()" styleClass="w-100" inputStyleClass="form-control"
                     [toggleMask]="true"></p-password>
 

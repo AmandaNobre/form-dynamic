@@ -123,7 +123,7 @@ export class AppComponent implements OnInit {
       // { label: 'Number', col: 'col-md-2', type: 'number', formControl: 'number' },
       // { label: 'TextArea', col: 'col-md-2', type: 'text-area', formControl: 'number' },
 
-      { label: 'Requisição', col: 'col-md-6', type: 'text', formControl: 'a', required: true },
+      { placeholder: 'Requisição', col: 'col-md-6', type: 'text', formControl: 'a', required: true },
       { label: 'Estabelecimento', col: 'col-md-6', type: 'multi', formControl: 'a', options: this.options, required: true },
       { label: 'Requisitante', col: 'col-md-4', type: 'select', formControl: 'a', options: this.options, required: true },
       { label: 'Lotação', col: 'col-md-4', type: 'select', formControl: 'a', options: this.options, required: true },
@@ -141,7 +141,6 @@ export class AppComponent implements OnInit {
   }
 
   chageValues() {
-    console.log("s")
   }
 
   click(id: number) {
