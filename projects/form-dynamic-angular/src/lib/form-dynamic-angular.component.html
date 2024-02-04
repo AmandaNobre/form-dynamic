@@ -58,7 +58,8 @@
                         (onSelect)="onChangevalues()" dateFormat="dd/mm/yy" [disabled]="campo.disabled"
                         placeholder="dd/mm/aaaa" [showIcon]="true" formControlName={{campo.formControl}}
                         (onBlur)="onBlurDate($event)"></p-calendar>
-                    <span class="calendarPeriod">{{translate.instant('globals.between_dates')}}</span>
+                    <!-- <span class="calendarPeriod">{{translate.instant('globals.between_dates')}}</span> -->
+                    <span class="calendarPeriod">a</span>
                     <p-calendar [selectOtherMonths]="true" styleClass="w-100 form-control p-0"
                         (onFocus)="onFocusDate(control.value['períodoIni'])" (onSelect)="onChangevalues()"
                         [minDate]="minDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [disabled]="campo.disabled"
@@ -101,7 +102,7 @@
 
                 <!-- button -->
                 <button pButton *ngIf="campo.type == 'button'" class='{{campo.class}} w-100 mt-3'
-                    (click)="campo.onCLick()" icon={{campo.icon}} [label]="translate.instant(campo.label)"
+                    (click)="campo.onCLick()" icon={{campo.icon}} [label]="translate.instant(campo.textButton)"
                     [disabled]="campo.disabled"></button>
 
                 <!-- upload files -->

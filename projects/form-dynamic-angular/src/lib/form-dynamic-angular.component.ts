@@ -50,7 +50,8 @@ export interface IForm {
   msgAcceptFiles?: string,
   required?: boolean,
   icon?: string,
-  placeholder?: string
+  placeholder?: string,
+  textButton?: string
 }
 
 

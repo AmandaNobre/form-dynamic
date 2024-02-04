@@ -71,3 +71,15 @@
 .subtitle {
     align-items: baseline;
 }
+
+.d-flex-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 1200px) {
+    .d-flex-custom {
+        display: block !important;
+    }
+}

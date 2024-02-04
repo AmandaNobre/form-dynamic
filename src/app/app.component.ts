@@ -127,14 +127,14 @@ export class AppComponent implements OnInit {
       { label: 'Estabelecimento', col: 'col-md-6', type: 'multi', formControl: 'a', options: this.options, required: true },
       { label: 'Requisitante', col: 'col-md-4', type: 'select', formControl: 'a', options: this.options, required: true },
       { label: 'Lotação', col: 'col-md-4', type: 'select', formControl: 'a', options: this.options, required: true },
-      { label: 'Data da Requisição', col: 'col-md-4', type: 'date', formControl: 'a', options: this.options, required: true },
+      { label: 'Data da Requisição', col: 'col-md-4', datePeriod: true,type: 'date', formControl: 'a', options: this.options, required: true },
       { label: 'Data da Requisição', col: 'col-md-12', type: 'date-time', formControl: 'a', options: this.options, required: true },
       { label: 'Local de Entrega', col: 'col-md-12', type: 'text', formControl: 'a', options: this.options, required: true },
       { label: 'Tipo da Requisição', col: 'col-md-12', type: 'select', formControl: 'a', options: this.options, required: true },
       { label: 'Narrativa', col: 'col-md-12', type: 'text', formControl: 'a', required: true },
       { label: 'Item', col: 'col-md-4', type: 'text', formControl: 'a', required: true },
       { label: 'Quantidade', col: 'col-md-4', type: 'text', formControl: 'a', required: true },
-      { label: 'Adicionar', col: 'col-md-4', type: 'button', class: "mt-3 p-button-outlined" },
+      { textButton: 'Adicionar', col: 'col-md-4', type: 'button', class: "mt-3 p-button-outlined" },
       { label: '', col: 'col-lg-12', type: 'upload-files',acceptFiles:"image/*, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf, application/msword" ,formControl: 'a', colsTable: this.cols, class: 'p-datatable-gridlines' },
 
     ]
