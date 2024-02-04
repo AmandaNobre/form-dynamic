@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 // import { IForm, IList } from 'form-dynamic-angular';
-import { IButtonsOptional, IButtonsStandard, ICols, IForm, IList, IOptions, ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
+import { IButtonsOptional, IButtonsStandard, ICols, IForm, IList, IOptions, ITreeSelectOptions } from 'form-dynamic-angular';
 
 @Component({
   selector: 'app-root',
