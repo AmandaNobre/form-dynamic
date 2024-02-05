@@ -6,6 +6,11 @@
 The form-dynamic is a solution whith objectve is minimize the coding in forms, so one json you can have mutch components in forms in primeng as: input (text and number),  select, treeSelect, autocomplete, date, dateTime, textarea, checkbox, button, upload files, list e radioButton
 
 
+| Lib version | Angular version     
+| :-------- | :------- 
+| `4.1.3` | `15.2.0` 
+| `5.0.6` | `17.0.0`   
+
 ## Basic Usage 📑
 ```html
 
@@ -100,7 +105,7 @@ formmAutocomplete: IForm[] = []
 this.controlAutocomplete = this.fb.group({});
 
 this.formmAutocomplete = [
- { label: 'Ver cidade', col: 'col-lg-4', type: 'button',  onCLick: this.click(), icon: 'pi pi-plus', class: 'p-button-outlined' }
+ { textButton: 'Ver cidade', col: 'col-lg-4', type: 'button',  onCLick: this.click(), icon: 'pi pi-plus', class: 'p-button-outlined' }
 ]
 
 click() {

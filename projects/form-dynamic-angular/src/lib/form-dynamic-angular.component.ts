@@ -51,7 +51,8 @@ export interface IForm {
   required?: boolean,
   icon?: string,
   placeholder?: string,
-  textButton?: string
+  textButton?: string,
+  textCheckBox?: string
 }
 
 

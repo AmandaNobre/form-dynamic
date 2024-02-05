@@ -83,3 +83,23 @@
         display: block !important;
     }
 }
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.margin-right-1 {
+    margin-right: 1px;
+}
+
+.d-flex-radio-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.d-flex-radio-button label,
+.label-check-box {
+    margin: 0;
+}

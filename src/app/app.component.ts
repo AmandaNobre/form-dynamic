@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 // import { IForm, IList } from 'form-dynamic-angular';
-import { IButtonsOptional, IButtonsStandard, ICols, IForm, IList, IOptions, ITreeSelectOptions } from 'form-dynamic-angular';
+import { IButtonsOptional, IButtonsStandard, ICols, IForm, IList, IOptions, ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -89,19 +89,24 @@ export class AppComponent implements OnInit {
     ]
 
 
-    this.controlAutocomplete = this.fb.group({
-      a: new FormControl<IOptions[] | null>([]),
-      cities: new FormControl('', Validators.required),
-      button: '',
-      ckech: false,
-      date: '',
-      date1: '',
-      date2: '',
-      switch: false,
-      number: 0,
-      selectButton: "1",
-      installationLocation: ''
-    });
+    this.controlAutocomplete
+      = this.fb.group({
+        user: '',
+        situation: 'active'
+      });
+    // = this.fb.group({
+    //   a: new FormControl<IOptions[] | null>([]),
+    //   cities: new FormControl('', Validators.required),
+    //   button: '',
+    //   ckech: false,
+    //   date: '',
+    //   date1: '',
+    //   date2: '',
+    //   switch: false,
+    //   number: 0,
+    //   selectButton: "1",
+    //   installationLocation: ''
+    // });
 
     this.formmAutocomplete = [
       // { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
@@ -123,19 +128,9 @@ export class AppComponent implements OnInit {
       // { label: 'Number', col: 'col-md-2', type: 'number', formControl: 'number' },
       // { label: 'TextArea', col: 'col-md-2', type: 'text-area', formControl: 'number' },
 
-      { placeholder: 'Requisição', col: 'col-md-6', type: 'text', formControl: 'a', required: true },
-      { label: 'Estabelecimento', col: 'col-md-6', type: 'multi', formControl: 'a', options: this.options, required: true },
-      { label: 'Requisitante', col: 'col-md-4', type: 'select', formControl: 'a', options: this.options, required: true },
-      { label: 'Lotação', col: 'col-md-4', type: 'select', formControl: 'a', options: this.options, required: true },
-      { label: 'Data da Requisição', col: 'col-md-4', datePeriod: true,type: 'date', formControl: 'a', options: this.options, required: true },
-      { label: 'Data da Requisição', col: 'col-md-12', type: 'date-time', formControl: 'a', options: this.options, required: true },
-      { label: 'Local de Entrega', col: 'col-md-12', type: 'text', formControl: 'a', options: this.options, required: true },
-      { label: 'Tipo da Requisição', col: 'col-md-12', type: 'select', formControl: 'a', options: this.options, required: true },
-      { label: 'Narrativa', col: 'col-md-12', type: 'text', formControl: 'a', required: true },
-      { label: 'Item', col: 'col-md-4', type: 'text', formControl: 'a', required: true },
-      { label: 'Quantidade', col: 'col-md-4', type: 'text', formControl: 'a', required: true },
-      { textButton: 'Adicionar', col: 'col-md-4', type: 'button', class: "mt-3 p-button-outlined" },
-      { label: '', col: 'col-lg-12', type: 'upload-files',acceptFiles:"image/*, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf, application/msword" ,formControl: 'a', colsTable: this.cols, class: 'p-datatable-gridlines' },
+      { label: 'Descrição', col: 'col-lg-12', type: 'text', formControl: 'user' },
+      { label: 'Situação', col: 'col-lg-2', type: 'radio-button', options: [{ id: 'active', descricao: "Ativo" }, { id: 'inactive', descricao: "Inativo" }], formControl: 'situation' },
+      { textCheckBox: 'Possui antendimento prioritário para idosos acima de 80 anos?', col: 'col-lg-6', type: 'check-box', formControl: 'situation' }
 
     ]
   }
