@@ -92,7 +92,7 @@ export class AppComponent implements OnInit {
     this.controlAutocomplete
       = this.fb.group({
         user: '',
-        situation: 'active'
+        situation: new FormControl({ value: true, disabled: false })
       });
     // = this.fb.group({
     //   a: new FormControl<IOptions[] | null>([]),
@@ -130,12 +130,13 @@ export class AppComponent implements OnInit {
 
       { label: 'Descrição', col: 'col-lg-12', type: 'text', formControl: 'user' },
       { label: 'Situação', col: 'col-lg-2', type: 'radio-button', options: [{ id: 'active', descricao: "Ativo" }, { id: 'inactive', descricao: "Inativo" }], formControl: 'situation' },
-      { textCheckBox: 'Possui antendimento prioritário para idosos acima de 80 anos?', col: 'col-lg-6', type: 'check-box', formControl: 'situation' }
+      { textCheckBox: 'Possui antendimento prioritário para idosos acima de 80 anos?', disabled: true, col: 'col-lg-6', type: 'check-box', formControl: 'situation' }
 
     ]
   }
 
   chageValues() {
+    console.log("ss", this.controlAutocomplete.value)
   }
 
   click(id: number) {

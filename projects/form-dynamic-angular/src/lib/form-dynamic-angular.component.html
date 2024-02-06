@@ -95,9 +95,8 @@
 
                 <!-- checkbox -->
                 <div *ngIf="campo.type == 'check-box'">
-                    <input (change)="onChangevalues()" [attr.disabled]="campo.disabled" id="checkbox" type='checkbox'
-                        formControlName={{campo.formControl}} class="margin-right-10">
-                    <label class="label-check-box" translate={{campo.textCheckBox}}></label>
+                    <p-checkbox (onChange)="onChangevalues()" binary="true" formControlName={{campo.formControl}}
+                        value={{campo.formControl}} label={{campo.textCheckBox}}></p-checkbox>
                 </div>
 
                 <!-- button -->
