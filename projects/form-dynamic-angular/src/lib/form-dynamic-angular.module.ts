@@ -24,6 +24,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { TableModule } from 'primeng/table';
 import { PasswordModule } from 'primeng/password';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputMaskModule } from 'primeng/inputmask';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -33,6 +35,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     FormDynamicAngularComponent
   ],
   imports: [
+    InputMaskModule,
+    InputNumberModule,
     PasswordModule,
     ButtonModule,
     TableModule,

@@ -30,7 +30,7 @@ export interface ICols {
 export interface IForm {
   label?: string,
   secondLabel?: string,
-  type?: "autocomplete" | "button" | "check-box" | "date" | "date-time" | "switch" | "list" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password",
+  type?: "autocomplete" | "button" | "check-box" | "currency" | "date" | "date-time" | "switch" | "list" | "mask"| "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password",
   disabled?: boolean | null,
   colsTable?: ICols[],
   options?: IOptions[]
@@ -52,7 +52,8 @@ export interface IForm {
   icon?: string,
   placeholder?: string,
   textButton?: string,
-  textCheckBox?: string
+  textCheckBox?: string,
+  mask?: string
 }
 
 

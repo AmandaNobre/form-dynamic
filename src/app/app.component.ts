@@ -77,6 +77,8 @@ export class AppComponent implements OnInit {
     private fb: UntypedFormBuilder,
   ) { }
 
+  validateForm: boolean = false
+
   ngOnInit() {
     this.controlExemple = this.fb.group({
       user: new FormControl({ value: '', disabled: true }),
@@ -90,56 +92,56 @@ export class AppComponent implements OnInit {
 
 
     this.controlAutocomplete
+      // = this.fb.group({
+      //   user: '',
+      //   situation: new FormControl({ value: true, disabled: false })
+      // });
       = this.fb.group({
-        user: '',
-        situation: new FormControl({ value: true, disabled: false })
+        a: new FormControl<IOptions[] | null>([]),
+        cities: new FormControl({ value: "", disabled: false }, {updateOn: 'submit', validators: Validators.required}),
+        button: '',
+        ckech: false,
+        date: '',
+        date1: '',
+        date2: '',
+        switch: false,
+        number: 0,
+        selectButton: "1",
+        installationLocation: ''
       });
-    // = this.fb.group({
-    //   a: new FormControl<IOptions[] | null>([]),
-    //   cities: new FormControl('', Validators.required),
-    //   button: '',
-    //   ckech: false,
-    //   date: '',
-    //   date1: '',
-    //   date2: '',
-    //   switch: false,
-    //   number: 0,
-    //   selectButton: "1",
-    //   installationLocation: ''
-    // });
 
     this.formmAutocomplete = [
       // { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
       // { label: 'Cities', col: 'col-md-4', type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*', msgAcceptFiles: "Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" },
-      // { label: 'Cities', col: 'col-md-2', type: 'multi', formControl: 'a', options: this.options, required: true },
-      // { label: 'Cities', col: 'col-md-2', type: 'password', formControl: 'cities', options: this.options, required: true },
-      // { label: 'Cities', col: 'col-md-2', type: 'text', formControl: 'cities', options: this.options, required: true },
+      { label: 'Cities', col: 'col-md-3', type: 'currency', formControl: 'cities', options: this.options, required: true, disabled: true },
+      { label: 'Cities', col: 'col-md-2', type: 'mask', mask: "999-999-9999", formControl: 'cities', options: this.options, required: true },
+      { label: 'Cities', col: 'col-md-2', type: 'text', formControl: 'cities', options: this.options, required: true },
       // { label: 'Adicionar', col: 'col-md-2', type: 'button', class: "mt-3 p-button-outlined" },
-      // { label: 'Cities', col: 'col-md-2', type: 'select', formControl: 'cities', options: this.options },
-      // { label: 'Cities', col: 'col-md-2', type: 'select-button', formControl: 'selectButton', options: this.options },
+      { label: 'Cities', col: 'col-md-2', type: 'select', formControl: 'cities', options: this.options },
+      { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date' },
+      { label: 'Cities', col: 'col-md-2', type: 'autocomplete', formControl: 'cities', options: this.options },
       // { label: 'Ver cidade', col: 'col-lg-4', type: 'button', onCLick: this.click },
-      // { label: 'Ckeck', col: 'col-md-2', type: 'check-box', formControl: 'ckech' },
-      // { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date' },
+      { label: 'Ckeck', col: 'col-md-2', type: 'check-box', formControl: 'ckech' },
       // { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date1', datePeriod: true, formControlSecondary: "date2" },
-      // { label: 'Date', col: 'col-md-2', type: 'date-time', formControl: 'date1' },
-      // { label: 'Switch', col: 'col-md-2', type: 'switch', formControl: 'switch' },
-      // { label: 'text', col: 'col-md-2', type: 'autocomplete', formControl: 'date2' },
+      { label: 'Date', col: 'col-md-2', type: 'date-time', formControl: 'date1' },
+      { label: 'Switch', col: 'col-md-2', type: 'switch', formControl: 'switch' },
       // { label: "pageRequests.installationLocation", col: 'col-md-2', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
-      // { label: 'Number', col: 'col-md-2', type: 'number', formControl: 'number' },
+      { label: 'Number', col: 'col-md-2', type: 'number', formControl: 'number' },
       // { label: 'TextArea', col: 'col-md-2', type: 'text-area', formControl: 'number' },
 
-      { label: 'Descrição', col: 'col-lg-12', type: 'text', formControl: 'user' },
-      { label: 'Situação', col: 'col-lg-2', type: 'radio-button', options: [{ id: 'active', descricao: "Ativo" }, { id: 'inactive', descricao: "Inativo" }], formControl: 'situation' },
-      { textCheckBox: 'Possui antendimento prioritário para idosos acima de 80 anos?', disabled: true, col: 'col-lg-6', type: 'check-box', formControl: 'situation' }
+      // { label: 'Descrição', col: 'col-lg-12', type: 'text', formControl: 'user' },
+      // { label: 'Situação', col: 'col-lg-2', type: 'radio-button', options: [{ id: 'active', descricao: "Ativo" }, { id: 'inactive', descricao: "Inativo" }], formControl: 'situation' },
+      // { textCheckBox: 'Possui antendimento prioritário para idosos acima de 80 anos?', disabled: true, col: 'col-lg-6', type: 'check-box', formControl: 'situation' }
 
     ]
   }
 
   chageValues() {
-    console.log("ss", this.controlAutocomplete.value)
+    console.log("ss", this.controlAutocomplete.status)
   }
 
   click(id: number) {
+    this.validateForm = true
     console.log(this.controlAutocomplete)
   }
 }

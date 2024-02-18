@@ -152,7 +152,7 @@ this.formmAutocomplete = [
 
 ```
 
-4- Switch |  Text | Text-area | Number | Password
+4- Switch |  Text | Text-area | Number | Password | Currency
 
 ```js
 
@@ -164,7 +164,8 @@ this.controlAutocomplete = this.fb.group({
   text: '',
   number: 0,
   textArea: '',
-  password: ''
+  password: '',
+  currency: 0
 });
 
 this.formmAutocomplete = [
@@ -172,7 +173,8 @@ this.formmAutocomplete = [
   { label: 'Text', col: 'col-lg-6', type: 'text', formControl: 'text' },
   { label: 'Number', col: 'col-lg-6', type: 'number', formControl: 'number' },
   { label: 'TextArea', col: 'col-lg-6', type: 'text-area', formControl: 'textArea' },
-  { label: 'Password', col: 'col-lg-6', type: 'password', formControl: 'password' }
+  { label: 'Password', col: 'col-lg-6', type: 'password', formControl: 'password' },
+  { label: 'Currency', col: 'col-lg-6', type: 'currency', formControl: 'currency' }
 ]
 
 ```
@@ -274,6 +276,52 @@ this.form = [
 
 ```
 
+8- Mask
+
+```js
+
+control: UntypedFormGroup
+form: IForm[] = []
+
+this.control = this.fb.group({
+  mask: 0
+});
+
+this.form = [
+  { label: 'Mask', col: 'col-md-12', type: 'mask', mask: "999-999-9999", formControl: 'mask' }
+]
+
+```
+## Required
+
+```js
+
+control: UntypedFormGroup
+form: IForm[] = []
+validateForm: boolean = false
+
+buttonsStandard: IButtonsStandard[] = [
+    { type: 'save', onCLick: () => this.save(), styleClass: 'p-button-outlined' }
+]
+
+this.control = this.fb.group({
+  mask: new FormControl({ value: 0 }, {updateOn: 'submit', validators: Validators.required}),
+});
+
+this.form = [
+  { label: 'Mask', col: 'col-md-12', type: 'mask', mask: "999-999-9999", formControl: 'mask', required: true }
+]
+
+save() {
+  this.validateForm = true
+}
+ 
+```
+```html
+
+<form-dynamic-angular title="Exemple" [form]=form [control]=control [validateForm]=validateForm  [buttonsStandard]=buttonsStandard></form-dynamic-angular>
+
+```
 ## Translate
 
 Created files
