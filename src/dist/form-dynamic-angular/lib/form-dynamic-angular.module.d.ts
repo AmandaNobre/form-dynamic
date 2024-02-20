@@ -1,0 +1,33 @@
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+import * as i0 from "@angular/core";
+import * as i1 from "./form-dynamic-angular.component";
+import * as i2 from "primeng/inputmask";
+import * as i3 from "primeng/inputnumber";
+import * as i4 from "primeng/password";
+import * as i5 from "primeng/button";
+import * as i6 from "primeng/table";
+import * as i7 from "primeng/fileupload";
+import * as i8 from "ngx-dropzone";
+import * as i9 from "primeng/multiselect";
+import * as i10 from "@angular/common";
+import * as i11 from "primeng/selectbutton";
+import * as i12 from "primeng/inputswitch";
+import * as i13 from "primeng/checkbox";
+import * as i14 from "primeng/inputtextarea";
+import * as i15 from "primeng/inputtext";
+import * as i16 from "primeng/divider";
+import * as i17 from "primeng/calendar";
+import * as i18 from "primeng/dropdown";
+import * as i19 from "primeng/treeselect";
+import * as i20 from "primeng/radiobutton";
+import * as i21 from "primeng/autocomplete";
+import * as i22 from "@angular/forms";
+import * as i23 from "@angular/common/http";
+import * as i24 from "@ngx-translate/core";
+export declare function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader;
+export declare class FormDynamicAngularModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<FormDynamicAngularModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<FormDynamicAngularModule, [typeof i1.FormDynamicAngularComponent], [typeof i2.InputMaskModule, typeof i3.InputNumberModule, typeof i4.PasswordModule, typeof i5.ButtonModule, typeof i6.TableModule, typeof i7.FileUploadModule, typeof i8.NgxDropzoneModule, typeof i9.MultiSelectModule, typeof i10.CommonModule, typeof i11.SelectButtonModule, typeof i12.InputSwitchModule, typeof i13.CheckboxModule, typeof i14.InputTextareaModule, typeof i15.InputTextModule, typeof i16.DividerModule, typeof i17.CalendarModule, typeof i18.DropdownModule, typeof i19.TreeSelectModule, typeof i20.RadioButtonModule, typeof i21.AutoCompleteModule, typeof i22.ReactiveFormsModule, typeof i23.HttpClientModule, typeof i24.TranslateModule], [typeof i1.FormDynamicAngularComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<FormDynamicAngularModule>;
+}

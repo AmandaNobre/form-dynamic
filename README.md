@@ -48,7 +48,6 @@ export class AppComponent implements OnInit {
 | `control` | `UntypedFormGroup` | `undefined` | Controls the form
 | `form` | `IForm[]` | `[]` | Input list
 | `files` | `File[]` | `[]` | Upload files
-| `onChange` | `Function` | `` | Change inputs
 | `validateForm` | `boolean` | `false` | if inputs have validation
 | `buttonsStandard` | `IButtonsStandard[]` | `[]` | Inputs standard (clean, filter, save, cancel)
 | `buttonsOptional` | `IButtonsOptional[]` | `[]` | Inputs optional

@@ -1,8 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 // import { IForm, IList } from 'form-dynamic-angular';
-import { IButtonsOptional, IButtonsStandard, ICols, IForm, IList, IOptions, ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
+import { IButtonsOptional, IButtonsStandard, ICols, IForm, IOptions, ITreeSelectOptions } from 'projects/form-dynamic-angular/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -47,8 +48,8 @@ export class AppComponent implements OnInit {
   formmAutocomplete: IForm[] = []
 
   options: IOptions[] = [
-    { id: 1, descricao: "Fortaleza" },
-    { id: 2, descricao: "Maracanaú" }
+    { code: 1, description: "Fortaleza" },
+    { code: 2, description: "Maracanaú" }
   ]
 
   treeSelect: ITreeSelectOptions[] = [{
@@ -75,6 +76,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private fb: UntypedFormBuilder,
+    private httpClient: HttpClient
   ) { }
 
   validateForm: boolean = false
@@ -97,36 +99,37 @@ export class AppComponent implements OnInit {
       //   situation: new FormControl({ value: true, disabled: false })
       // });
       = this.fb.group({
-        a: new FormControl<IOptions[] | null>([]),
-        cities: new FormControl({ value: "", disabled: false }, {updateOn: 'submit', validators: Validators.required}),
-        button: '',
-        ckech: false,
-        date: '',
-        date1: '',
-        date2: '',
-        switch: false,
-        number: 0,
-        selectButton: "1",
-        installationLocation: ''
+        // a: new FormControl<IOptions[] | null>([]),
+        cities: new FormControl({ value: "", disabled: false }, { validators: [Validators.email, Validators.required] }),
+        // button: '',
+        // ckech: false,
+        // date: new FormControl({ value: "", disabled: false }, { validators: Validators.required }),
+        // date1: new FormControl({ value: "", disabled: false }, { validators: Validators.required }),
+        // date2: new FormControl({ value: "", disabled: false }, { validators: Validators.required }),
+        // switch: new FormControl({ value: false, disabled: false }, { validators: Validators.required }),
+        // number: 0,
+        // selectButton: "1",
+        // installationLocation: ''
       });
 
     this.formmAutocomplete = [
       // { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
       // { label: 'Cities', col: 'col-md-4', type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*', msgAcceptFiles: "Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" },
-      { label: 'Cities', col: 'col-md-3', type: 'currency', formControl: 'cities', options: this.options, required: true, disabled: true },
+      // { label: 'Cities', col: 'col-md-3', type: 'currency', formControl: 'cities', options: this.options, required: true, disabled: true },
       { label: 'Cities', col: 'col-md-2', type: 'mask', mask: "999-999-9999", formControl: 'cities', options: this.options, required: true },
-      { label: 'Cities', col: 'col-md-2', type: 'text', formControl: 'cities', options: this.options, required: true },
+      { label: 'Cities', col: 'col-md-2', type: 'radio-button', formControl: 'cities', options: this.options, required: true, onChange: () => this.chageValues()  },
+      { label: 'Cities', col: 'col-md-2', type: 'multi', formControl: 'cities', options: this.options, required: true, onChange: () => this.chageValues() },
       // { label: 'Adicionar', col: 'col-md-2', type: 'button', class: "mt-3 p-button-outlined" },
-      { label: 'Cities', col: 'col-md-2', type: 'select', formControl: 'cities', options: this.options },
-      { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date' },
-      { label: 'Cities', col: 'col-md-2', type: 'autocomplete', formControl: 'cities', options: this.options },
+      // { label: 'Cities', col: 'col-md-2', type: 'select', formControl: 'cities', options: this.options },
+      // { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date' },
+      // { label: 'autocomplete', col: 'col-md-2', type: 'radio-button', formControl: 'cities', options: this.options },
       // { label: 'Ver cidade', col: 'col-lg-4', type: 'button', onCLick: this.click },
-      { label: 'Ckeck', col: 'col-md-2', type: 'check-box', formControl: 'ckech' },
+      // { label: 'Ckeck', col: 'col-md-2', type: 'check-box', formControl: 'cities' },
       // { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date1', datePeriod: true, formControlSecondary: "date2" },
-      { label: 'Date', col: 'col-md-2', type: 'date-time', formControl: 'date1' },
-      { label: 'Switch', col: 'col-md-2', type: 'switch', formControl: 'switch' },
+      // { label: 'Date', col: 'col-md-2', type: 'date-time', formControl: 'date1' },
+      // { label: 'Switch', col: 'col-md-2', type: 'switch', formControl: 'switch' },
       // { label: "pageRequests.installationLocation", col: 'col-md-2', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
-      { label: 'Number', col: 'col-md-2', type: 'number', formControl: 'number' },
+      // { label: 'Number', col: 'col-md-2', type: 'number', formControl: 'cities' },
       // { label: 'TextArea', col: 'col-md-2', type: 'text-area', formControl: 'number' },
 
       // { label: 'Descrição', col: 'col-lg-12', type: 'text', formControl: 'user' },
@@ -137,6 +140,7 @@ export class AppComponent implements OnInit {
   }
 
   chageValues() {
+    this.httpClient.get("https://viacep.com.br/ws/61900-470/json/").subscribe(data => console.log(data))
     console.log("ss", this.controlAutocomplete.status)
   }
 
