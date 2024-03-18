@@ -21,7 +21,6 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { CommonModule } from '@angular/common';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FileUploadModule } from 'primeng/fileupload';
-import { NgxDropzoneModule } from 'ngx-dropzone';
 import { TableModule } from 'primeng/table';
 import { PasswordModule } from 'primeng/password';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -41,7 +40,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ButtonModule,
     TableModule,
     FileUploadModule,
-    NgxDropzoneModule,
     MultiSelectModule,
     CommonModule,
     SelectButtonModule,

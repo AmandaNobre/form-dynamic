@@ -100,7 +100,7 @@ export class AppComponent implements OnInit {
       // });
       = this.fb.group({
         // a: new FormControl<IOptions[] | null>([]),
-        cities: new FormControl({ value: "", disabled: false }, { validators: [Validators.email, Validators.required] }),
+        cities: new FormControl({ value: "", disabled: true }, { validators: [Validators.email, Validators.required] }),
         // button: '',
         // ckech: false,
         // date: new FormControl({ value: "", disabled: false }, { validators: Validators.required }),
@@ -116,9 +116,9 @@ export class AppComponent implements OnInit {
       // { label: 'Cities', col: 'col-lg-12', type: 'table', formControl: 'a', rowsTable: this.table, colsTable: this.cols, class: 'p-datatable-gridlines' },
       // { label: 'Cities', col: 'col-md-4', type: 'upload-files', formControl: 'cities', acceptFiles: 'image/*', msgAcceptFiles: "Arquivos suportados: PNG, TIF, JPG, PDF, WORD e EXCEL" },
       // { label: 'Cities', col: 'col-md-3', type: 'currency', formControl: 'cities', options: this.options, required: true, disabled: true },
-      { label: 'Cities', col: 'col-md-2', type: 'mask', mask: "999-999-9999", formControl: 'cities', options: this.options, required: true },
-      { label: 'Cities', col: 'col-md-2', type: 'radio-button', formControl: 'cities', options: this.options, required: true, onChange: () => this.chageValues()  },
-      { label: 'Cities', col: 'col-md-2', type: 'multi', formControl: 'cities', options: this.options, required: true, onChange: () => this.chageValues() },
+      { label: 'Cities', col: 'col-md-2', type: 'upload-files', mask: "999-999-9999", formControl: 'cities', options: this.options, required: true, acceptFiles: "image/*" },
+      // { label: 'Cities', col: 'col-md-2', type: 'radio-button', formControl: 'cities', options: this.options, required: true, onChange: () => this.chageValues()  },
+      // { label: 'Cities', col: 'col-md-2', type: 'multi', formControl: 'cities', options: this.options, required: true, onChange: () => this.chageValues() },
       // { label: 'Adicionar', col: 'col-md-2', type: 'button', class: "mt-3 p-button-outlined" },
       // { label: 'Cities', col: 'col-md-2', type: 'select', formControl: 'cities', options: this.options },
       // { label: 'Date', col: 'col-md-2', type: 'date', formControl: 'date' },
@@ -137,15 +137,12 @@ export class AppComponent implements OnInit {
       // { textCheckBox: 'Possui antendimento prioritário para idosos acima de 80 anos?', disabled: true, col: 'col-lg-6', type: 'check-box', formControl: 'situation' }
 
     ]
-  }
+}
 
-  chageValues() {
-    this.httpClient.get("https://viacep.com.br/ws/61900-470/json/").subscribe(data => console.log(data))
-    console.log("ss", this.controlAutocomplete.status)
-  }
+chageValues() {
+}
 
-  click(id: number) {
-    this.validateForm = true
-    console.log(this.controlAutocomplete)
-  }
+click(id: number) {
+  this.validateForm = true
+}
 }

@@ -1,6 +1,6 @@
 import { UntypedFormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import * as moment from 'moment';
 import { MessageService } from 'primeng/api';
@@ -50,7 +50,8 @@ export interface IForm {
   placeholder?: string,
   textButton?: string,
   textCheckBox?: string,
-  mask?: string
+  mask?: string,
+  multi?: boolean
 }
 
 
@@ -68,6 +69,7 @@ export interface IButtonsOptional {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'form-dynamic-angular',
   templateUrl: 'form-dynamic-angular.component.html',
   styleUrls: ['form-dynamic-angular.component.css']
@@ -88,7 +90,7 @@ export class FormDynamicAngularComponent {
 
   @Input() files: File[] = [];
 
-  filesDonwload: File[] = [];
+  filesDonwload: any[] = [];
 
   filteredAutoComplete: any[] = [];
   maxDate: Date
@@ -119,9 +121,14 @@ export class FormDynamicAngularComponent {
     this.maxDate = moment(date).add(6, 'month').toDate();
   }
 
-  async onSelect(fileName: string, event: { addedFiles: any; }) {
-    this.filesDonwload.push(...event.addedFiles);
-    const newFIles = event.addedFiles
+  getUrl(file: File) {
+    return window.URL.createObjectURL(file)
+  }
+
+  async onSelect(fileName: string, event: any) {
+    const file = event.target.files
+    this.filesDonwload.push(...file);
+    const newFIles = file
     let arr = [];
     for (const item of newFIles) {
       let aux = {

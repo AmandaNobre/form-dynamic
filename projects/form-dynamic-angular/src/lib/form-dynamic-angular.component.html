@@ -131,25 +131,24 @@
                     [label]="translate.instant(campo.textButton)"></button>
 
                 <!-- upload files -->
-                <div *ngIf="campo.type === 'upload-files' && !campo.disabled " ngx-dropzone class="drag-image"
-                    [accept]="campo.acceptFiles" (change)="onSelect(campo.formControl, $event)">
-                    <ngx-dropzone-label>
-                        <div><i class="pi pi-cloud-upload"></i></div>
-                        <h6>Clique ou arraste e solte um arquivo para anexar</h6>
-                        <span>{{campo.msgAcceptFiles}}</span>
-                    </ngx-dropzone-label>
+                <div *ngIf="campo.type === 'upload-files' && !campo.disabled " class="drag-image">
+                    <label>
+                        <i *ngIf="filesDonwload.length === 0" class="pi pi-cloud-upload"></i>
+                        <h6 *ngIf="filesDonwload.length === 0">Clique ou arraste e solte um arquivo para anexar</h6>
+                        <span *ngIf="filesDonwload.length === 0">{{campo.msgAcceptFiles}}</span>
+                        <input type="file" multiple [accept]="campo.acceptFiles"
+                            (change)="onSelect(campo.formControl, $event)" />
+                    </label>
                     <div *ngFor="let f of filesDonwload">
-                        <ngx-dropzone-image-preview *ngIf="f.type && f.type.includes('image')" [file]="f"
-                            [removable]="true" (removed)="onRemove(f)">
-                            <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
-                        </ngx-dropzone-image-preview>
-                        <ngx-dropzone-preview *ngIf="f.type && !f.type.includes('image')" [file]="f" [removable]="true"
-                            (removed)="onRemove(f)">
-                            <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
-                        </ngx-dropzone-preview>
-                        <ngx-dropzone-preview *ngIf=" f.id" [file]="f" [removable]="true" (removed)="onRemove(f)">
-                            <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
-                        </ngx-dropzone-preview>
+                        <div *ngIf="f.type && f.type.includes('image')">
+                            <label class="preview-img">
+                                <img src='{{getUrl(f)}}'>
+                                <span>{{ f.name }}</span>
+                                <input type="file" multiple [accept]="campo.acceptFiles"
+                                    (change)="onSelect(campo.formControl, $event)" />
+                                <label> <i class="pi pi-times remove-file" (click)="onRemove(f)"></i></label>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
