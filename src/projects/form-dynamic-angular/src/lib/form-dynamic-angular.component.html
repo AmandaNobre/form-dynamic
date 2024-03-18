@@ -102,7 +102,7 @@
                         'ng-invalid ng-dirty':
                         validateForm && control.controls[campo.formControl].errors
                       }" (onSelect)="onChange(campo.onChange)" [selectOtherMonths]="true"
-                        [(minDate)]="campo.minDate ?? minDateAll" [(maxDate)]="campo.maxDate"
+                        [minDate]="campo.minDate ?? minDateAll" (minDateChange)="campo.minDate ?? (minDateAll = $event)" [(maxDate)]="campo.maxDate"
                         styleClass="w-100 form-control p-0" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa hh:mm"
                         formControlName={{campo.formControl}} [showIcon]="true" [showTime]="true"
                         (onBlur)="onBlurDate($event)"></p-calendar>
