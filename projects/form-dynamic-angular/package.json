@@ -1,6 +1,6 @@
 {
   "name": "form-dynamic-angular",
-  "version": "5.0.18",
+  "version": "5.0.25",
   "peerDependencies": {
     "@angular/common": "^17.0.0",
     "@angular/core": "^17.0.0",

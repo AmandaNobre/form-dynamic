@@ -1,15 +1,14 @@
 <div>
     <div *ngIf="title" class="div-title">
         <span translate={{title}}></span>
-        <div *ngIf="sigle && description" class="d-flex subtitle">
-            <span translate={{sigle}}></span> <span>-</span><span translate={{description}}></span>
+        <div *ngIf="subTitle" class="d-flex subtitle">
+            <span translate={{subTitle}}></span>
         </div>
         <p-divider></p-divider>
     </div>
     <form *ngIf="control" [formGroup]="control" class="row row-custom">
         <div *ngFor="let campo of form" class="{{campo.col}} col-sm-12">
             <label class="form-label" *ngIf="campo.label">{{campo.label}}</label>
-            <label class="form-label ml-2" *ngIf="campo.secondLabel">{{campo.secondLabel}}</label>
             <label *ngIf="campo.required && campo.label" class="danger-text ml-2">*</label>
 
             <div class="mb-3 ">
@@ -25,8 +24,10 @@
                 <p-dropdown [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
-                  }" placeholder={{campo.placeholder}} styleClass="w-100 form-control p-0"
-                    (onChange)="onChange(campo.onChange)" *ngIf="campo.type === 'select'" [options]="campo.options"
+                  }" [filter]=campo.search emptyFilterMessage="Nenhum dado encontrado"
+                    emptyMessage="Nenhum dado encontrado" placeholder={{campo.placeholder}}
+                    styleClass="w-100 form-control p-0" (onChange)="onChange(campo.onChange)"
+                    *ngIf="campo.type === 'select'" [showClear]="true" [options]="campo.options"
                     formControlName={{campo.formControl}} optionLabel="description"></p-dropdown>
 
                 <!-- currency  -->
@@ -43,7 +44,7 @@
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[campo.formControl].errors
                   }" formControlName={{campo.formControl}} placeholder={{campo.placeholder}} styleClass=" form-control"
-                    (onComplete)="onChange(campo.onChange)" mask={{campo.mask}} unmask="true"></p-inputMask>
+                    (onComplete)="onChange(campo.onChange)" mask={{campo.mask}} unmask={{campo.unmask}}></p-inputMask>
 
                 <!-- treeSelect -->
                 <p-treeSelect [ngClass]="{
@@ -64,14 +65,15 @@
                     *ngIf="campo.type === 'autocomplete'" formControlName={{campo.formControl}}
                     [suggestions]="filteredAutoComplete" (completeMethod)="filterAutoComplete($event, campo.options)"
                     [forceSelection]="false" [showEmptyMessage]="true" emptyMessage="Nenhum dado encontrado"
-                    dataKey="code" field="description"></p-autoComplete>
+                    dataKey="code" field="description" showClear=true
+                    (onClear)="cleanAutoComplete(campo.formControl)"></p-autoComplete>
 
                 <!-- date -->
                 <div class="d-flex-custom" *ngIf="campo.type === 'date' && campo.datePeriod">
                     <p-calendar [ngClass]="{
                         'ng-invalid ng-dirty':
                         validateForm && control.controls[campo.formControl].errors
-                      }" [selectOtherMonths]="true" [minDate]="minDateAll" styleClass="w-100 form-control p-0"
+                      }" [selectOtherMonths]="true" [minDate]="minDateAll" styleClass="w-100 p-0"
                         (onSelect)="onChange(campo.onChange)" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa"
                         [showIcon]="true" formControlName={{campo.formControl}}
                         (onBlur)="onBlurDate($event)"></p-calendar>
@@ -80,7 +82,7 @@
                     <p-calendar [ngClass]="{
                         'ng-invalid ng-dirty':
                         validateForm && control.controls[campo.formControl].errors
-                      }" [selectOtherMonths]="true" styleClass="w-100 form-control p-0"
+                      }" [selectOtherMonths]="true" styleClass="w-100 p-0"
                         (onFocus)="onFocusDate(control.value['períodoIni'])" (onSelect)="onChange(campo.onChange)"
                         [minDate]="minDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa"
                         [showIcon]="true" formControlName={{campo.formControlSecondary}}
@@ -102,10 +104,10 @@
                         'ng-invalid ng-dirty':
                         validateForm && control.controls[campo.formControl].errors
                       }" (onSelect)="onChange(campo.onChange)" [selectOtherMonths]="true"
-                        [minDate]="campo.minDate ?? minDateAll" (minDateChange)="campo.minDate ?? (minDateAll = $event)" [(maxDate)]="campo.maxDate"
-                        styleClass="w-100 form-control p-0" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa hh:mm"
-                        formControlName={{campo.formControl}} [showIcon]="true" [showTime]="true"
-                        (onBlur)="onBlurDate($event)"></p-calendar>
+                        [minDate]="campo.minDate ?? minDateAll" (minDateChange)="campo.minDate ?? (minDateAll = $event)"
+                        [(maxDate)]="campo.maxDate" styleClass="w-100 form-control p-0" dateFormat="dd/mm/yy"
+                        placeholder="dd/mm/aaaa hh:mm" formControlName={{campo.formControl}} [showIcon]="true"
+                        [showTime]="true" (onBlur)="onBlurDate($event)"></p-calendar>
                 </div>
 
                 <!-- textarea -->
@@ -127,8 +129,19 @@
 
                 <!-- button -->
                 <button pButton *ngIf="campo.type == 'button'" class='{{campo.class}} w-100 mt-3'
-                    (click)="campo.onCLick()" icon={{campo.icon}}
-                    [label]="translate.instant(campo.textButton)"></button>
+                    (click)="campo.onCLick()" icon={{campo.icon}} label={{campo.textButton}}></button>
+
+                <div class="area" *ngIf="campo.type == 'can'">
+                    <video autoplay="true" id="webCamera">
+                    </video>
+
+                    <input type="text" id="base_img" name="base_img">
+                    <button type="button" onclick="takeSnapShot()">Tirar foto e salvar</button>
+
+                    <img id="imagemConvertida">
+                    <p id="caminhoImagem" class="caminho-imagem"><a href="" target="_blank" rel="noopener"></a></p>
+                    <script src="script.js"></script>
+                </div>
 
                 <!-- upload files -->
                 <div *ngIf="campo.type === 'upload-files' && !campo.disabled " class="drag-image">
@@ -222,13 +235,15 @@
                 </div>
 
                 <!-- table -->
-                <p-table *ngIf="campo.type === 'table'" [columns]=campo.colsTable styleClass=p-datatable-striped
-                    [value]=campo.rowsTable>
+                <p-table *ngIf="campo.type === 'table'" [scrollable]="true" scrollHeight={{campo.scrollHeight}}
+                    [columns]=campo.colsTable styleClass="p-datatable-striped p-datatable-sm" [value]=campo.rowsTable>
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             <th *ngFor="let col of columns">
-                                {{ col.header }}
+                                <span *ngIf="col.filed !== 'action'">{{ col.header }}</span>
+                                <span *ngIf="col.filed === 'action'">Ação</span>
                             </th>
+
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -237,12 +252,17 @@
                                 <div *ngIf="col.field !== 'button'">
                                     {{ rowData[col.field] }}
                                 </div>
-                                <div *ngIf="col.field == 'button'">
-                                    <p-button styleClass={{rowData[col.field].styleClass}}
-                                        label={{rowData[col.field].label}} (click)="rowData[col.field].onCLick(rowData)"
-                                        icon={{rowData[col.field].icon}}></p-button>
+                                <div *ngIf="col.field === 'action'">
+                                    <p-button *ngFor="let action of campo.buttonsTable" styleClass={{action.styleClass}}
+                                        label={{action.label}} (click)="action.onCLick(rowData)"
+                                        icon={{action.icon}}></p-button>
                                 </div>
                             </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer" let-columns>
+                        <tr *ngFor="let footer of campo.rowsFooter">
+                            <td colspan=12><span class="font-weight-400">{{footer.text}}:</span> {{footer.value}}</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -261,6 +281,16 @@
                   }" placeholder={{campo.placeholder}} *ngIf="campo.type === 'password'" [feedback]="false"
                     formControlName={{campo.formControl}} (onChange)="onChange(campo.onChange)" styleClass="w-100"
                     inputStyleClass="form-control" [toggleMask]="true"></p-password>
+
+                <!-- photo  -->
+                <div class="camera" *ngIf="campo.type === 'photo'">
+                    <video id="video" class="foto" autoplay>Vídeo não disponível.</video>
+                    <canvas id="canvas" class="foto" style="display: none;"></canvas>
+                    <button pButton icon="pi pi-times" class="remove-file" id="icon-remove" [rounded]="true"
+                        style="visibility: collapse;" (click)="removePhoto()"></button>
+                    <button pButton icon="pi pi-camera" [rounded]="true" (click)="capturePhoto(campo.formControl)"
+                        id="button"></button>
+                </div>
 
                 <!-- validação de campo -->
                 <div class="h-10">

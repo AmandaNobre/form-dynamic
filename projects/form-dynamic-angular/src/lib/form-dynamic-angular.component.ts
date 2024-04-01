@@ -1,6 +1,6 @@
 import { UntypedFormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
 import { MessageService } from 'primeng/api';
@@ -25,33 +25,36 @@ export interface ICols {
 
 export interface IForm {
   label?: string,
-  secondLabel?: string,
-  type?: "autocomplete" | "button" | "check-box" | "currency" | "date" | "date-time" | "switch" | "list" | "mask" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password",
+  type?: "autocomplete" | "button" | "check-box" | "currency" | "date" | "date-time" | "switch" | "list" | "mask" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password" | "photo",
   disabled?: boolean | null,
   colsTable?: ICols[],
   options?: IOptions[]
   datePeriod?: boolean
   formControl?: string,
-  clean?: Function,
+  clean?: Function, // autocmplete and  treeSelect
   formControlSecondary?: string,
   treeSelectOptions?: ITreeSelectOptions[],
   forceSelection?: boolean,
   onCLick?: Function,
   onChange?: Function,
-  class?: string,
+  class?: string, //button
   rowsTable?: any[],
+  rowsFooter?: any[],
   minDate?: Date,
   maxDate?: Date,
   col?: string,
   acceptFiles?: string,
   msgAcceptFiles?: string,
   required?: boolean,
-  icon?: string,
+  icon?: string, //button
   placeholder?: string,
   textButton?: string,
-  textCheckBox?: string,
+  textCheckBox?: string, //?
   mask?: string,
-  multi?: boolean
+  search?: boolean,
+  buttonsTable?: any[],
+  scrollHeight?: string, //table
+  unmask?: boolean
 }
 
 
@@ -76,10 +79,9 @@ export interface IButtonsOptional {
 })
 
 
-export class FormDynamicAngularComponent {
+export class FormDynamicAngularComponent implements OnInit {
   @Input() title!: string;
-  @Input() sigle!: string;
-  @Input() description!: string;
+  @Input() subTitle!: string;
   @Input() validateForm: boolean = false;
 
   @Input() form: IForm[] = []
@@ -100,8 +102,64 @@ export class FormDynamicAngularComponent {
   constructor(
     public translate: TranslateService,
     private messageService: MessageService
-  ) {
+  ) { }
 
+  ngOnInit(): void {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function (mediaStream) {
+        const video: HTMLVideoElement | null = document.querySelector('#video');
+        if (video) {
+          video.srcObject = mediaStream;
+          video.play();
+        }
+      })
+      .catch(function (err) {})
+  }
+
+  async capturePhoto(fileName: string) {
+    const canvas: HTMLCanvasElement | null = document.querySelector("#canvas");
+    const icon: HTMLButtonElement | null = document.querySelector("#icon-remove");
+    const video: HTMLVideoElement | null = document.querySelector('#video');
+    const button: HTMLButtonElement | null = document.querySelector('#button');
+
+
+    if (canvas && video) {
+      canvas.height = video.videoHeight;
+      canvas.width = video.videoWidth;
+      const context = canvas.getContext('2d');
+      if (context && icon && button) {
+        context.drawImage(video, 0, 0)
+        video.style.display = "none"
+        button.disabled = true
+        canvas.style.display = "block"
+        icon.style.visibility = "visible"
+
+        let aux = {
+          name: "photo user",
+          contentType: "image/png",
+          content: canvas.toDataURL("image/png")
+        };
+
+        this.control.get(fileName)?.setValue(aux);
+      }
+    }
+  }
+
+  removePhoto() {
+    const canvas: HTMLCanvasElement | null = document.querySelector("#canvas");
+    const icon: HTMLButtonElement | null = document.querySelector("#icon-remove");
+    const video: HTMLVideoElement | null = document.querySelector('#video');
+    const button: HTMLButtonElement | null = document.querySelector('#button');
+
+    if (canvas && video) {
+      const context = canvas.getContext('2d');
+      if (context && icon && button) {
+        video.style.display = "block"
+        button.disabled = false
+        canvas.style.display = "none"
+        icon.style.visibility = "collapse"
+      }
+    }
   }
 
   dowloadFIle(event: any, file: any) {
@@ -183,4 +241,9 @@ export class FormDynamicAngularComponent {
       change()
     }
   }
+
+  cleanAutoComplete(input: string) {
+    this.control.controls[input].reset()
+  }
+
 }
