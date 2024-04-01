@@ -43,14 +43,45 @@ export class AppComponent implements OnInit {
 | Prop  | Type  | Default | Description |
 |:--------- | :---- | :----   |:----  | 
 | `title` | `string` | `''` | Title page
-| `sigle` | `string` | `''` | Sigle page
-| `description` | `string` | `''` | Description page
+| `subTitle` | `string` | `''` | Sub title page
 | `control` | `UntypedFormGroup` | `undefined` | Controls the form
 | `form` | `IForm[]` | `[]` | Input list
 | `files` | `File[]` | `[]` | Upload files
 | `validateForm` | `boolean` | `false` | if inputs have validation
 | `buttonsStandard` | `IButtonsStandard[]` | `[]` | Inputs standard (clean, filter, save, cancel)
 | `buttonsOptional` | `IButtonsOptional[]` | `[]` | Inputs optional
+
+
+## Props Inputs 💬
+
+| Prop  | Type  | Required |type input | Description |
+|:--------- | :---- | :----   |:----  | :----  | 
+| `label` | `string` | `no` | `all` | Label
+| `type` | `'autocomplete or button or check-box or currency or date or switch or list or mask or number or radio-button or select or select-button or table or text or text-area or tree-select or multi or upload-files or password or photo'` | `yes` | `all` | Type
+| `disabled` | `boolean or null` | `no` | `button or upload-files` | Disabled
+| `formControl` | ` string` | `no` | `all` | Controler input
+| `onChange` | `Function` | `no` | `all` | Change
+| `required` | `boolean` | `no` | `all` | If input is required
+| `placeholder` | `string` | `no` | `all` | Placeholder
+| `options` | ` IOptions[]` | `no` | `select or autocomplete or list or multi or radio-button or ` | Cols table
+| `colsTable` | ` ICols[]` | `no` | `table` | Cols table
+| `forceSelection` | ` ICols[]` | `no` | `table` | Cols table
+| `clean` | `Function` | `no` | `tree-select` | Function clear 
+| `treeSelectOptions` | ` ITreeSelectOptions[]` | `no` | `tree-select` | Options tree select
+| `onCLick` | `Function` | `no` | `button` | Function clear 
+| `icon` | `string` | `no` | `button` | Icon Button 
+| `textButton` | `string` | `no` | `button` | Text Button 
+| `showTime` | ` boolean` | `no` | `date` | if view time in date
+| `onFocusDate` | `Function` | `no` | `date` | Functions focus 
+| `numberOfMonthsDate` | `number` | `no` | `date` | Amount month is view in date
+| `minDate` | `Date` | `no` | `date` | Min Date
+| `maxDate` | `Date` | `no` | `date` | Max Date
+| `acceptFiles` | `string` | `no` | `upload-files` | Formats accepts
+| `msgAcceptFiles` | `string` | `no` | `upload-files` | Message accepts
+| `mask` | `string` | `no` | `mask` | type mask
+| `unmask` | `boolean` | `no` | `mask` | If control user mask or no
+| `search` | `boolean` | `no` | `select` | If input search
+
 
 ## Usage Inputs
 
@@ -117,7 +148,7 @@ this.formmAutocomplete = [
 
 ```
 
-3- Date | Date period | Date Time
+3- Date 
 
 ```js
 
@@ -125,17 +156,11 @@ controlAutocomplete: UntypedFormGroup
 formmAutocomplete: IForm[] = []
 
 this.controlAutocomplete = this.fb.group({
-  date: '',
-  startDate: '',
-  endDate: '',
-  dateTime: ''
+  date: ''
 });
 
 this.formmAutocomplete = [
   { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date' },
-  { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'startDate', datePeriod: true, formControlSecondary: "endDate" },
-  { label: 'Date', col: 'col-lg-6', type: 'date-time', formControl: 'dateTime' }
-    
 ]
 
 ```
@@ -293,7 +318,7 @@ buttonsStandard: IButtonsStandard[] = [
 ]
 
 this.control = this.fb.group({
-  mask: new FormControl({ value: 0 }, {updateOn: 'submit', validators: Validators.required}),
+  mask: new FormControl({ value: 0, validators: Validators.required}),
 });
 
 this.form = [
@@ -311,6 +336,83 @@ save() {
 
 ```
 ## Translate
+
+Created files
+
+```json
+//src/assets/i18n/pt.json
+
+{
+  "pageLogin": {
+        "userName": "Usuário",
+        "password": "Senha"
+    }
+}
+
+//src/assets/i18n/en.json
+
+{
+  "pageLogin": {
+        "userName": "Username",
+        "password": "Password"
+    }
+}
+
+```
+
+Created input and form
+
+```html
+<!--app.component.html-->
+
+<select (change)="uselanguage($event.target.value)">
+    <option value='pt'>pt</option>
+    <option value='en'>en</option>
+</select>
+
+<form-dynamic-angular title="Login" [form]=formLogin [control]=controlLogin></form-dynamic-angular>
+
+```
+
+Created function
+
+```js
+//app.component.ts
+
+import { TranslateService } from '@ngx-translate/core';
+import { UntypedFormBuilder } from '@angular/forms';
+import { IForm } from 'form-dynamic-angular';
+
+
+export class AppComponent implements OnInit {
+
+  controlmitigationBarriers: UntypedFormGroup 
+  formLogin: IForm[] = []
+
+  constructor(
+    private translate: TranslateService,
+    private fb: UntypedFormBuilder,
+  ) {}
+
+  ngOnInit() {
+    this.controlmitigationBarriers  = this.fb.group({
+      username: '',
+      password: ''
+    });
+
+    this.formLogin = [
+      { label: 'pageLogin.userName', col: 'col-lg-6', type: 'text', formControl: 'username' },
+      { label: 'pageLogin.password', col: 'col-lg-6', type: 'text', formControl: 'password' }
+    ]
+  }
+
+  uselanguage(language: string) {
+    this.translate.use(language);
+  }
+}
+
+```
+
 
 Created files
 

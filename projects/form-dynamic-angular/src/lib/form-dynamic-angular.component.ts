@@ -25,18 +25,18 @@ export interface ICols {
 
 export interface IForm {
   label?: string,
-  type?: "autocomplete" | "button" | "check-box" | "currency" | "date" | "date-time" | "switch" | "list" | "mask" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password" | "photo",
+  type: "autocomplete" | "button" | "check-box" | "currency" | "date" | "switch" | "list" | "mask" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password" | "photo"
   disabled?: boolean | null,
   colsTable?: ICols[],
   options?: IOptions[]
-  datePeriod?: boolean
   formControl?: string,
+  showTime?: boolean,
   clean?: Function, // autocmplete and  treeSelect
-  formControlSecondary?: string,
   treeSelectOptions?: ITreeSelectOptions[],
-  forceSelection?: boolean,
   onCLick?: Function,
   onChange?: Function,
+  onFocusDate?: Function,
+  numberOfMonthsDate?: number;
   class?: string, //button
   rowsTable?: any[],
   rowsFooter?: any[],
@@ -54,7 +54,8 @@ export interface IForm {
   search?: boolean,
   buttonsTable?: any[],
   scrollHeight?: string, //table
-  unmask?: boolean
+  unmask?: boolean,
+  selectionMode?: "multiple" | "range" | "single"
 }
 
 
@@ -113,8 +114,17 @@ export class FormDynamicAngularComponent implements OnInit {
           video.play();
         }
       })
-      .catch(function (err) {})
+      .catch(function (err) { })
   }
+
+  numberOfMonthsDate(numberOfMonthsDate: number) {
+    return numberOfMonthsDate ?? 1
+  }
+
+  selectionMode(selectionMode: string) {
+    return selectionMode ?? "single"
+  }
+
 
   async capturePhoto(fileName: string) {
     const canvas: HTMLCanvasElement | null = document.querySelector("#canvas");
