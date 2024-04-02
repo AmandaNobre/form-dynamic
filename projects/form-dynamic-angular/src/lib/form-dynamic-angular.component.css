@@ -1,27 +1,5 @@
-.page {
-    border-radius: 11px;
-    padding: 38px;
-    margin-bottom: 35px;
-}
-
-.font-weight-400 {
-    font-weight: 400;
-}
-
-.border-none {
-    border: none;
-}
-
-.p-0 {
-    padding: 0 !important;
-}
-
 .h-10 {
     height: 10px;
-}
-
-.row-custom {
-    align-items: end
 }
 
 .div-title span {
@@ -80,38 +58,6 @@
 
 .subtitle {
     align-items: baseline;
-}
-
-.d-flex-custom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-@media (max-width: 1200px) {
-    .d-flex-custom {
-        display: block !important;
-    }
-}
-
-.margin-right-10 {
-    margin-right: 10px;
-}
-
-.margin-right-1 {
-    margin-right: 1px;
-}
-
-.d-flex-radio-button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-
-.d-flex-radio-button label,
-.label-check-box {
-    margin: 0;
 }
 
 input[type="file"] {

@@ -1,49 +1,47 @@
 <div>
     <div *ngIf="title" class="div-title">
         <span translate={{title}}></span>
-        <div *ngIf="subTitle" class="d-flex subtitle">
+        <div *ngIf="subTitle" class="flex subtitle">
             <span translate={{subTitle}}></span>
         </div>
         <p-divider></p-divider>
     </div>
-    <form *ngIf="control" [formGroup]="control" class="row row-custom">
-        <div *ngFor="let item of form" class="{{item.col}} col-sm-12">
-            <label class="form-label" *ngIf="item.label">{{item.label}}</label>
+    <form *ngIf="control" [formGroup]="control" class="formgrid grid">
+        <div *ngFor="let item of form" class="{{item.col}} sm:col-12">
+            <label *ngIf="item.label">{{item.label}}</label>
             <label *ngIf="item.required && item.label" class="danger-text ml-2">*</label>
 
-            <div class="mb-3 ">
+            <div class="mt-2">
                 <!-- text -->
                 <input [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
-                  }" pInputText placeholder={{item.placeholder}}
-                    *ngIf="item.type == 'text' || item.type == 'number' " type={{item.type}} class="form-control"
-                    formControlName={{item.formControl}} />
+                  }" pInputText placeholder={{item.placeholder}} *ngIf="item.type == 'text' || item.type == 'number' "
+                    type={{item.type}} formControlName={{item.formControl}} class="w-full" />
 
                 <!-- select -->
                 <p-dropdown [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
                   }" [filter]=item.search emptyFilterMessage="Nenhum dado encontrado"
-                    emptyMessage="Nenhum dado encontrado" placeholder={{item.placeholder}}
-                    styleClass="w-100 form-control p-0" (onChange)="onChange(item.onChange)"
-                    *ngIf="item.type === 'select'" [showClear]="true" [options]="item.options"
-                    formControlName={{item.formControl}} optionLabel="description"></p-dropdown>
+                    emptyMessage="Nenhum dado encontrado" placeholder={{item.placeholder}} styleClass="w-full p-0"
+                    (onChange)="onChange(item.onChange)" *ngIf="item.type === 'select'" [showClear]="true"
+                    [options]="item.options" formControlName={{item.formControl}}
+                    optionLabel="description"></p-dropdown>
 
                 <!-- currency  -->
                 <p-inputNumber *ngIf="item.type === 'currency'" [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
-                  }" formControlName={{item.formControl}} placeholder={{item.placeholder}}
-                    inputStyleClass=" form-control w-100" styleClass="w-100" (onKeyDown)="onChange(item.onChange)"
-                    mode="currency" [min]="0" currency="BRL">
+                  }" formControlName={{item.formControl}} placeholder={{item.placeholder}} inputStyleClass="w-full"
+                    styleClass="w-full" (onKeyDown)="onChange(item.onChange)" mode="currency" [min]="0" currency="BRL">
                 </p-inputNumber>
 
                 <!-- mask  -->
                 <p-inputMask *ngIf="item.type === 'mask'" [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
-                  }" formControlName={{item.formControl}} placeholder={{item.placeholder}} styleClass=" form-control"
+                  }" formControlName={{item.formControl}} placeholder={{item.placeholder}}
                     (onComplete)="onChange(item.onChange)" mask={{item.mask}} unmask={{item.unmask}}></p-inputMask>
 
                 <!-- treeSelect -->
@@ -51,7 +49,7 @@
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
                   }" placeholder={{item.placeholder}} (onNodeSelect)="onChange(item.onChange)"
-                    *ngIf="item.type === 'tree-select'" containerStyleClass="w-100 form-control p-0"
+                    *ngIf="item.type === 'tree-select'" containerStyleClass="w-full p-0"
                     formControlName={{item.formControl}} [options]="item.treeSelectOptions" [filter]="true"
                     [filterInputAutoFocus]="true" emptyMessage="Nenhum dado encontrado" [showClear]="true"
                     (onClear)="item.clean()"></p-treeSelect>
@@ -60,32 +58,31 @@
                 <p-autoComplete [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
-                  }" placeholder={{item.placeholder}} styleClass="w-100 p-0" inputStyleClass="form-control"
-                    [inputStyle]="{'width':'100%'}" *ngIf="item.type === 'autocomplete'"
+                  }" placeholder={{item.placeholder}} styleClass="w-full p-0" [inputStyle]="{'width':'100%'}"
+                    *ngIf="item.type === 'autocomplete'" (onSelect)=" onChange(item.onChange)"
                     formControlName={{item.formControl}} [suggestions]="filteredAutoComplete"
                     (completeMethod)="filterAutoComplete($event, item.options)" [forceSelection]="false"
                     [showEmptyMessage]="true" emptyMessage="Nenhum dado encontrado" dataKey="code" field="description"
                     showClear=true (onClear)="cleanAutoComplete(item.formControl)"></p-autoComplete>
 
                 <!-- date -->
-                <div class="d-flex-custom">
-                    <p-calendar *ngIf="item.type === 'date'" [ngClass]="{
+                <p-calendar *ngIf="item.type === 'date'" [ngClass]="{
                         'ng-invalid ng-dirty':
                         validateForm && control.controls[item.formControl].errors
-                    }" formControlName={{item.formControl}} [numberOfMonths]=numberOfMonthsDate(item.numberOfMonthsDate)
-                        [selectionMode]=selectionMode(item.selectionMode) (onFocus)="onChange(item.onFocusDate)" [maxDate]="item.maxDate"
-                        [minDate]="item.minDate" dateFormat="dd/mm/yy" (onSelect)="onChange(item.onChange)"
-                        inputStyleClass="form-control" [iconDisplay]="'input'" styleClass="w-100 p-0"
-                        placeholder={{item.placeholder}} [showIcon]="true" [showTime]="item.showTime"></p-calendar>
-                </div>
+                    }" formControlName={{item.formControl}} styleClass="w-full"
+                    [numberOfMonths]=numberOfMonthsDate(item.numberOfMonthsDate)
+                    [selectionMode]=selectionMode(item.selectionMode) (onFocus)="onChange(item.onFocusDate)"
+                    [maxDate]="item.maxDate" [minDate]="item.minDate" dateFormat="dd/mm/yy"
+                    (onSelect)="onChange(item.onChange)" [iconDisplay]="'input'" placeholder={{item.placeholder}}
+                    [showIcon]="true" [showTime]="item.showTime"></p-calendar>
 
                 <!-- textarea -->
                 <textarea [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
-                  }" placeholder={{item.placeholder}} pInputTextarea (attr.change)="onChange(item.onChange)"
-                    *ngIf="item.type === 'text-area' " pInputTextarea formControlName={{item.formControl}}
-                    class="form-control" rows={{item.rows}}></textarea>
+                  }" placeholder={{item.placeholder}} class="w-full" pInputTextarea
+                    (attr.change)="onChange(item.onChange)" *ngIf="item.type === 'text-area' " pInputTextarea
+                    formControlName={{item.formControl}} rows={{item.rows}}></textarea>
 
                 <!-- checkbox -->
                 <div *ngIf="item.type == 'check-box'">
@@ -97,9 +94,10 @@
                 </div>
 
                 <!-- button -->
-                <p-button *ngIf="item.type == 'button'" class='{{item.class}} w-100 mt-3' (click)="item.onCLick()"
+                <p-button *ngIf="item.type == 'button'" styleClass='{{item.class}} w-full mt-3' (click)="item.onCLick()"
                     [disabled]=item.disabled icon={{item.icon}} label={{item.textButton}}></p-button>
 
+                <!-- can  -->
                 <div class="area" *ngIf="item.type == 'can'">
                     <video autoplay="true" id="webCamera">
                     </video>
@@ -176,18 +174,18 @@
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
                   }" placeholder={{item.placeholder}} *ngIf="item.type === 'multi'" [options]="item.options"
-                    formControlName={{item.formControl}} styleClass="form-control p-0"
+                    formControlName={{item.formControl}} styleClass="p-0 w-full"
                     optionLabel="description"></p-multiSelect>
 
                 <!-- radioButton -->
-                <div *ngIf="item.type === 'radio-button'" class="d-flex-radio-button form-control border-none">
+                <div *ngIf="item.type === 'radio-button'" class="flex gap-3 border-none">
                     <div *ngFor="let listRadioButton of item.options" class="field-checkbox">
                         <p-radioButton [ngClass]="{
                             'ng-invalid ng-dirty':
                             validateForm && control.controls[item.formControl].errors
                           }" [value]="listRadioButton.code" formControlName={{item.formControl}}
-                            class="margin-right-10" (onClick)="onChange(item.onChange)"></p-radioButton>
-                        <label class="margin-right-1">{{listRadioButton.description}}</label>
+                            (onClick)="onChange(item.onChange)"></p-radioButton>
+                        <label>{{listRadioButton.description}}</label>
                     </div>
                 </div>
 
@@ -199,7 +197,7 @@
                             <span>{{item.description}}</span>
                         </ng-template>
                     </p-selectButton>
-                    <!-- <input type="text" pInputText class="form-control" [attr.disabled]="item.disabled"
+                    <!-- <input type="text" pInputText [attr.disabled]="item.disabled"
                         formControlName={{item.formControlSecondary}}> -->
                 </div>
 
@@ -231,7 +229,7 @@
                     </ng-template>
                     <ng-template pTemplate="footer" let-columns>
                         <tr *ngFor="let footer of item.rowsFooter">
-                            <td colspan=12><span class="font-weight-400">{{footer.text}}:</span> {{footer.value}}</td>
+                            <td colspan=12><span class="font-normal">{{footer.text}}:</span> {{footer.value}}</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -248,8 +246,8 @@
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
                   }" placeholder={{item.placeholder}} *ngIf="item.type === 'password'" [feedback]="false"
-                    formControlName={{item.formControl}} (onChange)="onChange(item.onChange)" styleClass="w-100"
-                    inputStyleClass="form-control" [toggleMask]="true"></p-password>
+                    formControlName={{item.formControl}} (onChange)="onChange(item.onChange)" styleClass="w-full"
+                    [toggleMask]="true"></p-password>
 
                 <!-- photo  -->
                 <div class="camera" *ngIf="item.type === 'photo'">
@@ -262,7 +260,7 @@
                 </div>
 
                 <!-- validação de item -->
-                <div class="h-10">
+                <div class="h-10h-10">
                     <small class="danger-text"
                         *ngIf="validateForm && control.controls[item.formControl] && control.controls[item.formControl].errors?.['required']">
                         item obrigatório
