@@ -5,8 +5,18 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { OnInit } from '@angular/core';
 import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { FormDynamicAngularModule, IForm, IButtonsStandard } from 'projects/form-dynamic-angular/src/public-api';
+import { FormDynamicAngularModule, IForm, IButtonsStandard } from 'form-dynamic-angular';
+// import { FormDynamicAngularModule, IForm, IButtonsStandard } from 'projects/form-dynamic-angular/src/public-api';
 import * as moment from 'moment';
+import { MenuModule } from 'primeng/menu';
+import { MenuItem } from 'primeng/api';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { ToolbarModule } from 'primeng/toolbar';
 
 @Component({
   selector: 'app-root',
@@ -18,69 +28,63 @@ import * as moment from 'moment';
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    FormDynamicAngularModule
+    FormDynamicAngularModule,
+    MenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    ToolbarModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('sidebarRef') sidebarRef!: Sidebar;
-
-  closeCallback(e: Event): void {
-    this.sidebarRef.close(e);
-  }
-
-  sidebarVisible: boolean = false;
-
-
-
   controlExemple: UntypedFormGroup
   formmExemple: IForm[] = []
-  buttonsStandard: IButtonsStandard[] = [
-    { type: 'save', onCLick: () => console.log(), styleClass: 'p-button-outlined' }
-  ]
 
+
+  title = 'material-responsive-sidenav';
+  @ViewChild(MatSidenav)
+  sidenav!: MatSidenav;
+  isMobile = true;
+
+  isCollapsed = true;
   constructor(
-    private fb: UntypedFormBuilder,
-  ) { }
+    private observer: BreakpointObserver,
+    private fb: UntypedFormBuilder,) { }
 
   ngOnInit() {
+
     this.controlExemple = this.fb.group({
-      startDate: new FormControl(""),
-      endDate: new FormControl(""),
-      requestingEmployee: new FormControl(""),
-      usergEmployee: new FormControl(""),
-      typeRoute: new FormControl(""),
-      route: new FormControl(""),
-      path: new FormControl(""),
-      period: new FormControl(""),
-      status: new FormControl("")
+      user: '',
+      password: ''
     });
 
     this.formmExemple = [
-      { label: 'Data Inicial do Agendamento', col: 'lg:col-3 md:col-3', type: 'date', formControl: "startDate" },
-      { label: 'Data Final do Agendamento', col: 'lg:col-3 md:col-3', type: 'date', formControl: "endDate" },
-      { label: 'Funcionario Solicitante', col: 'lg:col-6 md:col-6', type: 'autocomplete', formControl: "requestingEmployee" },
-      { label: 'Funcionario Utilizador', col: 'lg:col-6 md:col-6', type: 'autocomplete', formControl: "usergEmployee" },
-      { label: 'Tipo de Rota', col: 'lg:col-3 md:col-3', type: 'select', formControl: "typeRoute" },
-      { label: 'Rota', col: 'lg:col-3 md:col-3', type: 'select', formControl: "route" },
-      { label: 'Percurso', col: 'lg:col-6 md:col-6', type: 'select', formControl: "path" },
-      { label: 'Período', col: 'lg:col-3 md:col-3', type: 'select', formControl: "period" },
-      {
-        label: 'Status do Agendamento', col: 'lg:col-3 md:col-3', type: 'radio-button', options: [{ code: 1, description: "asd" }, { code: 2, description: "teste" }], formControl: "status"
-      },
+      { label: 'User', col: 'md:col-6', type: 'text', formControl: 'user' },
+      { label: 'Password', col: 'md:col-6', type: 'text', formControl: 'password', id: "adsa" }
     ]
 
+
+    this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
+      if (screenSize.matches) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
   }
 
-  focusDate() {
-    this.formmExemple[0].maxDate = undefined
+  toggleMenu() {
+    if (this.isMobile) {
+      this.sidenav.toggle();
+      this.isCollapsed = false; // On mobile, the menu can never be collapsed
+    } else {
+      this.sidenav.open(); // On desktop/tablet, the menu can never be fully closed
+      this.isCollapsed = !this.isCollapsed;
+    }
   }
-
-  changeMaxDate() {
-    const control = this.controlExemple.value
-    this.formmExemple[0].maxDate = moment(control.date[0]).add(7, 'days').toDate()
-  }
-
 }

@@ -56,6 +56,7 @@ export interface IForm {
   scrollHeight?: string, //table
   unmask?: boolean,
   selectionMode?: "multiple" | "range" | "single"
+  id?: number | string
 }
 
 
@@ -106,15 +107,18 @@ export class FormDynamicAngularComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function (mediaStream) {
-        const video: HTMLVideoElement | null = document.querySelector('#video');
-        if (video) {
-          video.srcObject = mediaStream;
-          video.play();
-        }
-      })
-      .catch(function (err) { })
+    if (window.location.protocol === "https") {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (mediaStream) {
+          const video: HTMLVideoElement | null = document.querySelector('#video');
+          if (video) {
+            video.srcObject = mediaStream;
+            video.play();
+          }
+        })
+        .catch(function (err) { })
+    }
+
   }
 
   numberOfMonthsDate(numberOfMonthsDate: number) {
