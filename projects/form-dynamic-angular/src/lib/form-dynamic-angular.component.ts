@@ -2,16 +2,12 @@ import { UntypedFormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
-import * as moment from 'moment';
-import { MessageService } from 'primeng/api';
-
 export interface ITreeSelectOptions {
   key: string,
   label: string,
   icon: string,
   children?: ITreeSelectOptions[]
 }
-
 
 export interface IOptions {
   description: string,
@@ -56,7 +52,8 @@ export interface IForm {
   scrollHeight?: string, //table
   unmask?: boolean,
   selectionMode?: "multiple" | "range" | "single"
-  id?: number | string
+  id?: number | string,
+  viewNameFile?: boolean
 }
 
 
@@ -92,21 +89,20 @@ export class FormDynamicAngularComponent implements OnInit {
   @Input() buttonsStandard: IButtonsStandard[]
   @Input() buttonsOptional: IButtonsOptional[]
 
-  @Input() files: File[] = [];
+  @Input() files: any[] = [];
 
-  filesDonwload: any[] = [];
-
+  filesView: any[] = [];
   filteredAutoComplete: any[] = [];
-  maxDate: Date
-  minDate: Date
-  minDateAll: Date;
 
   constructor(
-    public translate: TranslateService,
-    private messageService: MessageService
+    public translate: TranslateService
   ) { }
 
   ngOnInit(): void {
+    this.files.map(f => {
+      this.filesView.push({ ...f, type: f.contentType })
+    })
+
     if (window.location.protocol === "https") {
       navigator.mediaDevices.getUserMedia({ video: true })
         .then(function (mediaStream) {
@@ -118,7 +114,6 @@ export class FormDynamicAngularComponent implements OnInit {
         })
         .catch(function (err) { })
     }
-
   }
 
   numberOfMonthsDate(numberOfMonthsDate: number) {
@@ -188,18 +183,13 @@ export class FormDynamicAngularComponent implements OnInit {
     // })
   }
 
-  onFocusDate(date: Date) {
-    this.minDate = moment(date).toDate()
-    this.maxDate = moment(date).add(6, 'month').toDate();
-  }
-
   getUrl(file: File) {
     return window.URL.createObjectURL(file)
   }
 
-  async onSelect(fileName: string, event: any) {
+  async onSelectFile(fileName: string, event: any) {
     const file = event.target.files
-    this.filesDonwload.push(...file);
+    this.filesView.push(...file);
     const newFIles = file
     let arr = [];
     for (const item of newFIles) {
@@ -210,12 +200,11 @@ export class FormDynamicAngularComponent implements OnInit {
       };
       arr.push(aux);
     }
-
     this.control.get(fileName)?.setValue(arr);
   }
 
   onRemove(event: File) {
-    this.filesDonwload.splice(this.filesDonwload.indexOf(event), 1);
+    this.filesView.splice(this.filesView.indexOf(event), 1);
   }
 
   filterAutoComplete(event: { query: any; }, suggestionsAutoComplete: any) {
@@ -240,14 +229,6 @@ export class FormDynamicAngularComponent implements OnInit {
       reader.onloadend = () => resolve(reader.result);
       reader.readAsDataURL(file);
     });
-  }
-
-  onBlurDate(event: any) {
-    if (event.target.value) {
-      if (!moment(event.target.value, "DD/MM/yyyy HH:mm", true).isValid() && !moment(event.target.value, "DD/MM/yyyy", true).isValid()) {
-        this.messageService.add({ severity: 'error', summary: this.translate.instant('globals.invalidDate'), detail: this.translate.instant('globals.invalidDateMessage') })
-      }
-    }
   }
 
   onChange(change?: Function) {

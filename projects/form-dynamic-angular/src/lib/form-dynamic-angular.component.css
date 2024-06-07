@@ -126,3 +126,7 @@ input[type="file"] {
 .preview-photo {
     position: relative;
 }
+
+.h-0 {
+    height: 0;
+}

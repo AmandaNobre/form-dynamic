@@ -1,9 +1,3 @@
-<!-- <mat-toolbar color="primary">
-  <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
-    <mat-icon>menu</mat-icon>
-  </button>
-</mat-toolbar> -->
-
 <p-toolbar class="fixed w-full z-2">
   <div class="p-toolbar-group-start">
     <p-button icon="pi pi-bars" class="mr-2" (click)="toggleMenu()" />
@@ -22,8 +16,6 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <form-dynamic-angular title="Exemple" [form]=formmExemple [control]=controlExemple></form-dynamic-angular>
-
-    <router-outlet></router-outlet>
+    <form-dynamic-angular title="Exemple" [form]=formmExemple [control]=controlExemple [files]=filesDonwload></form-dynamic-angular>
   </mat-sidenav-content>
 </mat-sidenav-container>
