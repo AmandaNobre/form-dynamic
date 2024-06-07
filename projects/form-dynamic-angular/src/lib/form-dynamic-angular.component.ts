@@ -53,7 +53,8 @@ export interface IForm {
   unmask?: boolean,
   selectionMode?: "multiple" | "range" | "single"
   id?: number | string,
-  viewNameFile?: boolean
+  viewNameFile?: boolean,
+  multileFile?: boolean
 }
 
 
@@ -187,9 +188,13 @@ export class FormDynamicAngularComponent implements OnInit {
     return window.URL.createObjectURL(file)
   }
 
-  async onSelectFile(fileName: string, event: any) {
+  async onSelectFile(fileName: string, event: any, multiple: boolean) {
     const file = event.target.files
+    if (!multiple) {
+      this.filesView = [];
+    }
     this.filesView.push(...file);
+
     const newFIles = file
     let arr = [];
     for (const item of newFIles) {
@@ -205,6 +210,7 @@ export class FormDynamicAngularComponent implements OnInit {
 
   onRemove(event: File) {
     this.filesView.splice(this.filesView.indexOf(event), 1);
+    console.log('this.filesView', this.filesView)
   }
 
   filterAutoComplete(event: { query: any; }, suggestionsAutoComplete: any) {

@@ -120,8 +120,8 @@
                             <i *ngIf="filesView.length === 0" class="pi pi-cloud-upload"></i>
                             <p *ngIf="filesView.length === 0">Clique ou arraste e solte um arquivo para anexar</p>
                             <span *ngIf="filesView.length === 0">{{item.msgAcceptFiles}}</span>
-                            <input type="file" multiple [accept]="item.acceptFiles"
-                                (change)="onSelectFile(item.formControl, $event)" />
+                            <input type="file" [multiple]=item.multileFile [accept]="item.acceptFiles"
+                                (change)="onSelectFile(item.formControl, $event, item.multileFile)" />
                         </label>
                         <div *ngFor="let f of filesView">
                             <div *ngIf="f.type && f.type.includes('image')">
@@ -129,8 +129,8 @@
                                     <img *ngIf="!f.content" src='{{getUrl(f)}}'>
                                     <img *ngIf="f.content" src='{{f.content}}'>
                                     <span *ngIf="item.viewNameFile">{{ f.name }}</span>
-                                    <input type="file" multiple [accept]="item.acceptFiles"
-                                        (change)="onSelectFile(item.formControl, $event)" />
+                                    <input type="file" [multiple]=item.multileFile [accept]="item.acceptFiles"
+                                        (change)="onSelectFile(item.formControl, $event,item.multileFile)" />
                                     <label> <i class="pi pi-times remove-file" (click)="onRemove(f)"></i></label>
                                 </label>
                             </div>
