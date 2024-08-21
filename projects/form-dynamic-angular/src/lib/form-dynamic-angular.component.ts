@@ -1,4 +1,4 @@
-import { UntypedFormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, UntypedFormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
@@ -19,15 +19,16 @@ export interface ICols {
   header: string
 }
 
+export type TTypes = "autocomplete" | "button" | "check-box" | "currency" | "date" | "switch" | "list" | "mask" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password" | "photo" | "likert"
 export interface IForm {
   label?: string,
-  type: "autocomplete" | "button" | "check-box" | "currency" | "date" | "switch" | "list" | "mask" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password" | "photo"
+  type: TTypes,
   disabled?: boolean | null,
   colsTable?: ICols[],
   options?: IOptions[]
   formControl?: string,
   showTime?: boolean,
-  clean?: Function, // autocmplete and  treeSelect
+  onCLear?: Function,
   treeSelectOptions?: ITreeSelectOptions[],
   onCLick?: Function,
   onChange?: Function,
@@ -36,6 +37,7 @@ export interface IForm {
   class?: string, //button
   rowsTable?: any[],
   rowsFooter?: any[],
+  rowsTextArea?: number,
   minDate?: Date,
   maxDate?: Date,
   col?: string,
@@ -54,7 +56,11 @@ export interface IForm {
   selectionMode?: "multiple" | "range" | "single"
   id?: number | string,
   viewNameFile?: boolean,
-  multileFile?: boolean
+  multileFile?: boolean,
+  maxlength?: number,
+  viewDate?: 'month' | 'date',
+  dateFormat?: string
+  timeOnly?: boolean
 }
 
 
@@ -85,19 +91,35 @@ export class FormDynamicAngularComponent implements OnInit {
   @Input() validateForm: boolean = false;
 
   @Input() form: IForm[] = []
-  @Input() control: UntypedFormGroup;
+  @Input() control: FormGroup;
 
   @Input() buttonsStandard: IButtonsStandard[]
   @Input() buttonsOptional: IButtonsOptional[]
 
   @Input() files: any[] = [];
 
+  valueCaracter = 0
   filesView: any[] = [];
   filteredAutoComplete: any[] = [];
 
+
+  selectedCategory: any = null;
+
+  categories: any[] = [
+    { name: 'Accounting', key: 'A' },
+    { name: 'Marketing', key: 'M' },
+    { name: 'Production', key: 'P' },
+    { name: 'Research', key: 'R' }
+  ];
+
+
   constructor(
-    public translate: TranslateService
-  ) { }
+    public translate: TranslateService,
+    private formBuilder: FormBuilder
+  ) {
+    this.control = this.formBuilder.group({});
+
+  }
 
   ngOnInit(): void {
     this.files.map(f => {
@@ -124,6 +146,7 @@ export class FormDynamicAngularComponent implements OnInit {
   selectionMode(selectionMode: string) {
     return selectionMode ?? "single"
   }
+
 
 
   async capturePhoto(fileName: string) {
@@ -210,7 +233,10 @@ export class FormDynamicAngularComponent implements OnInit {
 
   onRemove(event: File) {
     this.filesView.splice(this.filesView.indexOf(event), 1);
-    console.log('this.filesView', this.filesView)
+    var input = document.getElementById('fileInput') as HTMLInputElement
+    if (input) {
+      input.value = ''
+    }
   }
 
   filterAutoComplete(event: { query: any; }, suggestionsAutoComplete: any) {
@@ -240,6 +266,12 @@ export class FormDynamicAngularComponent implements OnInit {
   onChange(change?: Function) {
     if (change) {
       change()
+    }
+  }
+
+  clickCLear(clear?: Function) {
+    if (clear) {
+      clear()
     }
   }
 

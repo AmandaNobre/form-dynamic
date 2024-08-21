@@ -76,8 +76,6 @@ input[type="file"] {
     min-width: 180px;
     padding: 0px 20px;
     position: relative;
-
-
 }
 
 .preview-img span {
@@ -85,10 +83,15 @@ input[type="file"] {
     overflow-wrap: break-word;
 }
 
-.preview-img img {
-    max-width: 100%;
-    opacity: .8;
+.preview-file {
+    align-items: center;
+    border-radius: 5px;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    min-width: 283px;
 }
+
 
 .remove-file {
     display: flex;
@@ -96,7 +99,6 @@ input[type="file"] {
     align-items: center;
     height: 22px;
     width: 22px;
-    position: absolute;
     top: 5px;
     right: 5px;
     border-radius: 50%;
@@ -104,6 +106,16 @@ input[type="file"] {
     color: #333;
     cursor: pointer;
     font-size: .8rem !important;
+}
+/* .preview-file span {
+    position: absolute;
+    overflow-wrap: break-word;
+} */
+
+
+.preview-img img {
+    max-width: 100%;
+    opacity: .8;
 }
 
 .camera {

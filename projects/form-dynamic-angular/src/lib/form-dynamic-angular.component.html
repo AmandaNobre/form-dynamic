@@ -27,8 +27,8 @@
                   }" [filter]=item.search emptyFilterMessage="Nenhum dado encontrado"
                         emptyMessage="Nenhum dado encontrado" placeholder={{item.placeholder}} styleClass="w-full p-0"
                         (onChange)="onChange(item.onChange)" *ngIf="item.type === 'select'" [showClear]="true"
-                        [options]="item.options" formControlName={{item.formControl}}
-                        optionLabel="description"></p-dropdown>
+                        [options]="item.options" formControlName={{item.formControl}} optionLabel="description"
+                        (onClear)="clickCLear(item.onCLear)"></p-dropdown>
 
                     <!-- currency  -->
                     <p-inputNumber id={{item.id}} *ngIf="item.type === 'currency'" [ngClass]="{
@@ -44,7 +44,8 @@
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
                   }" formControlName={{item.formControl}} placeholder={{item.placeholder}} styleClass="w-full"
-                        (onComplete)="onChange(item.onChange)" mask={{item.mask}} unmask={{item.unmask}}></p-inputMask>
+                        (onComplete)="onChange(item.onChange)" mask={{item.mask}} unmask={{item.unmask}}
+                        (onClear)="clickCLear(item.onCLear)" showClear="true"></p-inputMask>
 
                     <!-- treeSelect -->
                     <p-treeSelect id={{item.id}} [ngClass]="{
@@ -54,7 +55,7 @@
                         *ngIf="item.type === 'tree-select'" containerStyleClass="w-full p-0"
                         formControlName={{item.formControl}} [options]="item.treeSelectOptions" [filter]="true"
                         [filterInputAutoFocus]="true" emptyMessage="Nenhum dado encontrado" [showClear]="true"
-                        (onClear)="item.clean()"></p-treeSelect>
+                        (onClear)="clickCLear(item.onCLear)"></p-treeSelect>
 
                     <!-- autoComplete -->
                     <p-autoComplete inputId={{item.id}} [ngClass]="{
@@ -65,27 +66,32 @@
                         formControlName={{item.formControl}} [suggestions]="filteredAutoComplete"
                         (completeMethod)="filterAutoComplete($event, item.options)" [forceSelection]="false"
                         [showEmptyMessage]="true" emptyMessage="Nenhum dado encontrado" dataKey="code"
-                        field="description" showClear=true
-                        (onClear)="cleanAutoComplete(item.formControl)"></p-autoComplete>
+                        field="description" showClear=true (onClear)="clickCLear(item.onCLear)"></p-autoComplete>
 
                     <!-- date -->
-                    <p-calendar id={{item.id}} *ngIf="item.type === 'date'" [ngClass]="{
+                    <p-calendar id={{item.id}} view="{{item.viewDate}}" *ngIf="item.type === 'date'" [ngClass]="{
                         'ng-invalid ng-dirty':
                         validateForm && control.controls[item.formControl].errors
                     }" formControlName={{item.formControl}} styleClass="w-full"
                         [numberOfMonths]=numberOfMonthsDate(item.numberOfMonthsDate)
                         [selectionMode]=selectionMode(item.selectionMode) (onFocus)="onChange(item.onFocusDate)"
-                        [maxDate]="item.maxDate" [minDate]="item.minDate" dateFormat="dd/mm/yy"
+                        [maxDate]="item.maxDate" [minDate]="item.minDate" dateFormat="{{item.dateFormat}}"
                         (onSelect)="onChange(item.onChange)" [iconDisplay]="'input'" placeholder={{item.placeholder}}
-                        [showIcon]="true" [showTime]="item.showTime"></p-calendar>
+                        [showIcon]="true" [showTime]="item.showTime" [timeOnly]="true"></p-calendar>
 
                     <!-- textarea -->
-                    <textarea id={{item.id}} [ngClass]="{
+                    <div *ngIf="item.type === 'text-area'" class="text-right">
+                        <textarea id={{item.id}} [ngClass]="{
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
-                  }" placeholder={{item.placeholder}} class="w-full" pInputTextarea
-                        (attr.change)="onChange(item.onChange)" *ngIf="item.type === 'text-area' " pInputTextarea
-                        formControlName={{item.formControl}} rows={{item.rows}}></textarea>
+                  }" placeholder={{item.placeholder}} class="w-full" maxlength="{{item.maxlength}}"
+                            counterTemplate="{1} of 50, {0} remaining" counter="display"
+                            (attr.change)="onChange(item.onChange)" pInputTextarea formControlName={{item.formControl}}
+                            rows={{item.rowsTextArea}}></textarea>
+                        <small *ngIf="item.maxlength" id="username-help">
+                            {{control.controls[item.formControl].value.length}}/{{item.maxlength}}
+                        </small>
+                    </div>
 
                     <!-- checkbox -->
                     <div *ngIf="item.type == 'check-box'">
@@ -120,7 +126,7 @@
                             <i *ngIf="filesView.length === 0" class="pi pi-cloud-upload"></i>
                             <p *ngIf="filesView.length === 0">Clique ou arraste e solte um arquivo para anexar</p>
                             <span *ngIf="filesView.length === 0">{{item.msgAcceptFiles}}</span>
-                            <input type="file" [multiple]=item.multileFile [accept]="item.acceptFiles"
+                            <input id="fileInput" type="file" [multiple]=item.multileFile [accept]="item.acceptFiles"
                                 (change)="onSelectFile(item.formControl, $event, item.multileFile)" />
                         </label>
                         <div *ngFor="let f of filesView">
@@ -131,7 +137,17 @@
                                     <span *ngIf="item.viewNameFile">{{ f.name }}</span>
                                     <input type="file" [multiple]=item.multileFile [accept]="item.acceptFiles"
                                         (change)="onSelectFile(item.formControl, $event,item.multileFile)" />
+                                    <label> <i class="pi pi-times remove-file absolute"
+                                            (click)="onRemove(f)"></i></label>
+                                </label>
+                            </div>
+                            <div *ngIf="f.type && !f.type.includes('image')">
+                                <label class="preview-file">
+                                    <label class="mr-3">{{ f.name }}</label>
                                     <label> <i class="pi pi-times remove-file" (click)="onRemove(f)"></i></label>
+                                    <input type="file" [multiple]=item.multileFile [accept]="item.acceptFiles"
+                                        (change)="onSelectFile(item.formControl, $event,item.multileFile)" />
+
                                 </label>
                             </div>
                         </div>
@@ -179,8 +195,8 @@
                     'ng-invalid ng-dirty':
                     validateForm && control.controls[item.formControl].errors
                   }" placeholder={{item.placeholder}} *ngIf="item.type === 'multi'" [options]="item.options"
-                        formControlName={{item.formControl}} styleClass="p-0 w-full"
-                        optionLabel="description"></p-multiSelect>
+                        formControlName={{item.formControl}} styleClass="p-0 w-full" optionLabel="description"
+                        (onChange)="onChange(item.onChange)"></p-multiSelect>
 
                     <!-- radioButton -->
                     <div id={{item.id}} *ngIf="item.type === 'radio-button'" class="flex gap-3">
@@ -265,6 +281,37 @@
                             id="button"></button>
                     </div>
 
+                    <!-- likert  -->
+                    <p-table id={{item.id}} *ngIf="item.type === 'likert'" [scrollable]="true"
+                        scrollHeight={{item.scrollHeight}} [columns]=item.colsTable
+                        styleClass="p-datatable-striped p-datatable-sm" [value]=item.rowsTable>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th style="width: 4rem"></th>
+
+
+                                <th *ngFor="let col of columns">
+                                    <span>{{ col.header }}</span>
+                                </th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-row let-rowIndex="rowIndex" let-columns="columns"
+                            formArrayName="{{item.formControl}}">
+                            <tr>
+                                <td>
+                                    {{row}}
+                                </td>
+                                @for (control of columns; track item; let index = $index) {
+                                <td [formGroupName]="rowIndex">
+                                    <p-radioButton value="{{columns[index].field}}+{{row}}"
+                                        formControlName="question{{rowIndex}}" />
+                                </td>
+                                }
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
                     <!-- validação de item -->
                     <div class="h-10h-10">
                         <small class="danger-text"
@@ -276,6 +323,7 @@
                             Email inválido
                         </small>
                     </div>
+
                 </div>
             </div>
 

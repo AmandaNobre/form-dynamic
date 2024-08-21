@@ -4,7 +4,7 @@ import { Sidebar, SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { OnInit } from '@angular/core';
-import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormArray, FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 // import { FormDynamicAngularModule, IForm, IButtonsStandard } from 'form-dynamic-angular';
 import { FormDynamicAngularModule, IForm, IButtonsStandard } from 'projects/form-dynamic-angular/src/public-api';
 import * as moment from 'moment';
@@ -69,29 +69,49 @@ export class AppComponent implements OnInit {
 
   filesDonwload = []
 
+  change() {
+    console.log("aaa")
+  }
+
+  clear() {
+    console.log("bbb")
+  }
+
+  adminForm1 = this.fb.group({
+    question1: new FormControl('', [Validators.required])
+  });
+  adminForm2 = this.fb.group({
+    question2: new FormControl('', [Validators.required])
+  });
+
+
   ngOnInit() {
     this.controlExemple = this.fb.group({
-      user: '',
-      password: ''
+      user: "",
+      // user2: "123"
     });
 
+
     this.formmExemple = [
-      // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'autocomplete', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
+      // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'date', formControl: 'user',  viewDate: 'date', maxlength: 5, colsTable: [{ field: "teste", header: "Teste" }, { field: "teste 2", header: "Teste 2" }, { field: "teste 3", header: "Teste 3" }], rowsTable: ["t1", "t2"] },
+      // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'text-area', formControl: 'user2', maxlength: 5, colsTable: [{ field: "teste", header: "Teste" }, { field: "teste 2", header: "Teste 2" }, { field: "teste 3", header: "Teste 3" }], rowsTable: ["t1", "t2"] },
+      // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'date', timeOnly: true,viewDate: 'date',formControl: 'user', search: true, id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", options: [{ code: '1', description: 'as' }] },
       // { label: 'Password', col: 'lg:col-6 md:col-6 col-6', type: 'button', formControl: 'password', id: "adsa" },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'check-box', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'currency', formControl: 'password', id: "adsa" },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'date', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'switch', formControl: 'password', id: "adsa" },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'list', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
-      { label: 'Password', col: 'lg:col-6', type: 'upload-files', multileFile: false, formControl: 'password', id: "adsa" },
+      { label: 'Password', col: 'lg:col-6', type: 'upload-files', multileFile: true, formControl: 'password', id: "adsa", acceptFiles: "pdf/*", viewNameFile: true },
+      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'mask', mask: '999', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", onChange: () => this.change(), onCLear: () => this.clear() },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'number', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'radio-button', formControl: 'password', id: "adsa" },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'select', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'select-button', formControl: 'password', id: "adsa" },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'table', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'text', formControl: 'password', id: "adsa" },
-      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'text-area', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
-      // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'multi', formControl: 'password', id: "adsa" },
+      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'text-area', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", rowsTextArea: 50 },
+      // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'multi', formControl: 'password', id: "adsa", onChange: () => console.log("as") },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'upload-files', formControl: 'password', id: "adsa", viewNameFile: false },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'photo', formControl: 'password', id: "adsa" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'password', formControl: 'password', id: "adsa" },
@@ -114,7 +134,8 @@ export class AppComponent implements OnInit {
 
   show() {
     // this.observable.show()
-    this.httpClient.get('https://viacep.com.br/ws/01001000/json/').subscribe(d => console.log(d))
+    // this.httpClient.get('https://viacep.com.br/ws/01001000/json/').subscribe(d => console.log(d))
+    console.log(this.controlExemple.value)
 
   }
 
