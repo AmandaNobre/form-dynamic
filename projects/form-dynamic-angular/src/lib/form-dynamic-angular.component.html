@@ -9,7 +9,7 @@
     <form *ngIf="control" [formGroup]="control">
         <div class="grid">
             <div *ngFor="let item of form" class="{{item.col}} col-12">
-                <label *ngIf="item.label">{{item.label}}</label>
+                <label *ngIf="item.label && !item.hideLabelTop">{{item.label}}</label>
                 <label *ngIf="item.required && item.label" class="danger-text ml-2">*</label>
 
                 <div class="mt-2">
@@ -99,13 +99,13 @@
                         'ng-invalid ng-dirty':
                         validateForm && control.controls[item.formControl].errors
                       }" (onChange)="onChange(item.onChange)" binary="true" formControlName={{item.formControl}}
-                            value={{item.formControl}} label={{item.textCheckBox}}></p-checkbox>
+                            value={{item.formControl}} label={{item.label}}></p-checkbox>
                     </div>
 
                     <!-- button -->
                     <p-button id={{item.id}} *ngIf="item.type == 'button'" styleClass='{{item.class}} w-full mt-3'
                         (click)="item.onCLick()" [disabled]=item.disabled icon={{item.icon}}
-                        label={{item.textButton}}></p-button>
+                        label={{item.label}}></p-button>
 
                     <!-- can  -->
                     <div id={{item.id}} class="area" *ngIf="item.type == 'can'">
@@ -154,6 +154,9 @@
                     </div>
 
                     <!-- upload files disabled -->
+                    <!-- <p-fileUpload mode="basic" formControlName="{{item.formControl}}" chooseLabel="Choose"
+                        chooseIcon="pi pi-upload" accept="image/*" maxFileSize="1000000" /> -->
+
                     <div id={{item.id}} *ngIf="item.type === 'upload-files' && item.disabled ">
                         <p-button (click)="op.toggle($event)" icon="pi pi-paperclip"
                             label="Arquivos anexados"></p-button>

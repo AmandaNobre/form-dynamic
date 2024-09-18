@@ -43,8 +43,7 @@ export interface IForm {
   required?: boolean,
   icon?: string, //button
   placeholder?: string,
-  textButton?: string,
-  textCheckBox?: string, //?
+  hideLabelTop?: boolean,
   mask?: string,
   search?: boolean,
   buttonsTable?: any[],
