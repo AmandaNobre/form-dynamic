@@ -77,7 +77,7 @@
                         [selectionMode]=selectionMode(item.selectionMode) (onFocus)="onChange(item.onFocusDate)"
                         [maxDate]="item.maxDate" [minDate]="item.minDate" dateFormat="{{item.dateFormat}}"
                         (onSelect)="onChange(item.onChange)" [iconDisplay]="'input'" placeholder={{item.placeholder}}
-                        [showIcon]="true" [showTime]="item.showTime" [timeOnly]="true"></p-calendar>
+                        [showIcon]="true" [showTime]="item.showTime" [timeOnly]="item.timeOnly"></p-calendar>
 
                     <!-- textarea -->
                     <div *ngIf="item.type === 'text-area'" class="text-right">
@@ -121,14 +121,13 @@
                     </div>
 
                     <!-- upload files -->
-                    <div id={{item.id}} *ngIf="item.type === 'upload-files' && !item.disabled " class="drag-image">
-                        <label>
-                            <i *ngIf="filesView.length === 0" class="pi pi-cloud-upload"></i>
-                            <p *ngIf="filesView.length === 0">Clique ou arraste e solte um arquivo para anexar</p>
-                            <span *ngIf="filesView.length === 0">{{item.msgAcceptFiles}}</span>
-                            <input id="fileInput" type="file" [multiple]=item.multileFile [accept]="item.acceptFiles"
-                                (change)="onSelectFile(item.formControl, $event, item.multileFile)" />
-                        </label>
+                    <div id={{item.id}} *ngIf="item.type === 'upload-files' && !item.disabled " class="drag-image"
+                        [style.border]="validateForm && control.controls[item.formControl].errors ? ' 1px dashed #f18282' : ' 1px dashed #d1d5db'">
+                        <i *ngIf="filesView.length === 0" class="pi pi-cloud-upload"></i>
+                        <p *ngIf="filesView.length === 0">Clique ou arraste e solte um arquivo para anexar</p>
+                        <span *ngIf="filesView.length === 0">{{item.msgAcceptFiles}}</span>
+                        <input id="fileInput" type="file" [multiple]=item.multileFile [accept]="item.acceptFiles"
+                            (change)="onSelectFile(item.formControl, $event, item.multileFile)" />
                         <div *ngFor="let f of filesView">
                             <div *ngIf="f.type && f.type.includes('image')">
                                 <label class="preview-img">
@@ -138,15 +137,16 @@
                                     <input type="file" [multiple]=item.multileFile [accept]="item.acceptFiles"
                                         (change)="onSelectFile(item.formControl, $event,item.multileFile)" />
                                     <label> <i class="pi pi-times remove-file absolute"
-                                            (click)="onRemove(f)"></i></label>
+                                            (click)="onRemove(item.formControl, f)"></i></label>
                                 </label>
                             </div>
                             <div *ngIf="f.type && !f.type.includes('image')">
-                                <label class="preview-file">
+                                <label class="preview-img h-0 max-w-0 mh-75 m-0">
                                     <label class="mr-3">{{ f.name }}</label>
-                                    <label> <i class="pi pi-times remove-file" (click)="onRemove(f)"></i></label>
                                     <input type="file" [multiple]=item.multileFile [accept]="item.acceptFiles"
                                         (change)="onSelectFile(item.formControl, $event,item.multileFile)" />
+                                    <label> <i class="pi pi-times remove-file absolute"
+                                            (click)="onRemove(f)"></i></label>
 
                                 </label>
                             </div>
@@ -156,7 +156,7 @@
                     <!-- upload files disabled -->
                     <div id={{item.id}} *ngIf="item.type === 'upload-files' && item.disabled ">
                         <p-button (click)="op.toggle($event)" icon="pi pi-paperclip"
-                            [label]="translate.instant('globals.files')"></p-button>
+                            label="Arquivos anexados"></p-button>
 
                         <p-overlayPanel #op [style]="{'width': '450px'}" [showCloseIcon]="true">
                             <ng-template pTemplate="content">
@@ -165,21 +165,21 @@
                                     responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th pSortableColumn="name">{{translate.instant('globals.name')}}<p-sortIcon
-                                                    field="name"></p-sortIcon></th>
+                                            <th pSortableColumn="name">Nome<p-sortIcon field="name"></p-sortIcon></th>
+                                            <th></th>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-rowData let-file>
-                                        <tr [pSelectableRow]="rowData">
+                                        <tr>
                                             <td *ngIf="item.viewNameFile">{{file.name}}</td>
-                                            <td> <p-button icon="pi pi-download"
-                                                    (click)='dowloadFIle($event,file)'></p-button>
+                                            <td> <p-button *ngIf="item.onCLick" icon="pi pi-download"
+                                                    (click)='item.onCLick(file)'></p-button>
                                             </td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
                                 <div *ngIf="files.length === 0" class="p-10">
-                                    <label>{{translate.instant('globals.notFiles')}}</label>
+                                    <label>Nenhum arquivo anexado</label>
                                 </div>
                             </ng-template>
                         </p-overlayPanel>
@@ -313,7 +313,7 @@
                     </p-table>
 
                     <!-- validação de item -->
-                    <div class="h-10h-10">
+                    <div>
                         <small class="danger-text"
                             *ngIf="validateForm && control.controls[item.formControl] && control.controls[item.formControl].errors?.['required']">
                             Campo obrigatório

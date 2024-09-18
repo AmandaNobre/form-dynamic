@@ -25,6 +25,7 @@ import { TableModule } from 'primeng/table';
 import { PasswordModule } from 'primeng/password';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -55,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AutoCompleteModule,
     ReactiveFormsModule,
     HttpClientModule,
+    OverlayPanelModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -62,9 +64,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       },
     })
-  ],
-  providers: [
-    MessageService
   ],
   exports: [
     FormDynamicAngularComponent

@@ -1,19 +1,16 @@
 import { FormBuilder, FormGroup, UntypedFormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-
 export interface ITreeSelectOptions {
   key: string,
   label: string,
   icon: string,
   children?: ITreeSelectOptions[]
 }
-
 export interface IOptions {
   description: string,
   code: number | string
 }
-
 export interface ICols {
   field: string,
   header: string
@@ -60,30 +57,26 @@ export interface IForm {
   maxlength?: number,
   viewDate?: 'month' | 'date',
   dateFormat?: string
-  timeOnly?: boolean
+  timeOnly?: boolean,
 }
-
-
 export interface IButtonsStandard {
   type: 'clean' | 'filter' | 'save' | 'cancel',
   onCLick: Function,
   styleClass?: string
 }
-
 export interface IButtonsOptional {
   label: string,
   onCLick: Function,
   icon: string,
-  styleClass: string
+  styleClass: string,
+  view?: Function;
 }
-
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'form-dynamic-angular',
   templateUrl: 'form-dynamic-angular.component.html',
   styleUrls: ['form-dynamic-angular.component.css']
 })
-
 
 export class FormDynamicAngularComponent implements OnInit {
   @Input() title!: string;
@@ -98,27 +91,14 @@ export class FormDynamicAngularComponent implements OnInit {
 
   @Input() files: any[] = [];
 
-  valueCaracter = 0
   filesView: any[] = [];
   filteredAutoComplete: any[] = [];
-
-
-  selectedCategory: any = null;
-
-  categories: any[] = [
-    { name: 'Accounting', key: 'A' },
-    { name: 'Marketing', key: 'M' },
-    { name: 'Production', key: 'P' },
-    { name: 'Research', key: 'R' }
-  ];
-
 
   constructor(
     public translate: TranslateService,
     private formBuilder: FormBuilder
   ) {
     this.control = this.formBuilder.group({});
-
   }
 
   ngOnInit(): void {
@@ -146,8 +126,6 @@ export class FormDynamicAngularComponent implements OnInit {
   selectionMode(selectionMode: string) {
     return selectionMode ?? "single"
   }
-
-
 
   async capturePhoto(fileName: string) {
     const canvas: HTMLCanvasElement | null = document.querySelector("#canvas");
@@ -195,27 +173,15 @@ export class FormDynamicAngularComponent implements OnInit {
     }
   }
 
-  dowloadFIle(event: any, file: any) {
-    event.stopPropagation()
-
-    // this.attachmentsService.download(file.id).subscribe(data => {
-    //   const blob = window.URL.createObjectURL(new Blob([data]));
-    //   const anchorEl = document.createElement("a");
-    //   anchorEl.href = blob;
-    //   anchorEl.setAttribute("download", file.name);
-    //   anchorEl.click();
-    // })
-  }
-
   getUrl(file: File) {
     return window.URL.createObjectURL(file)
   }
 
   async onSelectFile(fileName: string, event: any, multiple: boolean) {
     const file = event.target.files
-    if (!multiple) {
-      this.filesView = [];
-    }
+    // if (!multiple) {
+    //   this.filesView = [];
+    // }
     this.filesView.push(...file);
 
     const newFIles = file
@@ -231,7 +197,7 @@ export class FormDynamicAngularComponent implements OnInit {
     this.control.get(fileName)?.setValue(arr);
   }
 
-  onRemove(event: File) {
+  onRemove(event: File, fileName: string) {
     this.filesView.splice(this.filesView.indexOf(event), 1);
     var input = document.getElementById('fileInput') as HTMLInputElement
     if (input) {
@@ -274,9 +240,4 @@ export class FormDynamicAngularComponent implements OnInit {
       clear()
     }
   }
-
-  cleanAutoComplete(input: string) {
-    this.control.controls[input].reset()
-  }
-
 }

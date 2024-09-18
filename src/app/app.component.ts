@@ -1,15 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Sidebar, SidebarModule } from 'primeng/sidebar';
+import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { OnInit } from '@angular/core';
-import { FormArray, FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-// import { FormDynamicAngularModule, IForm, IButtonsStandard } from 'form-dynamic-angular';
-import { FormDynamicAngularModule, IForm, IButtonsStandard } from 'projects/form-dynamic-angular/src/public-api';
-import * as moment from 'moment';
+import { FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormDynamicAngularModule, IForm } from 'projects/form-dynamic-angular/src/public-api';
 import { MenuModule } from 'primeng/menu';
-import { MenuItem } from 'primeng/api';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
@@ -17,10 +14,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ToolbarModule } from 'primeng/toolbar';
-import { Observable, Subject, observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { InstallationComponent } from './pages/installation/installation.component';
-import { HTTP_INTERCEPTORS, HttpClient, HttpContext } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-root',
@@ -50,7 +45,6 @@ export class AppComponent implements OnInit {
   controlExemple: UntypedFormGroup
   formmExemple: IForm[] = []
 
-
   title = 'material-responsive-sidenav';
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
@@ -63,12 +57,10 @@ export class AppComponent implements OnInit {
     private observer: BreakpointObserver,
     private fb: UntypedFormBuilder,
     private changeDetector: ChangeDetectorRef,
-    private httpClient: HttpClient
-  ) {
-  }
+  ) { }
 
-  filesDonwload = []
-
+  filesDonwload = [{ name: " aaa.pdf", contextTYpe: 'pdf', id: 123 }]
+  validateForm: boolean = false
   change() {
     console.log("aaa")
   }
@@ -84,16 +76,21 @@ export class AppComponent implements OnInit {
     question2: new FormControl('', [Validators.required])
   });
 
+  teste(file: any) {
+    console.log('file', file)
+
+  }
 
   ngOnInit() {
     this.controlExemple = this.fb.group({
-      user: "",
+      user: { value: "" },
+      password: new FormControl('', Validators.required),
       // user2: "123"
     });
 
 
     this.formmExemple = [
-      // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'date', formControl: 'user',  viewDate: 'date', maxlength: 5, colsTable: [{ field: "teste", header: "Teste" }, { field: "teste 2", header: "Teste 2" }, { field: "teste 3", header: "Teste 3" }], rowsTable: ["t1", "t2"] },
+      // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'date', formControl: 'user',  viewDate: 'date'},
       // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'text-area', formControl: 'user2', maxlength: 5, colsTable: [{ field: "teste", header: "Teste" }, { field: "teste 2", header: "Teste 2" }, { field: "teste 3", header: "Teste 3" }], rowsTable: ["t1", "t2"] },
       // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'date', timeOnly: true,viewDate: 'date',formControl: 'user', search: true, id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", options: [{ code: '1', description: 'as' }] },
       // { label: 'Password', col: 'lg:col-6 md:col-6 col-6', type: 'button', formControl: 'password', id: "adsa" },
@@ -102,7 +99,7 @@ export class AppComponent implements OnInit {
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'date', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'switch', formControl: 'password', id: "adsa" },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'list', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
-      { label: 'Password', col: 'lg:col-6', type: 'upload-files', multileFile: true, formControl: 'password', id: "adsa", acceptFiles: "pdf/*", viewNameFile: true },
+      { col: 'lg:col-6', type: 'upload-files', formControl: 'password', acceptFiles: ".pdf" },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'mask', mask: '999', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", onChange: () => this.change(), onCLear: () => this.clear() },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'number', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'radio-button', formControl: 'password', id: "adsa" },
@@ -135,8 +132,8 @@ export class AppComponent implements OnInit {
   show() {
     // this.observable.show()
     // this.httpClient.get('https://viacep.com.br/ws/01001000/json/').subscribe(d => console.log(d))
-    console.log(this.controlExemple.value)
-
+    console.log(this.controlExemple.controls['password'].errors)
+    this.validateForm = true
   }
 
   toggleMenu() {
