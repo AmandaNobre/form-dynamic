@@ -4,7 +4,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { OnInit } from '@angular/core';
-import { FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { FormDynamicAngularModule, IForm } from 'projects/form-dynamic-angular/src/public-api';
 import { MenuModule } from 'primeng/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +14,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ToolbarModule } from 'primeng/toolbar';
-import { Observable } from 'rxjs';
+import { min, Observable } from 'rxjs';
 import { InstallationComponent } from './pages/installation/installation.component';
 
 @Component({
@@ -81,12 +81,44 @@ export class AppComponent implements OnInit {
 
   }
 
+  selectedCategories: any[] = [];
+
+  minSelectedCheckboxes(min = 1) {
+    const validator: any = (formArray: FormArray) => {
+      const totalSelected = formArray.controls
+        // get a list of checkbox values (boolean)
+        .map(control => control.value)
+        // total up the number of checked checkboxes
+        .reduce((prev, next) => next ? prev + next : prev, 0);
+
+      // if the total is not greater than the minimum, return the error message
+      return totalSelected >= min ? null : { required: true };
+    };
+
+    return validator;
+  }
+
+
+  testeradio() {
+    console.log(this.controlExemple.controls['user'].value)
+    console.log(this.controlExemple.controls['teste'].value)
+
+  }
+
+  onBlur() {
+    console.log("blur")
+  }
   ngOnInit() {
     this.controlExemple = this.fb.group({
-      user: { value: "" },
-      password: new FormControl('', Validators.required),
+      user: "",
+      teste: 'asda',
+      password: this.fb.array([
+        this.fb.group({ 1: true }),
+        this.fb.group({ 2: false })
+      ])
       // user2: "123"
     });
+
 
 
     this.formmExemple = [
@@ -99,10 +131,12 @@ export class AppComponent implements OnInit {
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'date', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'switch', formControl: 'password', id: "adsa" },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'list', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
-      { col: 'lg:col-6', type: 'upload-files', formControl: 'password', acceptFiles: ".pdf" },
-      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'mask', mask: '999', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", onChange: () => this.change(), onCLear: () => this.clear() },
-      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'number', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
-      // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'radio-button', formControl: 'password', id: "adsa" },
+      // { col: 'lg:col-6', type: 'upload-files', formControl: 'password', acceptFiles: ".pdf" },
+      { label: 'User', col: 'lg:col-12 md:col-12', type: 'number', mask: '999', formControl: 'user', onBlur: () => this.onBlur(), id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", onChange: () => this.change(), onCLear: () => this.clear() },
+      {
+        label: 'Password', col: 'lg:col-12 md:col-12', type: 'multi', formControl: 'user', id: "adsa", onChange: () => this.testeradio(),
+        options: [{ code: '1', description: '1' }, { code: '2', description: '2' }, { code: '3', description: 'as' }, { code: '4', description: '3' }, { code: '5', description: '4' }, { code: '6', description: '5' }], formControlOther: 'teste'
+      },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'select', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'select-button', formControl: 'password', id: "adsa" },
       // { label: 'User', col: 'lg:col-12 md:col-12', type: 'table', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
@@ -132,7 +166,7 @@ export class AppComponent implements OnInit {
   show() {
     // this.observable.show()
     // this.httpClient.get('https://viacep.com.br/ws/01001000/json/').subscribe(d => console.log(d))
-    console.log(this.controlExemple.controls['password'].errors)
+    console.log(this.controlExemple.controls['user'].value)
     this.validateForm = true
   }
 

@@ -16,7 +16,7 @@ export interface ICols {
   header: string
 }
 
-export type TTypes = "autocomplete" | "button" | "check-box" | "currency" | "date" | "switch" | "list" | "mask" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password" | "photo" | "likert"
+export type TTypes = "autocomplete" | "button" | "check-box" | "currency" | "date" | "switch" | "list" | "mask" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password" | "photo" | "likert" | "check-box-multi"
 export interface IForm {
   label?: string,
   type: TTypes,
@@ -24,6 +24,7 @@ export interface IForm {
   colsTable?: ICols[],
   options?: IOptions[]
   formControl?: string,
+  formControlOther?: string,
   showTime?: boolean,
   onCLear?: Function,
   treeSelectOptions?: ITreeSelectOptions[],
@@ -57,7 +58,7 @@ export interface IForm {
   maxlength?: number,
   viewDate?: 'month' | 'date',
   dateFormat?: string
-  timeOnly?: boolean,
+  timeOnly?: boolean
 }
 export interface IButtonsStandard {
   type: 'clean' | 'filter' | 'save' | 'cancel',
@@ -238,6 +239,12 @@ export class FormDynamicAngularComponent implements OnInit {
   clickCLear(clear?: Function) {
     if (clear) {
       clear()
+    }
+  }
+
+  onBlur(blur?: Function) {
+    if (blur) {
+      blur()
     }
   }
 }
