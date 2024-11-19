@@ -1,4 +1,4 @@
-<div>
+<div></div>
     <div *ngIf="title" class="div-title">
         <span translate={{title}}></span>
         <div *ngIf="subTitle" class="flex subtitle">
@@ -102,6 +102,21 @@
                             value={{item.formControl}} label={{item.label}}></p-checkbox>
                     </div>
 
+                    <!-- checkbox  multiple -->
+                    <div id={{item.id}} *ngIf="item.type === 'check-box-multi'" class="flex gap-3">
+                        <div formArrayName="{{item.formControl}}" *ngFor="let list of item.options; let i = index"
+                            class="flex align-items-center gap-2">
+                            <div [formGroupName]="i">
+                                <p-checkbox id={{item.id}} [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                    validateForm && control.controls[item.formControl].errors
+                                }" (onChange)="onChange(item.onChange)" binary="true" formControlName="{{list.code}}"
+                                    label={{list.description}}></p-checkbox>
+                            </div>
+                        </div>
+
+                    </div>
+
                     <!-- button -->
                     <p-button id={{item.id}} *ngIf="item.type == 'button'" styleClass='{{item.class}} w-full mt-3'
                         (click)="item.onCLick()" [disabled]=item.disabled icon={{item.icon}}
@@ -199,7 +214,7 @@
                     validateForm && control.controls[item.formControl].errors
                   }" placeholder={{item.placeholder}} *ngIf="item.type === 'multi'" [options]="item.options"
                         formControlName={{item.formControl}} styleClass="p-0 w-full" optionLabel="description"
-                        (onChange)="onChange(item.onChange)"></p-multiSelect>
+                        (onChange)="onChange(item.onChange)" maxSelectedLabels="100"></p-multiSelect>
 
                     <!-- radioButton -->
                     <div id={{item.id}} *ngIf="item.type === 'radio-button'" class="flex gap-3">
@@ -211,6 +226,9 @@
                                 (onClick)="onChange(item.onChange)"></p-radioButton>
                             <label>{{listRadioButton.description}}</label>
                         </div>
+                        @if(control.controls[item.formControl].value == 'other'){
+                        <input pInputText type="text" formControlName={{item.formControlOther}} />
+                        }
                     </div>
 
                     <!-- selectButton -->
