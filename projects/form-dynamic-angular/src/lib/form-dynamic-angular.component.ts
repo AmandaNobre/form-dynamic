@@ -16,48 +16,79 @@ export interface ICols {
   header: string
 }
 
-export type TTypes = "autocomplete" | "button" | "check-box" | "currency" | "date" | "switch" | "list" | "mask" | "number" | "radio-button" | "select" | "select-button" | "table" | "text" | "text-area" | "tree-select" | "multi" | "upload-files" | "password" | "photo" | "likert" | "check-box-multi"
+export type TTypes =
+  "autocomplete" |
+  "button" |
+  "check-box" |
+  "currency" |
+  "check-box-multi" |
+  "date" |
+  "switch" |
+  "list" |
+  "likert" |
+  "mask" |
+  "multi" |
+  "number" |
+  "password" |
+  "photo" |
+  "radio-button" |
+  "select" |
+  "select-button" |
+  "table" |
+  "text" |
+  "text-area" |
+  "tree-select" |
+  "upload-files"
 export interface IForm {
+  id: number | string,
   label?: string,
   type: TTypes,
+  col?: string,
   disabled?: boolean | null,
-  colsTable?: ICols[],
-  options?: IOptions[]
   formControl?: string,
-  formControlOther?: string,
-  showTime?: boolean,
-  onCLear?: Function,
-  treeSelectOptions?: ITreeSelectOptions[],
-  onCLick?: Function,
-  onChange?: Function,
-  onFocusDate?: Function,
+  required?: boolean,
+  placeholder?: string,
+  
   numberOfMonthsDate?: number;
-  class?: string, //button
-  rowsTable?: any[],
-  rowsFooter?: any[],
-  rowsTextArea?: number,
+  selectionMode?: "multiple" | "range" | "single"
   minDate?: Date,
   maxDate?: Date,
-  col?: string,
-  acceptFiles?: string,
-  msgAcceptFiles?: string,
-  required?: boolean,
-  icon?: string, //button
-  placeholder?: string,
-  hideLabelTop?: boolean,
-  mask?: string,
-  search?: boolean,
-  buttonsTable?: any[],
-  scrollHeight?: string, //table
-  unmask?: boolean,
-  selectionMode?: "multiple" | "range" | "single"
-  id?: number | string,
-  viewNameFile?: boolean,
-  multileFile?: boolean,
-  maxlength?: number,
   viewDate?: 'month' | 'date',
   dateFormat?: string
   timeOnly?: boolean
+  showTime?: boolean,
+  
+  maxlength?: number,
+  rowsTextArea?: number,
+  
+  mask?: string,
+  unmask?: boolean,
+  
+  search?: boolean,
+  options?: IOptions[]
+  treeSelectOptions?: ITreeSelectOptions[],
+  
+  buttonClass?: string, 
+  iconButton?: string, 
+  
+  formControlOther?: string,
+  hideLabelTop?: boolean,
+
+  scrollHeight?: string, 
+  colsTable?: ICols[],
+  rowsTable?: any[],
+  rowsFooter?: any[],
+  buttonsTable?: IButtonsTable[],
+
+  acceptFiles?: string,
+  msgAcceptFiles?: string,
+  viewNameFile?: boolean,
+  multileFile?: boolean,
+
+  onChange?: Function,
+  onCLick?: Function,
+  onCLear?: Function,
+  onFocusDate?: Function,
 }
 export interface IButtonsStandard {
   type: 'clean' | 'filter' | 'save' | 'cancel',
@@ -70,6 +101,13 @@ export interface IButtonsOptional {
   icon: string,
   styleClass: string,
   view?: Function;
+}
+
+export interface IButtonsTable {
+  styleClass: string,
+  label: string,
+  icon: string,
+  onCLick: Function
 }
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

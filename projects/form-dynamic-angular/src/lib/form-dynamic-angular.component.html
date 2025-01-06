@@ -1,4 +1,4 @@
-<div></div>
+<div>
     <div *ngIf="title" class="div-title">
         <span translate={{title}}></span>
         <div *ngIf="subTitle" class="flex subtitle">
@@ -118,8 +118,8 @@
                     </div>
 
                     <!-- button -->
-                    <p-button id={{item.id}} *ngIf="item.type == 'button'" styleClass='{{item.class}} w-full mt-3'
-                        (click)="item.onCLick()" [disabled]=item.disabled icon={{item.icon}}
+                    <p-button id={{item.id}} *ngIf="item.type == 'button'" styleClass='{{item.buttonClass}} w-full mt-3'
+                        (click)="item.onCLick()" [disabled]=item.disabled icon={{item.iconButton}}
                         label={{item.label}}></p-button>
 
                     <!-- can  -->
@@ -309,12 +309,9 @@
                         <ng-template pTemplate="header" let-columns>
                             <tr>
                                 <th style="width: 4rem"></th>
-
-
                                 <th *ngFor="let col of columns">
                                     <span>{{ col.header }}</span>
                                 </th>
-
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-row let-rowIndex="rowIndex" let-columns="columns"

@@ -19,8 +19,6 @@ The form-dynamic is a solution whith objectve is minimize the coding in forms, s
 ```
 
 ```js
-
-import { TranslateService } from '@ngx-translate/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { IForm } from 'form-dynamic-angular';
 
@@ -30,8 +28,7 @@ export class AppComponent implements OnInit {
   formmExemple: IForm[] = []
 
   constructor(
-    private translate: TranslateService,
-    private fb: UntypedFormBuilder,
+    private fb: UntypedFormBuilder
   ) {}
 
    ngOnInit() {
@@ -41,8 +38,8 @@ export class AppComponent implements OnInit {
     });
 
     this.formmExemple = [
-      { label: 'User', col: 'col-lg-6', type: 'text', formControl: 'user' },
-      { label: 'Password', col: 'col-lg-6', type: 'text', formControl: 'password' }
+      { label: 'User', col: 'lg:col-6', type: 'text', formControl: 'user' },
+      { label: 'Password', col: 'lg:col-6', type: 'text', formControl: 'password' }
     ]
   }
 }
@@ -67,32 +64,42 @@ export class AppComponent implements OnInit {
 
 | Prop  | Type  | Required |type input | Description |
 |:--------- | :---- | :----   |:----  | :----  |
+| `id` | `string or number` | `yes` | `all` | Id unic
 | `label` | `string` | `no` | `all` | Label
-| `type` | `autocomplete or button or check-box or currency or date or switch or list or mask or number or radio-button or select or select-button or table or text or text-area or tree-select or multi or upload-files or password or photo` | `yes` | `all` | Type
+| `type` | ` autocomplete or button or check-box or currency or check-box-multi or date or switch or list or likert or mask or multi or number or password or photo or radio-button or select or select-button or table or text or text-area or tree-select or upload-files` | `yes` | `all` | Type
 | `disabled` | `boolean or null` | `no` | `button or upload-files` | Disabled
+| `col` | `string` | `no` | `all` | Class grid primeflex
 | `formControl` | ` string` | `no` | `all` | Controler input
-| `onChange` | `Function` | `no` | `all` | Change
 | `required` | `boolean` | `no` | `all` | If input is required
 | `placeholder` | `string` | `no` | `all` | Placeholder
-| `options` | ` IOptions[]` | `no` | `select or autocomplete or list or multi or radio-button or ` | Cols table
+| `onChange` | `Function` | `no` | `all` | Change
+| `search` | `boolean` | `no` | `select` | If input search
+| `options` | ` IOptions[]` | `no` | `select or autocomplete or list or multi or radio-button or checkbox-multiple or select-button` | Options view
+| `treeSelectOptions` | ` ITreeSelectOptions[]` | `no` | `tree-select` | Options tree select
+| `numberOfMonthsDate` | ` number` | `no` | `date` | Quantity months views, default 1
+| `selectionMode` | ` multiple or range or single` | `no` | `date` | Mode selection dates
+| `minDate` | `Date` | `no` | `date` | Min Date
+| `maxDate` | `Date` | `no` | `date` | Max Date
+| `viewDate` | `month or date` | `no` | `date` | View only month or date
+| `dateFormat` | `string` | `no` | `date` | Format date
+| `timeOnly` | `boolean` | `no` | `date` | View only time
+| `showTime` | ` boolean` | `no` | `date` | if view time in date
+| `rowsTextArea` | ` number` | `no` | `text-area` | Quantity rows in text-area
+| `maxlength` | ` number` | `no` | `text-area` | Count words
+
 | `colsTable` | ` ICols[]` | `no` | `table` | Cols table
 | `forceSelection` | ` ICols[]` | `no` | `table` | Cols table
 | `clean` | `Function` | `no` | `tree-select` | Function clear 
-| `treeSelectOptions` | ` ITreeSelectOptions[]` | `no` | `tree-select` | Options tree select
 | `onCLick` | `Function` | `no` | `button` | Function clear 
 | `icon` | `string` | `no` | `button` | Icon Button 
 | `textButton` | `string` | `no` | `button` | Text Button 
-| `showTime` | ` boolean` | `no` | `date` | if view time in date
 | `onFocusDate` | `Function` | `no` | `date` | Functions focus 
 | `onFocusDate` | `Function` | `no` | `date` | Functions focus 
 | `selectionMode` | `multiple or range or single` | `no` | `date` | Amount month is view in date
-| `minDate` | `Date` | `no` | `date` | Min Date
-| `maxDate` | `Date` | `no` | `date` | Max Date
 | `acceptFiles` | `string` | `no` | `upload-files` | Formats accepts
 | `msgAcceptFiles` | `string` | `no` | `upload-files` | Message accepts
 | `mask` | `string` | `no` | `mask` | type mask
 | `unmask` | `boolean` | `no` | `mask` | If control user mask or no
-| `search` | `boolean` | `no` | `select` | If input search
 
 
 ## Usage Inputs
@@ -116,12 +123,12 @@ this.controlAutocomplete = this.fb.group({
 });
 
 this.formmAutocomplete = [
-  { label: 'Cities', col: 'col-lg-6', type: 'autocomplete', formControl: 'cities', options: this.options },
-  { label: 'Cities', col: 'col-lg-6', type: 'list', formControl: 'cities', options: this.options },
-  { label: 'Cities', col: 'col-lg-6', type: 'radio-button', formControl: 'cities', options: this.options },
-  { label: 'Cities', col: 'col-lg-6', type: 'select', formControl: 'cities', options: this.options },
-  { label: 'Cities', col: 'col-lg-6', type: 'select-button', formControl: 'cities', options: this.options },
-  { label: 'Cities', col: 'col-lg-6', type: 'multi', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'lg:col-6', type: 'autocomplete', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'lg:col-6', type: 'list', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'lg:col-6', type: 'radio-button', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'lg:col-6', type: 'select', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'lg:col-6', type: 'select-button', formControl: 'cities', options: this.options },
+  { label: 'Cities', col: 'lg:col-6', type: 'multi', formControl: 'cities', options: this.options },
 ]
 
 ```
@@ -155,7 +162,7 @@ formmAutocomplete: IForm[] = []
 this.controlAutocomplete = this.fb.group({});
 
 this.formmAutocomplete = [
-  { label: 'Ckeck', col: 'col-lg-6', type: 'check-box', formControl: 'ckech' },
+  { label: 'Ckeck', col: 'lg:col-6', type: 'check-box', formControl: 'ckech' },
 ]
 
 ```
@@ -172,7 +179,7 @@ this.controlAutocomplete = this.fb.group({
 });
 
 this.formmAutocomplete = [
-  { label: 'Date', col: 'col-lg-6', type: 'date', formControl: 'date' },
+  { label: 'Date', col: 'lg:col-6', type: 'date', formControl: 'date' },
 ]
 
 ```
@@ -194,12 +201,12 @@ this.controlAutocomplete = this.fb.group({
 });
 
 this.formmAutocomplete = [
-  { label: 'Switch', col: 'col-lg-6', type: 'switch', formControl: 'switch' },
-  { label: 'Text', col: 'col-lg-6', type: 'text', formControl: 'text' },
-  { label: 'Number', col: 'col-lg-6', type: 'number', formControl: 'number' },
-  { label: 'TextArea', col: 'col-lg-6', type: 'text-area', formControl: 'textArea' },
-  { label: 'Password', col: 'col-lg-6', type: 'password', formControl: 'password' },
-  { label: 'Currency', col: 'col-lg-6', type: 'currency', formControl: 'currency' }
+  { label: 'Switch', col: 'lg:col-6', type: 'switch', formControl: 'switch' },
+  { label: 'Text', col: 'lg:col-6', type: 'text', formControl: 'text' },
+  { label: 'Number', col: 'lg:col-6', type: 'number', formControl: 'number' },
+  { label: 'TextArea', col: 'lg:col-6', type: 'text-area', formControl: 'textArea' },
+  { label: 'Password', col: 'lg:col-6', type: 'password', formControl: 'password' },
+  { label: 'Currency', col: 'lg:col-6', type: 'currency', formControl: 'currency' }
 ]
 
 ```
@@ -240,7 +247,7 @@ this.control = this.fb.group({
 });
 
 this.form = [
-  { label: "Tree-select", col: 'col-lg-6', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
+  { label: "Tree-select", col: 'lg:col-6', type: 'tree-select', formControl: 'installationLocation', treeSelectOptions: this.treeSelect },
 ]
 
 ```
@@ -377,11 +384,6 @@ Created input and form
 ```html
 <!--app.component.html-->
 
-<select (change)="uselanguage($event.target.value)">
-    <option value='pt'>pt</option>
-    <option value='en'>en</option>
-</select>
-
 <form-dynamic-angular title="Login" [form]=formLogin [control]=controlLogin></form-dynamic-angular>
 
 ```
@@ -391,36 +393,31 @@ Created function
 ```js
 //app.component.ts
 
-import { TranslateService } from '@ngx-translate/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { IForm } from 'form-dynamic-angular';
 
 
 export class AppComponent implements OnInit {
 
-  controlmitigationBarriers: UntypedFormGroup 
+  controlLogin: UntypedFormGroup 
   formLogin: IForm[] = []
 
   constructor(
-    private translate: TranslateService,
-    private fb: UntypedFormBuilder,
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit() {
-    this.controlmitigationBarriers  = this.fb.group({
+    this.controlLogin  = this.fb.group({
       username: '',
       password: ''
     });
 
     this.formLogin = [
-      { label: 'pageLogin.userName', col: 'col-lg-6', type: 'text', formControl: 'username' },
-      { label: 'pageLogin.password', col: 'col-lg-6', type: 'text', formControl: 'password' }
+      { label: 'userName', col: 'lg:col-6', type: 'text', formControl: 'username' },
+      { label: 'password', col: 'lg:col-6', type: 'text', formControl: 'password' }
     ]
   }
 
-  uselanguage(language: string) {
-    this.translate.use(language);
-  }
 }
 
 ```
