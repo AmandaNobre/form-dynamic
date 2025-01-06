@@ -3,8 +3,5 @@
   "dest": "../../dist/form-dynamic-angular",
   "lib": {
     "entryFile": "src/public-api.ts"
-  },
-  "allowedNonPeerDependencies": [
-    "moment"
-  ]
+  }
 }

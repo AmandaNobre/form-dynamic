@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { FormDynamicAngularModule, IForm } from 'projects/form-dynamic-angular/src/public-api';
+import {  FormDynamicAngularComponent, IForm } from 'projects/form-dynamic-angular/src/public-api';
 import { MenuModule } from 'primeng/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,7 +27,7 @@ import { InstallationComponent } from './pages/installation/installation.compone
     CommonModule,
     RouterLink,
     RouterLinkActive,
-    FormDynamicAngularModule,
+    FormDynamicAngularComponent,
     MenuModule,
     MatIconModule,
     MatButtonModule,

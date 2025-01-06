@@ -17,7 +17,14 @@
         "dist/form"
       ],
       "form-dynamic-angular": [
-        "dist/form-dynamic-angular"
+        "dist/form-dynamic-angular",
+        "./dist/form-dynamic-angular",
+        "./dist/form-dynamic-angular",
+        "./dist/form-dynamic-angular",
+        "./dist/form-dynamic-angular"
+      ],
+      "teste": [
+        "./dist/teste"
       ]
     },
     "noPropertyAccessFromIndexSignature": false,

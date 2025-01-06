@@ -1,6 +1,25 @@
-import { FormBuilder, FormGroup, UntypedFormGroup } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { FileUploadModule } from 'primeng/fileupload';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { CommonModule } from '@angular/common';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { DividerModule } from 'primeng/divider';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { TextareaModule } from 'primeng/textarea';
+
 export interface ITreeSelectOptions {
   key: string,
   label: string,
@@ -48,7 +67,7 @@ export interface IForm {
   formControl?: string,
   required?: boolean,
   placeholder?: string,
-  
+
   numberOfMonthsDate?: number;
   selectionMode?: "multiple" | "range" | "single"
   minDate?: Date,
@@ -57,24 +76,24 @@ export interface IForm {
   dateFormat?: string
   timeOnly?: boolean
   showTime?: boolean,
-  
+
   maxlength?: number,
   rowsTextArea?: number,
-  
+
   mask?: string,
   unmask?: boolean,
-  
+
   search?: boolean,
   options?: IOptions[]
   treeSelectOptions?: ITreeSelectOptions[],
-  
-  buttonClass?: string, 
-  iconButton?: string, 
-  
+
+  buttonClass?: string,
+  iconButton?: string,
+
   formControlOther?: string,
   hideLabelTop?: boolean,
 
-  scrollHeight?: string, 
+  scrollHeight?: string,
   colsTable?: ICols[],
   rowsTable?: any[],
   rowsFooter?: any[],
@@ -112,8 +131,31 @@ export interface IButtonsTable {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'form-dynamic-angular',
+  standalone: true,
   templateUrl: 'form-dynamic-angular.component.html',
-  styleUrls: ['form-dynamic-angular.component.css']
+  styleUrls: ['form-dynamic-angular.component.css'],
+  imports: [
+    InputMaskModule,
+    InputNumberModule,
+    PasswordModule,
+    ButtonModule,
+    TableModule,
+    FileUploadModule,
+    MultiSelectModule,
+    CommonModule,
+    SelectButtonModule,
+    InputSwitchModule,
+    CheckboxModule,
+    TextareaModule,
+    InputTextModule,
+    DividerModule,
+    CalendarModule,
+    DropdownModule,
+    TreeSelectModule,
+    RadioButtonModule,
+    AutoCompleteModule,
+    ReactiveFormsModule
+  ],
 })
 
 export class FormDynamicAngularComponent implements OnInit {
@@ -133,7 +175,6 @@ export class FormDynamicAngularComponent implements OnInit {
   filteredAutoComplete: any[] = [];
 
   constructor(
-    public translate: TranslateService,
     private formBuilder: FormBuilder
   ) {
     this.control = this.formBuilder.group({});

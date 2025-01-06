@@ -1,13 +1,11 @@
 {
   "name": "form-dynamic-angular",
-  "version": "7.0.14",
+  "version": "18.0.0",
   "peerDependencies": {
-    "@angular/common": "^17.0.0",
-    "@angular/core": "^17.0.0",
-    "moment": "^2.29.4"
+    "@angular/common": "^18.2.0",
+    "@angular/core": "^18.2.0"
   },
   "dependencies": {
-    "moment": "^2.29.4",
     "tslib": "^2.3.0"
   },
   "sideEffects": false
