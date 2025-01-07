@@ -4,13 +4,12 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Observable, Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-installation',
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [],
-  templateUrl: './installation.component.html',
-  styleUrl: './installation.component.scss'
+    selector: 'app-installation',
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [],
+    templateUrl: './installation.component.html',
+    styleUrl: './installation.component.scss'
 })
 
 export class InstallationComponent {

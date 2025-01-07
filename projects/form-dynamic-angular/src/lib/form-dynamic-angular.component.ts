@@ -129,33 +129,32 @@ export interface IButtonsTable {
   onCLick: Function
 }
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'form-dynamic-angular',
-  standalone: true,
-  templateUrl: 'form-dynamic-angular.component.html',
-  styleUrls: ['form-dynamic-angular.component.css'],
-  imports: [
-    InputMaskModule,
-    InputNumberModule,
-    PasswordModule,
-    ButtonModule,
-    TableModule,
-    FileUploadModule,
-    MultiSelectModule,
-    CommonModule,
-    SelectButtonModule,
-    InputSwitchModule,
-    CheckboxModule,
-    TextareaModule,
-    InputTextModule,
-    DividerModule,
-    CalendarModule,
-    DropdownModule,
-    TreeSelectModule,
-    RadioButtonModule,
-    AutoCompleteModule,
-    ReactiveFormsModule
-  ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'form-dynamic-angular',
+    templateUrl: 'form-dynamic-angular.component.html',
+    styleUrls: ['form-dynamic-angular.component.css'],
+    imports: [
+        InputMaskModule,
+        InputNumberModule,
+        PasswordModule,
+        ButtonModule,
+        TableModule,
+        FileUploadModule,
+        MultiSelectModule,
+        CommonModule,
+        SelectButtonModule,
+        InputSwitchModule,
+        CheckboxModule,
+        TextareaModule,
+        InputTextModule,
+        DividerModule,
+        CalendarModule,
+        DropdownModule,
+        TreeSelectModule,
+        RadioButtonModule,
+        AutoCompleteModule,
+        ReactiveFormsModule
+    ]
 })
 
 export class FormDynamicAngularComponent implements OnInit {

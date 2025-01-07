@@ -18,27 +18,26 @@ import { min, Observable } from 'rxjs';
 import { InstallationComponent } from './pages/installation/installation.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    SidebarModule,
-    ButtonModule,
-    CommonModule,
-    RouterLink,
-    RouterLinkActive,
-    FormDynamicAngularComponent,
-    MenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    ToolbarModule,
-    InstallationComponent
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [
+        RouterOutlet,
+        SidebarModule,
+        ButtonModule,
+        CommonModule,
+        RouterLink,
+        RouterLinkActive,
+        FormDynamicAngularComponent,
+        MenuModule,
+        MatIconModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        ToolbarModule,
+        InstallationComponent
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
 
