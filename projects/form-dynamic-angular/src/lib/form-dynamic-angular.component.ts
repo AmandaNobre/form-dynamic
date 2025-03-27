@@ -38,7 +38,8 @@ export type TTypes =
   "text" |
   "text-area" |
   "tree-select" |
-  "upload-files"
+  "upload-files" |
+  "editable-table"
 export interface IForm {
   id: number | string,
   label?: string,
@@ -48,7 +49,7 @@ export interface IForm {
   formControl?: string,
   required?: boolean,
   placeholder?: string,
-  
+
   numberOfMonthsDate?: number;
   selectionMode?: "multiple" | "range" | "single"
   minDate?: Date,
@@ -57,24 +58,24 @@ export interface IForm {
   dateFormat?: string
   timeOnly?: boolean
   showTime?: boolean,
-  
+
   maxlength?: number,
   rowsTextArea?: number,
-  
+
   mask?: string,
   unmask?: boolean,
-  
+
   search?: boolean,
   options?: IOptions[]
   treeSelectOptions?: ITreeSelectOptions[],
-  
-  buttonClass?: string, 
-  iconButton?: string, 
-  
+
+  buttonClass?: string,
+  iconButton?: string,
+
   formControlOther?: string,
   hideLabelTop?: boolean,
 
-  scrollHeight?: string, 
+  scrollHeight?: string,
   colsTable?: ICols[],
   rowsTable?: any[],
   rowsFooter?: any[],

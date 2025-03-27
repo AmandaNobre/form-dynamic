@@ -109,43 +109,46 @@ export class AppComponent implements OnInit {
     console.log("blur")
   }
   ngOnInit() {
+    // this.controlExemple = this.fb.group({
+    //   user: "",
+    //   teste: 'asda',
+    //   password: this.fb.array([
+    //     this.fb.group({ 1: true }),
+    //     this.fb.group({ 2: false })
+    //   ])
+    //   // user2: "123"
+    // });
+
     this.controlExemple = this.fb.group({
-      user: "",
-      teste: 'asda',
-      password: this.fb.array([
-        this.fb.group({ 1: true }),
-        this.fb.group({ 2: false })
-      ])
-      // user2: "123"
-    });
-
-
+      likertScale: this.fb.array([
+        this.fb.group({
+          question0: new FormControl(''),
+        })
+      ]),
+      }
+    )
 
     this.formmExemple = [
-      { id: 1, label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'button', formControl: 'user', viewDate: 'date' },
-      // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'text-area', formControl: 'user2', maxlength: 5, colsTable: [{ field: "teste", header: "Teste" }, { field: "teste 2", header: "Teste 2" }, { field: "teste 3", header: "Teste 3" }], rowsTable: ["t1", "t2"] },
-      { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'date', timeOnly: false,viewDate: 'date',formControl: 'user', search: true, id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", numberOfMonthsDate: 2 },
-      // { label: 'Password', col: 'lg:col-6 md:col-6 col-6', hideLabelTop: true, type: 'button', formControl: 'password', id: "adsa" },
-      // { label: 'User', col: 'lg:col-12 md:col-12', hideLabelTop: true, type: 'check-box', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
-      // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'currency', formControl: 'password', id: "adsa" },
-      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'date', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
-      // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'switch', formControl: 'password', id: "adsa" },
-      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'list', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
-      // { col: 'lg:col-6', type: 'upload-files', formControl: 'password', acceptFiles: ".pdf" },
-      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'number', mask: '999', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", onChange: () => this.change(), onCLear: () => this.clear() },
-      // {
-      //   label: 'Password', col: 'lg:col-12 md:col-12', type: 'multi', formControl: 'user', id: "adsa", onChange: () => this.testeradio(),
-      //   options: [{ code: '1', description: '1' }, { code: '2', description: '2' }, { code: '3', description: 'as' }, { code: '4', description: '3' }, { code: '5', description: '4' }, { code: '6', description: '5' }], formControlOther: 'teste'
-      // },
-      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'select', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
-      // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'select-button', formControl: 'password', id: "adsa" },
-      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'table', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
-      // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'text', formControl: 'password', id: "adsa" },
-      // { label: 'User', col: 'lg:col-12 md:col-12', type: 'text-area', formControl: 'password', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", rowsTextArea: 5 },
-      // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'multi', formControl: 'password', id: "adsa", onChange: () => console.log("as") },
-      // { label: "Logotipo", type: 'upload-files', formControl: 'logo', acceptFiles: "image/*", multileFile: false, required: true },
-      // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'photo', formControl: 'password', id: "adsa" },
-      // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'password', formControl: 'password', id: "adsa" },
+      {
+        id: "deb3be53-8d57-4ea5-bef8-e9e7f365c954",
+        type: "likert",
+        label: "Pergunta teste",
+        options: [],
+        formControl: "likertScale",
+        rowsTable: [
+            "Declaração 0"
+        ],
+        colsTable: [
+            {
+                field: "Opcao 0",
+                header: "Opção 0",
+            },
+            {
+                field: "Opcao 1",
+                header: "Opção 1"
+            }
+        ],
+    }
     ]
 
 
@@ -161,8 +164,9 @@ export class AppComponent implements OnInit {
   show() {
     // this.observable.show()
     // this.httpClient.get('https://viacep.com.br/ws/01001000/json/').subscribe(d => console.log(d))
-    console.log(this.controlExemple.controls['user'].value)
-    this.validateForm = true
+    // console.log(this.controlExemple.controls['user'].value)
+    // this.validateForm = true
+    console.log(this.controlExemple);
   }
 
   toggleMenu() {
