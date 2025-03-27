@@ -207,7 +207,7 @@ export class AppComponent implements OnInit {
     // this.httpClient.get('https://viacep.com.br/ws/01001000/json/').subscribe(d => console.log(d))
     // console.log(this.controlExemple.controls['user'].value)
     // this.validateForm = true
-    console.log(this.controlExemple);
+    // console.log(this.controlExemple);
   }
 
   toggleMenu() {
