@@ -360,10 +360,10 @@
                           <td [formGroupName]="rowIndex" [pEditableColumn]="row" pEditableColumnField="row">
                             <p-cellEditor>
                               <ng-template pTemplate="input">
-                                <input pInputText type="text"  [formControlName]="col.field + rowIndex"  />
+                                <input pInputText type="text" formControlName="_{{control.field}}question{{ rowIndex }}" />
                               </ng-template>
                               <ng-template pTemplate="output">
-                                {{ control.field }}
+                                <input pInputText type="text" formControlName="_{{control.field}}question{{ rowIndex }}" />
                               </ng-template>
                             </p-cellEditor>
                           </td>
