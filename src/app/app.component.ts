@@ -109,22 +109,45 @@ export class AppComponent implements OnInit {
     console.log("blur")
   }
   ngOnInit() {
+    // this.controlExemple = this.fb.group({
+    //   user: "",
+    //   teste: 'asda',
+    //   password: this.fb.array([
+    //     this.fb.group({ 1: true }),
+    //     this.fb.group({ 2: false })
+    //   ])
+    //   // user2: "123"
+    // });
+
     this.controlExemple = this.fb.group({
-      user: "",
-      teste: 'asda',
-      password: this.fb.array([
-        this.fb.group({ 1: true }),
-        this.fb.group({ 2: false })
-      ])
-      // user2: "123"
-    });
+      editableTable: this.fb.array([
+        this.fb.group({
+          "_Opcao 0question0": new FormControl(''),
+          "_Opcao 1question0": new FormControl(''),
+        }),
+        this.fb.group({
+          "_Opcao 0question1": new FormControl(''),
+          "_Opcao 1question1": new FormControl(''),
+        }),
+      ]),
+      }
+    )
 
-
+    this.controlExemple.get('editableTable')?.setValue([
+      {
+          "_Opcao 0question0": "dfsd",
+          "_Opcao 1question0": "fsdf"
+      },
+      {
+          "_Opcao 0question1": "sdf",
+          "_Opcao 1question1": "234324"
+      }
+    ])
 
     this.formmExemple = [
-      { id: 1, label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'button', formControl: 'user', viewDate: 'date' },
+      // { id: 1, label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'button', formControl: 'user', viewDate: 'date' },
       // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'text-area', formControl: 'user2', maxlength: 5, colsTable: [{ field: "teste", header: "Teste" }, { field: "teste 2", header: "Teste 2" }, { field: "teste 3", header: "Teste 3" }], rowsTable: ["t1", "t2"] },
-      { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'date', timeOnly: false,viewDate: 'date',formControl: 'user', search: true, id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", numberOfMonthsDate: 2 },
+      // { label: 'User', col: 'lg:col-6 md:col-6 col-6', type: 'date', timeOnly: false,viewDate: 'date',formControl: 'user', search: true, id: "testqqqqqqqqqqqqqqqqqqqqqqqqe", numberOfMonthsDate: 2 },
       // { label: 'Password', col: 'lg:col-6 md:col-6 col-6', hideLabelTop: true, type: 'button', formControl: 'password', id: "adsa" },
       // { label: 'User', col: 'lg:col-12 md:col-12', hideLabelTop: true, type: 'check-box', formControl: 'user', id: "testqqqqqqqqqqqqqqqqqqqqqqqqe" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'currency', formControl: 'password', id: "adsa" },
@@ -146,6 +169,27 @@ export class AppComponent implements OnInit {
       // { label: "Logotipo", type: 'upload-files', formControl: 'logo', acceptFiles: "image/*", multileFile: false, required: true },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'photo', formControl: 'password', id: "adsa" },
       // { label: 'Password', col: 'lg:col-12 md:col-12', type: 'password', formControl: 'password', id: "adsa" },
+      {
+        id: "deb3be53-8d57-4ea5-bef8-e9e7f365c954",
+        type: "editable-table",
+        label: "Pergunta teste",
+        options: [],
+        formControl: "editableTable",
+        rowsTable: [
+            "Declaração 0",
+            "Declaração 1"
+        ],
+        colsTable: [
+            {
+                field: "Opcao 0",
+                header: "Opção 0",
+            },
+            {
+                field: "Opcao 1",
+                header: "Opção 1"
+            }
+        ],
+    }
     ]
 
 
@@ -161,8 +205,9 @@ export class AppComponent implements OnInit {
   show() {
     // this.observable.show()
     // this.httpClient.get('https://viacep.com.br/ws/01001000/json/').subscribe(d => console.log(d))
-    console.log(this.controlExemple.controls['user'].value)
-    this.validateForm = true
+    // console.log(this.controlExemple.controls['user'].value)
+    // this.validateForm = true
+    // console.log(this.controlExemple);
   }
 
   toggleMenu() {
